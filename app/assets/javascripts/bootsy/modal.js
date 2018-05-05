@@ -24,8 +24,8 @@ Bootsy.Modal = function(area) {
     img = $(this).parents('.bootsy-image').find('img');
 
     imageObject = {
-      src: img.attr('src').replace('/thumb_', imagePrefix),
-      alt: img.attr('alt').replace('Thumb_', '')
+      src: img.attr('src').replace('/thumb_', imagePrefix)/*,
+      alt: img.attr('alt').replace('Thumb_', '')*/
     };
 
     imageObject.align = $(this).data('position');
