@@ -59,7 +59,7 @@ Bootsy.Modal = function(area) {
       event.target.querySelector('input[name="authenticity_token"]').value);
 
     if (file) {
-      formData.append('image[image_file]', file, file.name);
+      formData.append('image[content]', file, file.name);
     }
 
     if (fileURLInput) {
@@ -156,13 +156,13 @@ Bootsy.Modal.prototype.setUploadForm = function(html) {
 
 // The image upload failed
 Bootsy.Modal.prototype.imageUploadFailed = function(xhr, invalidErrors) {
-  if (Number(xhr.status) === 422 && invalidErrors.image_file) {
+  if (Number(xhr.status) === 422 && invalidErrors.content) {
     this.hideUploadLoadingAnimation();
 
     if (this.validation) this.validation.remove();
 
     this.validation = $("<p class='text-danger'>");
-    this.validation.text(invalidErrors.image_file[0]);
+    this.validation.text(invalidErrors.content[0]);
     this.$el.find('.bootsy-upload-form').append(this.validation);
   } else {
     this.hideGalleryLoadingAnimation();

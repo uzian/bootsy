@@ -10,7 +10,7 @@ module Bootsy
 
     has_one_attached :content 
 
-    validates_presence_of :image_file, :image_gallery_id
+    validates_presence_of :content, :image_gallery_id
 
     SIZES={
       thumb: [60,60],
