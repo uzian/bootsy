@@ -13,7 +13,7 @@ module Bootsy
     validates_presence_of :content, :image_gallery_id
 
     SIZES={
-      thumb: [60,60],
+      thumbnail: [60,60],
       small: [160,160],
       medium: [360,360],
       large: [760,760],
@@ -21,13 +21,14 @@ module Bootsy
 
     SIZES.each do |size_name, size_values|
       define_method size_name do
-        if content.attached?
-          content.variant(
-            combine_options: {
-            gravity: "center",
-            resize: "#{size_values[0]}x#{size_values[1]}>",
-            crop: "#{size_values[0]}x#{size_values[1]}+0+0"
-          })
+        if self.content.attached?
+          # self.content.variant(
+          #   combine_options: {
+          #   gravity: "center",
+          #   resize: "#{size_values[0]}x#{size_values[1]}>",
+          #   crop: "#{size_values[0]}x#{size_values[1]}+0+0"
+          # })
+          self.content.variant(resize: "60x60>")          
         end   
       end
     end
