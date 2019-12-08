@@ -8,6 +8,30 @@ module Bootsy
 
     mount_uploader :image_file, ImageUploader
 
+    has_one_attached :content 
+
     validates_presence_of :image_file, :image_gallery_id
+
+    SIZES={
+      thumb: [60,60],
+      small: [160,160],
+      medium: [360,360],
+      large: [760,760],
+    }
+
+    SIZES.each do |size_name, size_values|
+      define_method size_name do
+        if content.attached?
+          content.variant(
+            combine_options: {
+            gravity: "center",
+            resize: "#{size_values[0]}x#{size_values[1]}>",
+            crop: "#{size_values[0]}x#{size_values[1]}+0+0"
+          })
+        end   
+      end
+    end
+
   end
 end
+
