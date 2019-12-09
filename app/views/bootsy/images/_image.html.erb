@@ -1,5 +1,5 @@
 <div class="bootsy-image dropdown col-sm-2" data-id="<%= image.id %>">
-  <%= link_to image_tag(Rails.application.routes.url_helpers.rails_representation_url(image.thumbnail.processed, only_path: true)), '#', class: 'thumbnail',
+  <%= link_to image_tag(image_path(image, variant: :thumbnail)), '#', class: 'thumbnail',
     data: { toggle: 'dropdown' } %>
 
   <ul class="dropdown-menu" role="menu">

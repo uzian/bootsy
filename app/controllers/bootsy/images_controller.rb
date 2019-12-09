@@ -40,6 +40,20 @@ module Bootsy
       end
     end
 
+    def show
+      @image = Image.find_by_id(params[:id])
+      redirect_to root_path, flash: { error: t("files.errors.no_such_file")} if @image.nil?      
+      if Bootsy::Image::SIZES.include?(variant_name=params[:variant])
+        variant=@image.send(variant_name).processed
+        prefix=variant_name+"_"
+      else
+        variant=@image.content
+        prefix=""
+      end
+
+      send_data variant.blob.download, filename: prefix+@image.content.filename.to_s, content_type: @image.content.content_type      
+    end
+
     private
 
     def set_gallery
