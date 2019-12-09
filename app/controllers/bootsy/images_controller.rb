@@ -42,17 +42,21 @@ module Bootsy
 
     def show
       @image = Image.find_by_id(params[:id])
-      redirect_to root_path, flash: { error: t("files.errors.no_such_file")} if @image.nil?      
-      if Bootsy::Image::SIZES.include?(variant_name=params[:variant])
-        variant=@image.send(variant_name).processed
-        prefix=variant_name+"_"
-      else
-        variant=@image.content
-        prefix=""
-      end
+      redirect_to root_path, flash: { error: t("files.errors.no_such_file")} if @image.nil? || !@image.content.attached?     
 
-      send_data variant.blob.download, filename: prefix+@image.content.filename.to_s, content_type: @image.content.content_type      
+      variant_name=params[:variant].to_s
+      filename=@image.content.filename.to_s
+      content_type=@image.content.content_type
+
+      if Image::SIZES.keys.map(&:to_s).include?(variant_name)        
+        variant=@image.send(variant_name).processed
+        filename=variant_name+"_"+filename
+        send_data @image.content.blob.service.download(variant.key), filename: filename, content_type: content_type 
+      else
+        send_data @image.content.blob.download, filename: filename, content_type: content_type
+      end         
     end
+
 
     private
 
