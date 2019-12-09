@@ -51,6 +51,7 @@ module Bootsy
       if Image::SIZES.keys.map(&:to_s).include?(variant_name)        
         variant=@image.send(variant_name).processed
         filename=variant_name+"_"+filename
+        logger.debug "Serving #{variant.inspect} "
         send_data @image.content.blob.service.download(variant.key), filename: filename, content_type: content_type 
       else
         send_data @image.content.blob.download, filename: filename, content_type: content_type

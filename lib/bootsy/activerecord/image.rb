@@ -22,13 +22,12 @@ module Bootsy
     SIZES.each do |size_name, size_values|
       define_method size_name do
         if self.content.attached?
-          # self.content.variant(
-          #   combine_options: {
-          #   gravity: "center",
-          #   resize: "#{size_values[0]}x#{size_values[1]}>",
-          #   crop: "#{size_values[0]}x#{size_values[1]}+0+0"
-          # })
-          self.content.variant(resize: "60x60>")          
+          self.content.variant(
+            combine_options: {
+            gravity: "center",
+            resize: "#{size_values[0]}x#{size_values[1]}>",
+            crop: "#{size_values[0]}x#{size_values[1]}+0+0"
+          })
         end   
       end
     end
