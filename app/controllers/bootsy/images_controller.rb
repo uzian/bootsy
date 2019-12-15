@@ -42,7 +42,10 @@ module Bootsy
 
     def show
       @image = Image.find_by_id(params[:id])
-      redirect_to root_path, flash: { error: t("files.errors.no_such_file")} if @image.nil? || !@image.content.attached?     
+      if @image.nil? || !@image.content.attached?     
+        render :status => 404
+        return
+      end
 
       variant_name=params[:variant].to_s
       filename=@image.content.filename.to_s
