@@ -43,7 +43,7 @@ module Bootsy
     def show
       @image = Image.find_by_id(params[:id])
       if @image.nil? || !@image.content.attached?     
-        raise ActiveRecord::RecordNotFound, "Record not found."
+        render :text => 'Not Found', :status => '404'
         return
       end
 
