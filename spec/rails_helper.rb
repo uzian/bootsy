@@ -4,9 +4,9 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../spec/dummy/config/environment', __FILE__)
 require 'rspec/rails'
 require 'database_cleaner'
-require 'capybara/poltergeist'
+require 'capybara/rspec'
 
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :selenium
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.

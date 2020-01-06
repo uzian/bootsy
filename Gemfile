@@ -16,10 +16,11 @@ gemspec
 
 # Development dependencies
 
+gem 'puma'
 gem 'capybara'
 gem 'database_cleaner'
 gem 'factory_girl_rails'
-gem 'poltergeist'
+gem 'selenium-webdriver'
 gem 'pry-rails'
 gem 'rspec-rails'
 gem 'rubocop'

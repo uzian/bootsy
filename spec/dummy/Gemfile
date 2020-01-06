@@ -12,6 +12,7 @@ gem 'sqlite3'
 gem 'font-awesome-sass'
 
 # Development dependencies
+gem 'puma'
 gem 'capybara'
 gem 'database_cleaner'
 gem 'factory_girl_rails'
@@ -21,3 +22,4 @@ gem 'rspec-rails'
 gem 'rubocop'
 gem 'sham_rack', require: false
 gem 'mini_magick'
+gem 'selenium-webdriver'
