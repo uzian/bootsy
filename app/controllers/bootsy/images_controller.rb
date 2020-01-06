@@ -98,7 +98,7 @@ module Bootsy
 
     def image_params
       #params.require(:image).permit(:image_file, :remote_image_file_url)
-      params.require(:image).permit(:content, :remote_image_file_url)
+      params.require(:image).permit(:content)
     end
 
     def create_and_respond

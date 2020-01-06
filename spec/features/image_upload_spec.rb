@@ -23,12 +23,12 @@ describe 'image upload', type: :feature, js: true do
     expect(page).to have_selector(:xpath, thumb_selector, visible: true)
   end
 
-  it 'works with remote files' do
-    fill_in 'image[remote_image_file_url]', with: 'http://stubhost.com/test.jpg'
-    click_on 'Go'
+  # it 'works with remote files' do
+  #   fill_in 'image[remote_image_file_url]', with: 'http://stubhost.com/test.jpg'
+  #   click_on 'Go'
 
-    expect(page).to have_selector(:xpath, thumb_selector, visible: true)
-  end
+  #   expect(page).to have_selector(:xpath, thumb_selector, visible: true)
+  # end
 
   it 'handles invalid images' do
     attach_file 'image[image_file]', Rails.root.to_s + '/public/test.fake'
@@ -41,16 +41,16 @@ describe 'image upload', type: :feature, js: true do
     expect(page).not_to have_content('You are not allowed to upload')
   end
 
-  it 'handles invalid remote images' do
-    fill_in 'image[remote_image_file_url]',
-            with: 'http://stubhost.com/test.fake'
-    click_on 'Go'
+  # it 'handles invalid remote images' do
+  #   fill_in 'image[remote_image_file_url]',
+  #           with: 'http://stubhost.com/test.fake'
+  #   click_on 'Go'
 
-    expect(page).not_to have_selector(
-      :xpath, "//div[contains(@class, 'bootsy-gallery')]//img", visible: true
-    )
-    expect(page).to have_content('You are not allowed to upload')
-  end
+  #   expect(page).not_to have_selector(
+  #     :xpath, "//div[contains(@class, 'bootsy-gallery')]//img", visible: true
+  #   )
+  #   expect(page).to have_content('You are not allowed to upload')
+  # end
 
   it 'associates the uploaded image with the resource' do
     attach_file 'image[image_file]', Rails.root.to_s + '/public/test.jpg'
