@@ -19,7 +19,7 @@ gemspec
 gem 'puma'
 gem 'capybara'
 gem 'database_cleaner'
-gem 'factory_girl_rails'
+gem 'factory_bot'
 gem 'selenium-webdriver'
 gem 'pry-rails'
 gem 'rspec-rails'

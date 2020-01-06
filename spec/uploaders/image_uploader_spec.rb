@@ -5,7 +5,7 @@
 
 #   before :all do
 #     path_to_file = Rails.root.to_s + '/public/test.jpg'
-#     @uploader = Bootsy::ImageUploader.new FactoryGirl.build(:image), :image_file
+#     @uploader = Bootsy::ImageUploader.new FactoryBot.build(:image), :image_file
 #     @uploader.store! File.open(path_to_file)
 #   end
 

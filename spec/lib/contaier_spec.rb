@@ -6,7 +6,7 @@ describe Bootsy::Container do
 
   let(:post_with_gallery) do
     post_with_gallery = Post.new(title: 'Test', content: 'Test')
-    post_with_gallery.bootsy_image_gallery = FactoryGirl.create(:image_gallery)
+    post_with_gallery.bootsy_image_gallery = FactoryBot.create(:image_gallery)
     post_with_gallery.save!
     post_with_gallery
   end
@@ -34,7 +34,7 @@ describe Bootsy::Container do
   end
 
   describe '#bootsy_image_gallery_id=' do
-    let(:image_gallery) { FactoryGirl.create(:image_gallery) }
+    let(:image_gallery) { FactoryBot.create(:image_gallery) }
 
     it 'sets an image gallery if container does not have one yet' do
       post.bootsy_image_gallery_id = image_gallery.id

@@ -53,9 +53,9 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  config.include(FactoryGirl::Syntax::Methods)
+  config.include(FactoryBot::Syntax::Methods)
 
-  # Manually config FactoryGirl
-  FactoryGirl.definition_file_paths = [Rails.root.join('..', 'factories')]
-  FactoryGirl.find_definitions
+  # Manually config FactoryBot
+  FactoryBot.definition_file_paths = [Rails.root.join('..', 'factories')]
+  FactoryBot.find_definitions
 end

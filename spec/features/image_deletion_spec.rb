@@ -3,14 +3,16 @@ require 'rails_helper'
 
 describe 'image deletion', type: :feature, js: true do
   let(:selector) do
+    sleep 2
+    image=Bootsy::Image.last
     "//div[contains(@class, 'bootsy-gallery')]//img[contains(@src, "\
-    "'/thumb_test.jpg')]"
+    "'/#{image.id}?variant=thumbnail')]"
   end
 
   before do
     visit new_post_path
     click_on 'Insert image'
-    attach_file 'image[image_file]', Rails.root.to_s + '/public/test.jpg'
+    attach_file 'image[content]', Rails.root.to_s + '/public/test.jpg'
   end
 
   it 'can be performed' do

@@ -23,7 +23,7 @@ describe 'image insertion', type: :feature, js: true do
     size_positions.each do |size_position|
       visit new_post_path
       click_on 'Insert image'
-      attach_file 'image[image_file]', Rails.root.to_s + '/public/test.jpg'
+      attach_file 'image[content]', Rails.root.to_s + '/public/test.jpg'
 
       find('.bootsy-gallery img').click
       size = size_position.first
@@ -37,8 +37,12 @@ describe 'image insertion', type: :feature, js: true do
       content = page.evaluate_script(
         'Bootsy.areas.post_content.editor.getValue()'
       )
-      img_src = "/#{size.downcase}_test.jpg"
-      img_src = 'test.jpg' if size == 'Original'
+
+      image=Bootsy::Image.last
+      "//div[contains(@class, 'bootsy-gallery')]//img[contains(@src, "\
+      "'/#{image.id}?variant=thumbnail')]"
+
+      img_src = "/#{image.id}?variant=#{size.downcase}"
       expect(content).to include(img_src)
       expect(content).to include("align=\"#{position.downcase}\"")
     end

@@ -14,7 +14,7 @@ describe 'image gallery modal', type: :feature, js: true do
 
   it 'is accessible with a persisted resource' do
     post = Post.new(title: 'Test', content: 'test')
-    post.bootsy_image_gallery_id = FactoryGirl.create(
+    post.bootsy_image_gallery_id = FactoryBot.create(
       :image_gallery_with_images
     ).id
     post.save!

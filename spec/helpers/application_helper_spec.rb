@@ -2,8 +2,8 @@
 require 'rails_helper'
 
 describe Bootsy::ApplicationHelper do
-  let(:unsaved_gallery) { FactoryGirl.build(:image_gallery) }
-  let(:saved_gallery) { FactoryGirl.create(:image_gallery) }
+  let(:unsaved_gallery) { FactoryBot.build(:image_gallery) }
+  let(:saved_gallery) { FactoryBot.create(:image_gallery) }
 
   describe '#refresh_btn' do
     subject { helper.refresh_btn }

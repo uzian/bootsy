@@ -4,8 +4,10 @@ require 'sham_rack'
 
 describe 'image upload', type: :feature, js: true do
   let(:thumb_selector) do
+    sleep 2
+    image=Bootsy::Image.last
     "//div[contains(@class, 'bootsy-gallery')]//img[contains(@src, "\
-      "'/thumb_test.jpg')]"
+    "'/#{image.id}?variant=thumbnail')]"      
   end
 
   before do
@@ -18,7 +20,7 @@ describe 'image upload', type: :feature, js: true do
   end
 
   it 'works with local files' do
-    attach_file 'image[image_file]', Rails.root.to_s + '/public/test.jpg'
+    attach_file 'image[content]', Rails.root.to_s + '/public/test.jpg'
 
     expect(page).to have_selector(:xpath, thumb_selector, visible: true)
   end
@@ -31,7 +33,7 @@ describe 'image upload', type: :feature, js: true do
   # end
 
   it 'handles invalid images' do
-    attach_file 'image[image_file]', Rails.root.to_s + '/public/test.fake'
+    attach_file 'image[content]', Rails.root.to_s + '/public/test.fake'
 
     expect(page).not_to have_selector(
       :xpath, "//div[contains(@class, 'bootsy-gallery')]//img", visible: true
@@ -53,9 +55,12 @@ describe 'image upload', type: :feature, js: true do
   # end
 
   it 'associates the uploaded image with the resource' do
-    attach_file 'image[image_file]', Rails.root.to_s + '/public/test.jpg'
+    attach_file 'image[content]', Rails.root.to_s + '/public/test.jpg'
+
+    sleep 2
+    image=Bootsy::Image.last
     find(:xpath, "//div[contains(@class, 'bootsy-gallery')]//img[contains(@src"\
-      ", '/thumb_test.jpg')]").click
+      ", '/#{image.id}?variant=thumbnail')]").click
     script = "$('.dropdown-submenu .dropdown-menu').hide(); "\
       "$('a:contains(Small):visible').parent()."\
       "find('.dropdown-menu').show()"
