@@ -5,7 +5,7 @@ window.Bootsy.imageTemplate = function(locale, options) {
 
   return  '<li>' +
     '<a class="btn btn-secondary ' + size + '" data-wysihtml5-command="customCommand" title="' + locale.image.insert + '" tabindex="-1">' +
-      '<span class="glyphicon glyphicon-picture"></span>' +
+      '<i class="fas fa-image"></i>' +
     '</a>' +
   '</li>';
 };
