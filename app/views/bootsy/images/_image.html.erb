@@ -7,7 +7,7 @@
 
     <% Bootsy.image_versions_available.each do |size| %>
       <li role="presentation" class="dropdown dropdown-submenu">
-        <%= link_to '#', tabindex: '-1', role: 'menuitem', data: { toggle: 'dropdown' } do %>
+        <%= link_to '#', tabindex: '-1', role: 'menuitem', data: { toggle: 'dropdown' }, class: "dropdown-item" do %>
           <i class="icon-picture"></i>
 
           <%= t size, scope: 'bootsy.image' %>
@@ -16,7 +16,7 @@
         <ul class="dropdown-menu" role="menu">
           <% [:left, :right, :inline].each do |position| %>
             <li role="presentation">
-              <%= link_to '#', class: 'insert', tabindex: '-1', role: 'menuitem',
+              <%= link_to '#', class: 'insert', tabindex: '-1', role: 'menuitem', class: "dropdown-item",
                 data: { image_size: size.to_s, position: position.to_s} do %>
                 <%= t position, scope: 'bootsy.image.position' %>
               <% end %>
@@ -31,8 +31,8 @@
 
       <li role="presentation">
         <%= link_to image, method: :delete, remote: true,
-          data: { confirm: t('bootsy.image.confirm.destroy'), type: 'json' },
-          tabindex: '-1', role: 'menuitem', class: 'destroy-btn' do %>
+          data: { confirm: t('bootsy.image.confirm.destroy'), type: 'json' }, class: "dropdown-item destroy-btn",
+          tabindex: '-1', role: 'menuitem' do %>
           <i class="icon-trash"></i>
 
           <%= t('bootsy.action.destroy') %>
