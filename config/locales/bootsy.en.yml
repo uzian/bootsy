@@ -6,9 +6,9 @@ en:
       close: Close
       load: Load
       or: or
-      upload: Upload New Image
+      upload: Upload
       submit_upload: Go
-      enter_image_url: Enter a URL from the web...
+      enter_image_url: Enter image URL...
     image_gallery: Image Gallery
     image:
       s: Image
