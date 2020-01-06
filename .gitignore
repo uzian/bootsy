@@ -7,4 +7,5 @@ spec/dummy/tmp/
 spec/dummy/.sass-cache
 spec/dummy/public/bootsy_uploads
 spec/dummy/public/uploads
+spec/dummy/storage
 coverage/
