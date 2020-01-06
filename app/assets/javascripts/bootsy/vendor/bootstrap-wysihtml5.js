@@ -47,8 +47,8 @@
                 "<div class='modal-dialog'>" +
                   "<div class='modal-content'>" +
                     "<div class='modal-header'>" +
-                      "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" +
-                      "<h3 class='modal-title'>" + locale.link.insert + "</h3>" +
+                      "<h6 class='modal-title'>" + locale.link.insert + "</h6>" +
+                      "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" +                      
                     "</div>" +
                     "<div class='modal-body'>" +
                       "<input value='http://' class='bootstrap-wysihtml5-insert-link-url form-control input-lg'>" +
@@ -71,8 +71,8 @@
                 "<div class='modal-dialog'>" +
                   "<div class='modal-content'>" +
                     "<div class='modal-header'>" +
+                      "<h6 class='modal-title'>" + locale.image.insert + "</h6>" +
                       "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" +
-                      "<h3 class='modal-title'>" + locale.image.insert + "</h3>" +
                     "</div>" +
                     "<div class='modal-body'>" +
                       "<input value='http://' class='bootstrap-wysihtml5-insert-image-url form-control input-lg'>" +
