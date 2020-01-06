@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'carrierwave'
 require 'bootsy/engine'
 require 'bootsy/container'
 require 'bootsy/form_helper'

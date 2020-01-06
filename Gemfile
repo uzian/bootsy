@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 # Gems used by the dummy application
-gem 'bootstrap-sass'
+gem 'bootstrap', '~> 4.4'
 gem 'jquery-rails'
 gem 'rails', '~> 5.0'
 gem 'sass-rails'
