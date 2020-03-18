@@ -20,7 +20,7 @@ describe 'editor customization', type: :feature, js: true do
 
       visit new_post_path
 
-      toolbar = find('ul.wysihtml5-toolbar')
+      toolbar = find('ul.wysihtml-toolbar')
 
       options[config].each do |label|
         expect(
@@ -37,7 +37,7 @@ describe 'editor customization', type: :feature, js: true do
 
       visit new_post_path
 
-      toolbar = find('ul.wysihtml5-toolbar')
+      toolbar = find('ul.wysihtml-toolbar')
 
       options[config].each do |label|
         expect(toolbar).not_to have_css('a', text: label)

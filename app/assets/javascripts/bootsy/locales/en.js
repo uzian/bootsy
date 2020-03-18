@@ -1,8 +1,8 @@
 /**
- * English translations for bootstrap-wysihtml5 and Bootsy
+ * English translations for bootstrap-wysihtml and Bootsy
  */
 (function($){
-  $.fn.wysihtml5.locale['en'] = {
+  $.fn.wysihtml.locale['en'] = {
     font_styles: {
       normal: 'Normal text',
       h1: 'Heading 1',

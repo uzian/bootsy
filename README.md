@@ -6,7 +6,7 @@
 ### Disclaimer: this project is no longer maintained.
 
 *Bootsy* is a WYSIWYG editor for Rails based on
-[Bootstrap-wysihtml5](https://github.com/jhollingworth/bootstrap-wysihtml5) with image uploads using
+[Bootstrap-wysihtml](https://github.com/jhollingworth/bootstrap-wysihtml) with image uploads using
 [CarrierWave](https://github.com/carrierwaveuploader/carrierwave).
 
 ### Live demo

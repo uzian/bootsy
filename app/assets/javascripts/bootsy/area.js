@@ -8,7 +8,7 @@ Bootsy.Area = function($el) {
   this.$el = $el;
   this.unsavedChanges = false;
   this.locale = $el.data('bootsy-locale') || $('html').attr('lang');
-  if (!$.fn.wysihtml5.locale.hasOwnProperty(this.locale)) this.locale = 'en';
+  if (!$.fn.wysihtml.locale.hasOwnProperty(this.locale)) this.locale = 'en';
 
   this.options = {
     locale: this.locale,
@@ -33,7 +33,7 @@ Bootsy.Area = function($el) {
 // Alert for unsaved changes
 Bootsy.Area.prototype.unsavedChangesAlert = function () {
   if (this.unsavedChanges) {
-    return $.fn.wysihtml5.locale[this.locale].bootsy.alertUnsaved;
+    return $.fn.wysihtml.locale[this.locale].bootsy.alertUnsaved;
   }
 };
 
@@ -60,7 +60,7 @@ Bootsy.Area.prototype.init = function() {
       this.options.customTemplates = { customCommand: Bootsy.imageTemplate };
     }
 
-    this.editor = this.$el.wysihtml5($.extend(true, {}, Bootsy.options, this.options)).data('wysihtml5').editor;
+    this.editor = this.$el.wysihtml($.extend(true, {}, Bootsy.options, this.options)).data('wysihtml').editor;
 
     // Mechanism for unsaved changes alert
     if (this.options.alertUnsavedChanges !== false) {

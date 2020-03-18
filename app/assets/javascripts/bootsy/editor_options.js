@@ -7,7 +7,7 @@ $('link[rel="stylesheet"]').each(function () {
 
 window.Bootsy.options = {};
 
-$.extend(true, window.Bootsy.options, $.fn.wysihtml5.defaultOptions, {
+$.extend(true, window.Bootsy.options, $.fn.wysihtml.defaultOptions, {
   parserRules: {
     classes: {
       "wysiwyg-float-left": 1,

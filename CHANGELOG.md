@@ -1,5 +1,11 @@
 # Bootsy Changelog
 
+## 2.5.0
+
+* Replaced paperclip with active storage
+* Replacing wysihtml5 with wysihtml
+
+
 ## 2.4.0
 
 * Full compatibility with Rails 5 (#244 thanks @dnswus).
@@ -23,15 +29,15 @@
 
 ## 2.2.1
 
-* Rollback to [jhollingworth/bootstrap-wysihtml5](https://github.com/jhollingworth/bootstrap-wysihtml5).
+* Rollback to [jhollingworth/bootstrap-wysihtml](https://github.com/jhollingworth/bootstrap-wysihtml).
 
-  Sadly, Bootsrap3-wysihtml5 has proven to be just another unreliable fork that,
+  Sadly, Bootsrap3-wysihtml has proven to be just another unreliable fork that,
   apart from an initial enthusiasm, ended up as any other fork of the original
   library: abandoned and unresponsive.
 
 ## 2.2.0
 
-* Move to [Bootstrap3-wysihtml5](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg).
+* Move to [Bootstrap3-wysihtml](https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg).
   **This is backwards incompatible** if you rely on previous events or functions.
 * New blockquote button - you can disable it in your initalizer.
 * **This version is backwards incompatible if you are using custom locales**:
