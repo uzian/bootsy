@@ -21,9 +21,22 @@
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
               "<div class='btn-group'>" +
-                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='bold' title='CTRL+B' tabindex='-1'>" + locale.emphasis.bold + "</a>" +
-                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='italic' title='CTRL+I' tabindex='-1'>" + locale.emphasis.italic + "</a>" +
-                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='underline' title='CTRL+U' tabindex='-1'>" + locale.emphasis.underline + "</a>" +
+                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='bold' title='CTRL+B' tabindex='-1'><i class='fas fa-bold'></i></a>" +
+                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='italic' title='CTRL+I' tabindex='-1'><i class='fas fa-italic'></i></a>" +
+                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='underline' title='CTRL+U' tabindex='-1'><i class='fas fa-underline'></i></a>" +
+              "</div>" +
+            "</li>";
+        },
+
+        "align": function(locale, options) {
+            var size = (options && options.size) ? ' btn-'+options.size : '';
+            return "<li>" +
+              "<div class='btn-group'>" +
+                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='alignLeftStyle' tabindex='-1'><i class='fas fa-align-left'></i></a>" +
+                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='alignRightStyle'tabindex='-1'><i class='fas fa-align-right'></i></a>" +
+                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='alignCenterStyle' tabindex='-1'><i class='fas fa-align-center'></i></a>" +
+                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='alignJustifyStyle' tabindex='-1'><i class='fas fa-align-justify'></i></a>" +
+
               "</div>" +
             "</li>";
         },
@@ -39,6 +52,24 @@
               "</div>" +
             "</li>";
         },
+
+        // "table": function(locale, options) {
+        //     var size = (options && options.size) ? ' btn-'+options.size : '';
+        //     return "<li>" +
+        //       "<div class='btn-group'>" +
+        //         "<a class='btn btn-secondary " + size + "' data-wysihtml-action='table' tabindex='-1'><i class='fas fa-table'></i></a>" +
+        //       "</div>" +
+        //     "</li>";
+        // },      
+
+        "hr": function(locale, options) {
+            var size = (options && options.size) ? ' btn-'+options.size : '';
+            return "<li>" +
+              "<div class='btn-group'>" +
+                "<a class='btn btn-secondary " + size + "' data-wysihtml-command='insertHorizontalRule' tabindex='-1'>⎼</a>" +
+              "</div>" +
+            "</li>";
+        },              
 
         "link": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
@@ -117,7 +148,28 @@
                 "<div class='wysihtml-colors' data-wysihtml-command-value='orange'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='orange' role='menuitem'>" + locale.colours.orange + "</a>" +
               "</div>" +
             "</li>";
-        }
+        },
+        // "bgcolor": function(locale, options) {
+        //     var size = (options && options.size) ? ' btn-'+options.size : '';
+        //     return "<li class='dropdown'>" +
+        //       "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' title='" + locale.colours.title + "' id='dropdownFontBgColorLink'  aria-haspopup='true' aria-expanded='false'>" +
+        //         "<span class='current-color'><i class='fas fa-paint-roller'></i></span>" +
+        //       "</a>" +
+        //       "<div class='dropdown-menu' aria-labelledby='dropdownBgFontColorLink'>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='black'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='black' role='menuitem'>" + locale.colours.black + "</a>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='silver'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='silver' role='menuitem'>" + locale.colours.silver + "</a>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='gray'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='gray' role='menuitem'>" + locale.colours.gray + "</a>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='maroon'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='maroon' role='menuitem'>" + locale.colours.maroon + "</a>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='red'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='red' role='menuitem'>" + locale.colours.red + "</a>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='purple'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='purple' role='menuitem'>" + locale.colours.purple + "</a>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='green'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='green' role='menuitem'>" + locale.colours.green + "</a>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='olive'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='olive' role='menuitem'>" + locale.colours.olive + "</a>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='navy'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='navy' role='menuitem'>" + locale.colours.navy + "</a>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='blue'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='blue' role='menuitem'>" + locale.colours.blue + "</a>" +
+        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='orange'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='orange' role='menuitem'>" + locale.colours.orange + "</a>" +
+        //       "</div>" +
+        //     "</li>";
+        // }        
     };
 
     var templates = function(key, locale, options) {
@@ -219,6 +271,12 @@
             });
 
             toolbar.find("a[data-wysihtml-command='foreColor']").click(function(e) {
+                var target = e.target || e.srcElement;
+                var el = $(target);
+                self.toolbar.find('.current-color').text(el.html());
+            });
+
+            toolbar.find("a[data-wysihtml-command='bgColor']").click(function(e) {
                 var target = e.target || e.srcElement;
                 var el = $(target);
                 self.toolbar.find('.current-color').text(el.html());
@@ -408,8 +466,12 @@
     var defaultOptions = $.fn.wysihtml.defaultOptions = {
         "font-styles": true,
         "color": false,
+        //"bgcolor": true,
         "emphasis": true,
+        "align": true,
         "lists": true,
+        //"table": true,
+        "hr": true,
         "html": false,
         "link": true,
         "image": true,
@@ -466,6 +528,7 @@
                 },
                 "span": 1,
                 "div": 1,
+                "hr": 1,
                 // to allow save and edit files with code tag hacks
                 "code": 1,
                 "pre": 1
