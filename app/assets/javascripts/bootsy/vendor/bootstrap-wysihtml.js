@@ -527,7 +527,8 @@
                     }
                 },
                 "span": 1,
-                "div": 1,
+                "div": {},
+                "p": {},                
                 "hr": 1,
                 // to allow save and edit files with code tag hacks
                 "code": 1,
