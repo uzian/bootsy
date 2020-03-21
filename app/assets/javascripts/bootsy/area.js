@@ -17,6 +17,7 @@ Bootsy.Area = function($el) {
     color: $el.data('bootsy-color'),
     emphasis: $el.data('bootsy-emphasis'),
     'font-styles': $el.data('bootsy-font-styles'),
+    align: $el.data('bootsy-align'),
     html: $el.data('bootsy-html'),
     image: $el.data('bootsy-image'),
     link: $el.data('bootsy-link'),
