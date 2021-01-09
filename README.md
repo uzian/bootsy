@@ -3,7 +3,9 @@
 [![Gem Version](https://badge.fury.io/rb/bootsy.svg)](http://badge.fury.io/rb/bootsy)
 [![Build Status](https://secure.travis-ci.org/volmer/bootsy.svg?branch=master)](http://travis-ci.org/volmer/bootsy)
 
-### Disclaimer: this is a fork of the original [bootsy](https://github.com/volmer/bootsy) project which is no longer maintained. Since I could not find a suitabel alternative to replace bootsy in my own application, I have been maintaining this fork.
+### Disclaimer: this is a fork of the original [bootsy](https://github.com/volmer/bootsy) project which is no longer maintained. 
+
+Bootsy users who could not find a suitable alternative to replace bootsy in their own application, can try this fork, which in which bootsy has been kept on "life support" for the very same reason: no viable alternative. Latest rails version this fork has been used with is Rails 6.1.1
 
 The *Bootsy* is a WYSIWYG editor for Rails based on
 [wysihtml](https://github.com/Voog/wysihtml). Originally image uploads were using CarrierWave. This fork uses ActiveStorage instead
