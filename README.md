@@ -3,23 +3,16 @@
 [![Gem Version](https://badge.fury.io/rb/bootsy.svg)](http://badge.fury.io/rb/bootsy)
 [![Build Status](https://secure.travis-ci.org/volmer/bootsy.svg?branch=master)](http://travis-ci.org/volmer/bootsy)
 
-### Disclaimer: this project is no longer maintained.
+### Disclaimer: this is a fork of the original [bootsy](https://github.com/volmer/bootsy) project which is no longer maintained. Since I could not find a suitabel alternative to replace bootsy in my own application, I have been maintaining this fork.
 
-*Bootsy* is a WYSIWYG editor for Rails based on
-[Bootstrap-wysihtml](https://github.com/jhollingworth/bootstrap-wysihtml) with image uploads using
-[CarrierWave](https://github.com/carrierwaveuploader/carrierwave).
-
-### Live demo
-
-* [bootsy-demo.herokuapp.com](http://bootsy-demo.herokuapp.com/)
-[![image](https://f.cloud.github.com/assets/301187/1365250/e1b7ba80-3854-11e3-9bfe-8bd1e090aca8.png)](http://bootsy-demo.herokuapp.com/)
-
+The *Bootsy* is a WYSIWYG editor for Rails based on
+[wysihtml](https://github.com/Voog/wysihtml). Originally image uploads were using CarrierWave. This fork uses ActiveStorage instead
 
 ## Requirements
 
-* Rails 5.
+* Rails 6.
 * ImageMagick or GraphicsMagick (for MiniMagick).
-* [Bootstrap 3](http://getbootstrap.com/) fully installed in your app.
+* [Bootstrap 4](http://getbootstrap.com/) fully installed in your app.
 
 
 ## Installation
