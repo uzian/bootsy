@@ -42,7 +42,7 @@ module Bootsy
 
     def show
       @image = Image.find_by_id(params[:id])
-      if @image.nil? || !@image.content.attached?     
+      if @image.nil? || !@image.content.attached?
         render :text => "404 Not Found", :status => 404
         return
       end
@@ -51,14 +51,14 @@ module Bootsy
       filename=@image.content.filename.to_s
       content_type=@image.content.content_type
 
-      if Image::SIZES.keys.map(&:to_s).include?(variant_name)        
+      if Image::SIZES.keys.map(&:to_s).include?(variant_name)
         variant=@image.send(variant_name).processed
         filename=variant_name+"_"+filename
         logger.debug "Serving #{variant.inspect} "
-        send_data @image.content.blob.service.download(variant.key), filename: filename, content_type: content_type 
+        send_data @image.content.blob.service.download(variant.key), filename: filename, content_type: content_type
       else
         send_data @image.content.blob.download, filename: filename, content_type: content_type
-      end         
+      end
     end
 
 
@@ -75,7 +75,7 @@ module Bootsy
     #         be rendered.
     def image_markup(image)
       render_to_string(
-        file: 'bootsy/images/_image',
+        partial: 'bootsy/images/image',
         formats: [:html],
         locals: { image: image },
         layout: false
@@ -89,7 +89,7 @@ module Bootsy
     #           the image will be uploaded to.
     def new_image_markup(gallery)
       render_to_string(
-        file: 'bootsy/images/_new',
+        partial: 'bootsy/images/new',
         formats: [:html],
         locals: { gallery: gallery, image: gallery.images.new },
         layout: false

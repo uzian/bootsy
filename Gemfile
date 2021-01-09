@@ -4,13 +4,14 @@ source 'https://rubygems.org'
 # Gems used by the dummy application
 gem 'bootstrap', '~> 4.4'
 gem 'jquery-rails'
-gem 'rails', '~> 5.0'
+gem 'rails'
 gem 'sass-rails'
 gem 'simple_form'
 gem 'sprockets-rails'
 gem 'sqlite3'
 gem 'font-awesome-sass'
 gem 'mini_magick'
+gem 'image_processing'
 
 gemspec
 
