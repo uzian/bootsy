@@ -27,9 +27,9 @@
               "<i class='fas fa-text-height'></i>" +
               "</a>" +
               "<div class='dropdown-menu' aria-labelledby='dropdownFontSizeStyleLink'>" +
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='75%' tabindex='-1' role='menuitem' style='font-size:50%'> 75% </a>" +                            
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='90%' tabindex='-1' role='menuitem' style='font-size:80%'> 90% </a>" +              
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='100%' tabindex='-1' role='menuitem' style='font-size:100%'> 100% </a>" +                              
+                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='75%' tabindex='-1' role='menuitem' style='font-size:50%'> 75% </a>" +
+                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='90%' tabindex='-1' role='menuitem' style='font-size:80%'> 90% </a>" +
+                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='100%' tabindex='-1' role='menuitem' style='font-size:100%'> 100% </a>" +
                 "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='110%' tabindex='-1' role='menuitem' style='font-size:110%'> 110% </a>" +
                 "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='120%' tabindex='-1' role='menuitem' style='font-size:120%'> 120% </a>" +
                 "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='150%' tabindex='-1' role='menuitem' style='font-size:150%'> 150% </a>" +
@@ -38,7 +38,7 @@
                 "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='400%' tabindex='-1' role='menuitem' style='font-size:400%'> 400% </a>" +
               "</div>" +
             "</li>";
-        },        
+        },
 
         // "font-size": function(locale, options) {
         //     var size = (options && options.size) ? ' btn-'+options.size : '';
@@ -52,10 +52,10 @@
         //             "<input type='text' data-wysihtml-dialog-field='size' style='width: 60px;' value='' />" +
         //             "&nbsp;<a data-wysihtml-dialog-action='save'><i class='fas fa-check text-green'></i></a>"+
         //             "&nbsp;<a data-wysihtml-dialog-action='cancel'><i class='fas fa-times text-red'></i></a>&nbsp;" +
-        //         "</div>" +                
+        //         "</div>" +
 
         //     "</li>";
-        // },              
+        // },
 
         "emphasis": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
@@ -99,7 +99,7 @@
         //         "<a class='btn btn-secondary " + size + "' data-wysihtml-action='table' tabindex='-1'><i class='fas fa-table'></i></a>" +
         //       "</div>" +
         //     "</li>";
-        // },      
+        // },
 
         "hr": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
@@ -108,7 +108,7 @@
                 "<a class='btn btn-secondary " + size + "' data-wysihtml-command='insertHorizontalRule' tabindex='-1'>⎼</a>" +
               "</div>" +
             "</li>";
-        },              
+        },
 
         "link": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
@@ -118,7 +118,7 @@
                   "<div class='modal-content'>" +
                     "<div class='modal-header'>" +
                       "<h6 class='modal-title'>" + locale.link.insert + "</h6>" +
-                      "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" +                      
+                      "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" +
                     "</div>" +
                     "<div class='modal-body'>" +
                       "<input value='http://' class='bootstrap-wysihtml-insert-link-url form-control input-lg'>" +
@@ -208,7 +208,7 @@
         //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='orange'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='orange' role='menuitem'>" + locale.colours.orange + "</a>" +
         //       "</div>" +
         //     "</li>";
-        // }        
+        // }
     };
 
     var templates = function(key, locale, options) {
@@ -515,7 +515,7 @@
                 "id": "any"
             }
         },
-    
+
         "makeDiv": {
             "rename_tag": "div",
             "one_of_type": {
@@ -534,7 +534,7 @@
             }
         }
     };
-    
+
     var wysihtmlParserRules = {
         /**
          * CSS Class white-list
@@ -542,16 +542,16 @@
          * If all classes should pass "any" as classes value. Ex: "classes": "any"
          */
         "classes": "any",
-    
+
         /* blacklist of classes is only available if classes is set to any */
         "classes_blacklist": {
             "Apple-interchange-newline": 1,
             "MsoNormal": 1,
             "MsoPlainText": 1
         },
-        
+
         "type_definitions": {
-            
+
             "alignment_object": {
                 "classes": {
                     "wysiwyg-text-align-center": 1,
@@ -566,26 +566,26 @@
                     "text-align": ["left", "right", "center"]
                 }
             },
-            
+
             "valid_image_src": {
                 "attrs": {
                     "src": /^[^data\:]/i
                 }
             },
-            
+
             "text_color_object": {
               "styles": {
                 "color": true,
                 "background-color": true
               }
             },
-            
+
             "text_fontsize_object": {
               "styles": {
                 "font-size": true
               }
             },
-            
+
             "text_formatting_object": {
                 "classes": {
                     "wysiwyg-color-aqua": 1,
@@ -616,9 +616,9 @@
                 }
             }
         },
-    
-        "comments": 1, // if set allows comments to pass
-        
+
+        //"comments": 1, // if set allows comments to pass
+
         /**
          * Tag list
          *
@@ -631,7 +631,7 @@
          *                          - clear_br:    converts clear attribute values left/right/all/both to their corresponding css class "wysiwyg-clear-*"
          *                            <br clear="all"> ... becomes ... <br class="wysiwyg-clear-both">
          *                          - align_img:    converts align attribute values (right/left) on <img> to their corresponding css class "wysiwyg-float-*"
-         *                          
+         *
          *    - remove:             removes the element and its content
          *
          *    - unwrap              removes element but leaves content
@@ -649,7 +649,7 @@
          *                            - alt:            strips unwanted characters. if the attribute is not set, then it gets set (to ensure valid and compatible HTML)
          *                            - numbers:        ensures that the attribute only contains numeric (integer) characters (no float values or units)
          *                            - dimension:      for with/height attributes where floating point numbrs and percentages are allowed
-         *                            - any:            allows anything to pass 
+         *                            - any:            allows anything to pass
          */
         "tags": {
             "tr": {
@@ -743,7 +743,8 @@
                     "href": "href", // if you compiled master manually then change this from 'url' to 'href'
                     "rel": "any",
                     "target": "any",
-                    "id": "any"
+                    "id": "any",
+                    "class": "any"
                 }
             },
             "img": {
@@ -818,7 +819,7 @@
             "object": {
                 "remove": 1
             },
-            
+
             "div": {
                 "one_of_type": {
                     "alignment_object": 1
@@ -836,7 +837,7 @@
                     "contenteditable": "any"
                 }
             },
-            
+
             "option": {
                 "remove":1
             },
@@ -924,20 +925,21 @@
                 "remove": 1
             },
             "span": {
-                "one_of_type": {
-                    "text_formatting_object": 1,
-                    "text_color_object": 1,
-                    "text_fontsize_object": 1
-                },
-                "keep_styles": {
-                    "color": 1,
-                    "backgroundColor": 1,
-                    "fontSize": 1
-                },
-                "remove_action": "unwrap",
-                "check_attributes": {
-                    "id": "any"
-                }
+              "unwrap": 1
+                // "one_of_type": {
+                //     "text_formatting_object": 1,
+                //     "text_color_object": 1,
+                //     "text_fontsize_object": 1
+                // },
+                // "keep_styles": {
+                //     "color": 1,
+                //     "backgroundColor": 1,
+                //     "fontSize": 1
+                // },
+                // "remove_action": "unwrap",
+                // "check_attributes": {
+                //     "id": "any"
+                // }
             },
             "rp": {
                 "unwrap": 1
@@ -1136,7 +1138,7 @@
             "header": wysihtmlParserRulesDefaults.makeDiv
         }
     };
-    
+
 
     var defaultOptions = $.fn.wysihtml.defaultOptions = {
         "font-styles": true,
@@ -1219,7 +1221,7 @@
     commonRules.tags.style  = { "remove": 1 };
     commonRules.tags.script = { "remove": 1 };
     commonRules.tags.head = { "remove": 1 };
-    
+
     // Paste cleanup for unindentified source
     var universalRules = wysihtml.lang.object(commonRules).clone(true);
     universalRules.tags.div.one_of_type.alignment_object = 1;
