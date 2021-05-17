@@ -1,6 +1,10 @@
 !function($, wysi) {
     "use strict";
 
+    var bootstrap_colors = ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'light', 'dark'];
+    var bootsy_colors = ['default', 'black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'orange', 'yellow', 'navy', 'blue', 'teal', 'aqua'];
+    var bootsy_fontsizes = ["smaller", "small", "medium", "normal", "large", "larger", "x-large", "xx-large", "xxx-large"];
+
     var tpl = {
         "font-styles": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
@@ -22,40 +26,23 @@
 
         "font-size": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
+            var menu = '';
+            var i, c;
+
+            for(i = 0; i < bootsy_fontsizes.length; i++) {
+              c = bootsy_fontsizes[i];
+              menu += "<a class='dropdown-item wysiwyg-font-size-"+c+"' data-wysihtml-command='fontSize' data-wysihtml-command-value='"+c+"' role='menuitem'>" + locale.fontSizes[c] + "</a>"
+            }
+
             return "<li class='dropdown'>" +
-              "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' id='dropdownFontSizeStyleLink'  aria-haspopup='true' aria-expanded='false'>" +
+              "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' id='dropdownFontSizeLink'  aria-haspopup='true' aria-expanded='false'>" +
               "<i class='fas fa-text-height'></i>" +
               "</a>" +
-              "<div class='dropdown-menu' aria-labelledby='dropdownFontSizeStyleLink'>" +
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='75%' tabindex='-1' role='menuitem' style='font-size:50%'> 75% </a>" +
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='90%' tabindex='-1' role='menuitem' style='font-size:80%'> 90% </a>" +
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='100%' tabindex='-1' role='menuitem' style='font-size:100%'> 100% </a>" +
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='110%' tabindex='-1' role='menuitem' style='font-size:110%'> 110% </a>" +
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='120%' tabindex='-1' role='menuitem' style='font-size:120%'> 120% </a>" +
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='150%' tabindex='-1' role='menuitem' style='font-size:150%'> 150% </a>" +
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='200%' tabindex='-1' role='menuitem' style='font-size:200%'> 300% </a>" +
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='300%' tabindex='-1' role='menuitem' style='font-size:300%'> 300% </a>" +
-                "<a class='dropdown-item' data-wysihtml-command='fontSizeStyle' data-wysihtml-command-value='400%' tabindex='-1' role='menuitem' style='font-size:400%'> 400% </a>" +
+              "<div class='dropdown-menu' aria-labelledby='dropdownFontSizeLink'>" +
+              menu +
               "</div>" +
             "</li>";
         },
-
-        // "font-size": function(locale, options) {
-        //     var size = (options && options.size) ? ' btn-'+options.size : '';
-        //     return "<li>" +
-        //       "<div class='btn-group'>" +
-        //         "<a class='btn btn-secondary " + size + "' data-wysihtml-command='fontSizeStyle' tabindex='-1'>" +
-        //             "<i class='fas fa-text-height'></i>" +
-        //         "</a>" +
-        //       "</div>" +
-        //         "<div data-wysihtml-dialog='fontSizeStyle' style='display: none;' class='p-2'>" +
-        //             "<input type='text' data-wysihtml-dialog-field='size' style='width: 60px;' value='' />" +
-        //             "&nbsp;<a data-wysihtml-dialog-action='save'><i class='fas fa-check text-green'></i></a>"+
-        //             "&nbsp;<a data-wysihtml-dialog-action='cancel'><i class='fas fa-times text-red'></i></a>&nbsp;" +
-        //         "</div>" +
-
-        //     "</li>";
-        // },
 
         "emphasis": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
@@ -169,25 +156,30 @@
 
         "color": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
+            var menu = '';
+            var i, c;
+
+            for(i = 0; i < bootstrap_colors.length; i++) {
+              c = bootstrap_colors[i];
+              menu += "<div class='wysihtml-colors bg-"+c+"'></div>"+
+              "<a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='text-"+c+"' role='menuitem'>" + locale.colours[c] + "</a>"
+            }
+            menu += "<hr class='dropdown-divider'>";
+            for(i = 0; i < bootsy_colors.length; i++) {
+              c = bootsy_colors[i];
+              menu += "<div class='wysihtml-colors wysiwyg-bgcolor-"+c+"'></div>"+
+              "<a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='wysiwyg-color-"+c+"' role='menuitem'>" + locale.colours[c] + "</a>"
+            }
+
             return "<li class='dropdown'>" +
-              "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' title='" + locale.colours.title + "' id='dropdownFontColorLink'  aria-haspopup='true' aria-expanded='false'>" +
-                "<span class='current-color'>" + locale.colours.black + "</span>" +
-              "</a>" +
-              "<div class='dropdown-menu' aria-labelledby='dropdownFontColorLink'>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='black'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='black' role='menuitem'>" + locale.colours.black + "</a>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='silver'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='silver' role='menuitem'>" + locale.colours.silver + "</a>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='gray'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='gray' role='menuitem'>" + locale.colours.gray + "</a>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='maroon'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='maroon' role='menuitem'>" + locale.colours.maroon + "</a>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='red'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='red' role='menuitem'>" + locale.colours.red + "</a>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='purple'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='purple' role='menuitem'>" + locale.colours.purple + "</a>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='green'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='green' role='menuitem'>" + locale.colours.green + "</a>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='olive'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='olive' role='menuitem'>" + locale.colours.olive + "</a>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='navy'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='navy' role='menuitem'>" + locale.colours.navy + "</a>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='blue'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='blue' role='menuitem'>" + locale.colours.blue + "</a>" +
-                "<div class='wysihtml-colors' data-wysihtml-command-value='orange'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='orange' role='menuitem'>" + locale.colours.orange + "</a>" +
-              "</div>" +
+            "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' title='" + locale.colours.title + "' id='dropdownFontColorLink'  aria-haspopup='true' aria-expanded='false'>" +
+              "<span class='current-color'>" + locale.colours.default + "</span>" +
+            "</a>" +
+            "<div class='dropdown-menu' aria-labelledby='dropdownFontColorLink'>" +
+            menu +
+            "</div>" +
             "</li>";
-        },
+        }
         // "bgcolor": function(locale, options) {
         //     var size = (options && options.size) ? ' btn-'+options.size : '';
         //     return "<li class='dropdown'>" +
@@ -195,17 +187,25 @@
         //         "<span class='current-color'><i class='fas fa-paint-roller'></i></span>" +
         //       "</a>" +
         //       "<div class='dropdown-menu' aria-labelledby='dropdownBgFontColorLink'>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='black'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='black' role='menuitem'>" + locale.colours.black + "</a>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='silver'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='silver' role='menuitem'>" + locale.colours.silver + "</a>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='gray'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='gray' role='menuitem'>" + locale.colours.gray + "</a>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='maroon'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='maroon' role='menuitem'>" + locale.colours.maroon + "</a>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='red'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='red' role='menuitem'>" + locale.colours.red + "</a>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='purple'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='purple' role='menuitem'>" + locale.colours.purple + "</a>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='green'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='green' role='menuitem'>" + locale.colours.green + "</a>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='olive'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='olive' role='menuitem'>" + locale.colours.olive + "</a>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='navy'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='navy' role='menuitem'>" + locale.colours.navy + "</a>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='blue'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='blue' role='menuitem'>" + locale.colours.blue + "</a>" +
-        //         "<div class='wysihtml-bgcolors' data-wysihtml-command-value='orange'></div><a class='dropdown-item wysihtml-bgcolors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='orange' role='menuitem'>" + locale.colours.orange + "</a>" +
+        //         "<div class='bg-primary' data-wysihtml-command-value='primary'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='primary' role='menuitem'>" + locale.colours.primary + "</a>" +
+        //         "<div class='bg-secondary' data-wysihtml-command-value='secondary'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='secondary' role='menuitem'>" + locale.colours.secondary + "</a>" +
+        //         "<div class='bg-success' data-wysihtml-command-value='success'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='success' role='menuitem'>" + locale.colours.success + "</a>" +
+        //         "<div class='bg-danger' data-wysihtml-command-value='danger'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='danger' role='menuitem'>" + locale.colours.danger + "</a>" +
+        //         "<div class='bg-warning' data-wysihtml-command-value='warning'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='warning' role='menuitem'>" + locale.colours.warning + "</a>" +
+        //         "<div class='bg-info' data-wysihtml-command-value='info'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='info' role='menuitem'>" + locale.colours.info + "</a>" +
+        //         "<div class='bg-light' data-wysihtml-command-value='light'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='light' role='menuitem'>" + locale.colours.light + "</a>" +
+        //         "<div class='bg-dark' data-wysihtml-command-value='dark'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='dark' role='menuitem'>" + locale.colours.dark + "</a>" +
+        //         "<hr class='dropdown-divider'>"+
+        //         "<div class='wysihtml-colors' data-wysihtml-command-value='silver'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='silver' role='menuitem'>" + locale.colours.silver + "</a>" +
+        //         "<div class='wysihtml-colors' data-wysihtml-command-value='gray'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='gray' role='menuitem'>" + locale.colours.gray + "</a>" +
+        //         "<div class='wysihtml-colors' data-wysihtml-command-value='maroon'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='maroon' role='menuitem'>" + locale.colours.maroon + "</a>" +
+        //         "<div class='wysihtml-colors' data-wysihtml-command-value='red'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='red' role='menuitem'>" + locale.colours.red + "</a>" +
+        //         "<div class='wysihtml-colors' data-wysihtml-command-value='purple'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='purple' role='menuitem'>" + locale.colours.purple + "</a>" +
+        //         "<div class='wysihtml-colors' data-wysihtml-command-value='green'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='green' role='menuitem'>" + locale.colours.green + "</a>" +
+        //         "<div class='wysihtml-colors' data-wysihtml-command-value='olive'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='olive' role='menuitem'>" + locale.colours.olive + "</a>" +
+        //         "<div class='wysihtml-colors' data-wysihtml-command-value='navy'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='navy' role='menuitem'>" + locale.colours.navy + "</a>" +
+        //         "<div class='wysihtml-colors' data-wysihtml-command-value='blue'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='blue' role='menuitem'>" + locale.colours.blue + "</a>" +
+        //         "<div class='wysihtml-colors' data-wysihtml-command-value='orange'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='orange' role='menuitem'>" + locale.colours.orange + "</a>" +
         //       "</div>" +
         //     "</li>";
         // }
@@ -315,11 +315,11 @@
                 self.toolbar.find('.current-color').text(el.html());
             });
 
-            // toolbar.find("a[data-wysihtml-command='bgColor']").click(function(e) {
-            //     var target = e.target || e.srcElement;
-            //     var el = $(target);
-            //     self.toolbar.find('.current-color').text(el.html());
-            // });
+            toolbar.find("a[data-wysihtml-command='bgColor']").click(function(e) {
+                var target = e.target || e.srcElement;
+                var el = $(target);
+                self.toolbar.find('.current-color').text(el.html());
+            });
 
             this.el.before(toolbar);
 
@@ -573,50 +573,135 @@
                 }
             },
 
+            // "text_color_object": {
+            //   "styles": {
+            //     "color": true,
+            //     "background-color": true
+            //   }
+            // },
+            // "text_fontsize_object": {
+            //   "styles": {
+            //     "font-size": true
+            //   }
+            // },
+
             "text_color_object": {
-              "styles": {
-                "color": true,
-                "background-color": true
+              "classes": {
+                "text-primary": 1,
+                "text-secondary": 1,
+                "text-success": 1,
+                "text-danger": 1,
+                "text-warning": 1,
+                "text-info": 1,
+                "text-light": 1,
+                "text-dark": 1,
+                "wysiwyg-color-default": 1,
+                "wysiwyg-color-black": 1,
+                "wysiwyg-color-silver": 1,
+                "wysiwyg-color-gray": 1,
+                "wysiwyg-color-white": 1,
+                "wysiwyg-color-maroon": 1,
+                "wysiwyg-color-red": 1,
+                "wysiwyg-color-purple": 1,
+                "wysiwyg-color-fuchsia": 1,
+                "wysiwyg-color-green": 1,
+                "wysiwyg-color-lime": 1,
+                "wysiwyg-color-olive": 1,
+                "wysiwyg-color-orange": 1,
+                "wysiwyg-color-yellow": 1,
+                "wysiwyg-color-navy": 1,
+                "wysiwyg-color-blue": 1,
+                "wysiwyg-color-teal": 1,
+                "wysiwyg-color-aqua": 1
+              }
+            },
+
+            "text_bgcolor_object": {
+              "classes": {
+                  "bg-primary": 1,
+                  "bg-secondary": 1,
+                  "bg-success": 1,
+                  "bg-danger": 1,
+                  "bg-warning": 1,
+                  "bg-info": 1,
+                  "bg-light": 1,
+                  "bg-dark": 1,
+                  "wysiwyg-bgcolor-default": 1,
+                  "wysiwyg-bgcolor-black": 1,
+                  "wysiwyg-bgcolor-silver": 1,
+                  "wysiwyg-bgcolor-gray": 1,
+                  "wysiwyg-bgcolor-white": 1,
+                  "wysiwyg-bgcolor-maroon": 1,
+                  "wysiwyg-bgcolor-red": 1,
+                  "wysiwyg-bgcolor-purple": 1,
+                  "wysiwyg-bgcolor-fuchsia": 1,
+                  "wysiwyg-bgcolor-green": 1,
+                  "wysiwyg-bgcolor-lime": 1,
+                  "wysiwyg-bgcolor-olive": 1,
+                  "wysiwyg-bgcolor-orange": 1,
+                  "wysiwyg-bgcolor-yellow": 1,
+                  "wysiwyg-bgcolor-navy": 1,
+                  "wysiwyg-bgcolor-blue": 1,
+                  "wysiwyg-bgcolor-teal": 1,
+                  "wysiwyg-bgcolor-aqua": 1
               }
             },
 
             "text_fontsize_object": {
-              "styles": {
-                "font-size": true
+              "classes": {
+                "wysiwyg-font-size-smaller": 1,
+                "wysiwyg-font-size-small": 1,
+                "wysiwyg-font-size-medium": 1,
+                "wysiwyg-font-size-normal": 1,
+                "wysiwyg-font-size-large": 1,
+                "wysiwyg-font-size-larger": 1,
+                "wysiwyg-font-size-x-large": 1,
+                "wysiwyg-font-size-xx-large": 1,
+                "wysiwyg-font-size-xxx-large": 1
               }
             },
 
-            "text_formatting_object": {
-                "classes": {
-                    "wysiwyg-color-aqua": 1,
-                    "wysiwyg-color-black": 1,
-                    "wysiwyg-color-blue": 1,
-                    "wysiwyg-color-fuchsia": 1,
-                    "wysiwyg-color-gray": 1,
-                    "wysiwyg-color-green": 1,
-                    "wysiwyg-color-lime": 1,
-                    "wysiwyg-color-maroon": 1,
-                    "wysiwyg-color-navy": 1,
-                    "wysiwyg-color-olive": 1,
-                    "wysiwyg-color-purple": 1,
-                    "wysiwyg-color-red": 1,
-                    "wysiwyg-color-silver": 1,
-                    "wysiwyg-color-teal": 1,
-                    "wysiwyg-color-white": 1,
-                    "wysiwyg-color-yellow": 1,
-                    "wysiwyg-font-size-large": 1,
-                    "wysiwyg-font-size-larger": 1,
-                    "wysiwyg-font-size-medium": 1,
-                    "wysiwyg-font-size-small": 1,
-                    "wysiwyg-font-size-smaller": 1,
-                    "wysiwyg-font-size-x-large": 1,
-                    "wysiwyg-font-size-x-small": 1,
-                    "wysiwyg-font-size-xx-large": 1,
-                    "wysiwyg-font-size-xx-small": 1
-                }
-            }
+            // "text_formatting_object": {
+            //     "classes": {
+            //         "bg-primary": 1,
+            //         "bg-secondary": 1,
+            //         "bg-success": 1,
+            //         "bg-danger": 1,
+            //         "bg-warning": 1,
+            //         "bg-info": 1,
+            //         "bg-light": 1,
+            //         "bg-dark": 1,
+            //         "wysiwyg-bgcolor-default": 1,
+            //         "wysiwyg-bgcolor-black": 1,
+            //         "wysiwyg-bgcolor-silver": 1,
+            //         "wysiwyg-bgcolor-gray": 1,
+            //         "wysiwyg-bgcolor-white": 1,
+            //         "wysiwyg-bgcolor-maroon": 1,
+            //         "wysiwyg-bgcolor-red": 1,
+            //         "wysiwyg-bgcolor-purple": 1,
+            //         "wysiwyg-bgcolor-fuchsia": 1,
+            //         "wysiwyg-bgcolor-green": 1,
+            //         "wysiwyg-bgcolor-lime": 1,
+            //         "wysiwyg-bgcolor-olive": 1,
+            //         "wysiwyg-bgcolor-orange": 1,
+            //         "wysiwyg-bgcolor-yellow": 1,
+            //         "wysiwyg-bgcolor-navy": 1,
+            //         "wysiwyg-bgcolor-blue": 1,
+            //         "wysiwyg-bgcolor-teal": 1,
+            //         "wysiwyg-bgcolor-aqua": 1,
+            //         "wysiwyg-font-size-large": 1,
+            //         "wysiwyg-font-size-larger": 1,
+            //         "wysiwyg-font-size-medium": 1,
+            //         "wysiwyg-font-size-small": 1,
+            //         "wysiwyg-font-size-smaller": 1,
+            //         "wysiwyg-font-size-x-large": 1,
+            //         "wysiwyg-font-size-x-small": 1,
+            //         "wysiwyg-font-size-xx-large": 1,
+            //         "wysiwyg-font-size-xx-small": 1
+            //     }
+            // }
         },
-
+        // ['default', 'black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green', 'lime', 'olive', 'orange', 'yellow', 'navy', 'blue', 'teal', 'aqua'];
         //"comments": 1, // if set allows comments to pass
 
         /**
@@ -925,18 +1010,19 @@
                 "remove": 1
             },
             "span": {
-              "unwrap": 1
-                // "one_of_type": {
-                //     "text_formatting_object": 1,
-                //     "text_color_object": 1,
-                //     "text_fontsize_object": 1
-                // },
+                // "unwrap": 1,
+                "one_of_type": {
+                    // "text_formatting_object": 1,
+                    "text_color_object": 1,
+                    "text_bgcolor_object": 1,
+                    "text_fontsize_object": 1
+                },
                 // "keep_styles": {
                 //     "color": 1,
                 //     "backgroundColor": 1,
                 //     "fontSize": 1
                 // },
-                // "remove_action": "unwrap",
+                "remove_action": "unwrap"
                 // "check_attributes": {
                 //     "id": "any"
                 // }
@@ -1200,6 +1286,12 @@
             },
             colours: {
                 title: "Text color",
+                primary: "Primary",
+                secondary: "Secondary",
+                success: "Success",
+                danger: "Danger",
+                warning: "Warning",
+                info: "Info",
                 black: "Black",
                 silver: "Silver",
                 gray: "Grey",

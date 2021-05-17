@@ -102,7 +102,7 @@ ul.wysihtml-commands-disabled .dropdown-menu {
 ul.wysihtml-toolbar div.wysihtml-colors {
   display:block;
   width: 50px;
-  height: 20px;
+  height: 30px;
   margin-top: 2px;
   margin-left: 5px;
   position: absolute;
@@ -113,53 +113,9 @@ ul.wysihtml-toolbar a.wysihtml-colors-title {
   padding-left: 70px;
 }
 
-ul.wysihtml-toolbar div[data-wysihtml-command-value="black"] {
-  background: black !important;
+.wysiwyg-color-default {
+  color: default;
 }
-
-ul.wysihtml-toolbar div[data-wysihtml-command-value="silver"] {
-  background: silver !important;
-}
-
-ul.wysihtml-toolbar div[data-wysihtml-command-value="gray"] {
-  background: gray !important;
-}
-
-ul.wysihtml-toolbar div[data-wysihtml-command-value="maroon"] {
-  background: maroon !important;
-}
-
-ul.wysihtml-toolbar div[data-wysihtml-command-value="red"] {
-  background: red !important;
-}
-
-ul.wysihtml-toolbar div[data-wysihtml-command-value="purple"] {
-  background: purple !important;
-}
-
-ul.wysihtml-toolbar div[data-wysihtml-command-value="green"] {
-  background: green !important;
-}
-
-ul.wysihtml-toolbar div[data-wysihtml-command-value="olive"] {
-  background: olive !important;
-}
-
-ul.wysihtml-toolbar div[data-wysihtml-command-value="navy"] {
-  background: navy !important;
-}
-
-ul.wysihtml-toolbar div[data-wysihtml-command-value="blue"] {
-  background: blue !important;
-}
-
-ul.wysihtml-toolbar div[data-wysihtml-command-value="orange"] {
-  background: orange !important;
-}
-
-/*
-  Bootsy
-*/
 
 .wysiwyg-color-black {
   color: black;
@@ -228,6 +184,115 @@ ul.wysihtml-toolbar div[data-wysihtml-command-value="orange"] {
 .wysiwyg-color-aqua {
   color: aqua;
 }
+
+.wysiwyg-bgcolor-default {
+  background-color: default;
+}
+
+.wysiwyg-bgcolor-black {
+  background-color: black;
+}
+
+.wysiwyg-bgcolor-silver {
+  background-color: silver;
+}
+
+.wysiwyg-bgcolor-gray {
+  background-color: gray;
+}
+
+.wysiwyg-bgcolor-white {
+  background-color: white;
+}
+
+.wysiwyg-bgcolor-maroon {
+  background-color: maroon;
+}
+
+.wysiwyg-bgcolor-red {
+  background-color: red;
+}
+
+.wysiwyg-bgcolor-purple {
+  background-color: purple;
+}
+
+.wysiwyg-bgcolor-fuchsia {
+  background-color: fuchsia;
+}
+
+.wysiwyg-bgcolor-green {
+  background-color: green;
+}
+
+.wysiwyg-bgcolor-lime {
+  background-color: lime;
+}
+
+.wysiwyg-bgcolor-olive {
+  background-color: olive;
+}
+
+.wysiwyg-bgcolor-orange {
+  background-color: orange;
+}
+
+.wysiwyg-bgcolor-yellow {
+  background-color: yellow;
+}
+
+.wysiwyg-bgcolor-navy {
+  background-color: navy;
+}
+
+.wysiwyg-bgcolor-blue {
+  background-color: blue;
+}
+
+.wysiwyg-bgcolor-teal {
+  background-color: teal;
+}
+
+.wysiwyg-bgcolor-aqua {
+  background-color: aqua;
+}
+
+.wysiwyg-font-size-smaller {
+  font-size: 70%;
+}
+
+.wysiwyg-font-size-small {
+  font-size: 80%;
+}
+
+.wysiwyg-font-size-medium {
+  font-size: 90%;
+}
+
+.wysiwyg-font-size-normal {
+  font-size: 100%;
+}
+
+.wysiwyg-font-size-large {
+  font-size: 120%;
+}
+
+.wysiwyg-font-size-larger {
+  font-size: 150%;
+}
+
+.wysiwyg-font-size-x-large {
+  font-size: 200%;
+}
+
+.wysiwyg-font-size-xx-large {
+  font-size: 300%;
+}
+
+.wysiwyg-font-size-xxx-large {
+  font-size: 400%;
+}
+
 
 .wysiwyg-float-left {
   float: left;

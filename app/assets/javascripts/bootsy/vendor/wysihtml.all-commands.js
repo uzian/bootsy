@@ -4,7 +4,7 @@ wysihtml.commands.alignCenterStyle = (function() {
     styleValue: "center",
     toggle: true
   };
-  
+
   return {
     exec: function(composer, command) {
       return wysihtml.commands.formatBlock.exec(composer, "formatBlock", nodeOptions);
@@ -124,7 +124,7 @@ wysihtml.commands.bold = (function() {
     nodeName: "B",
     toggle: true
   };
-  
+
   return {
     exec: function(composer, command) {
       wysihtml.commands.formatInline.exec(composer, command, nodeOptions);
@@ -348,16 +348,30 @@ wysihtml.commands.fontSizeStyle = (function() {
   };
 })();
 
+// wysihtml.commands.foreColor = (function() {
+//   var REG_EXP = /wysiwyg-color-[0-9a-z]+/g;
+
+//   return {
+//     exec: function(composer, command, color) {
+//       wysihtml.commands.formatInline.exec(composer, command, {className: "wysiwyg-color-" + color, classRegExp: REG_EXP, toggle: true});
+//     },
+
+//     state: function(composer, command, color) {
+//       return wysihtml.commands.formatInline.state(composer, command, {className: "wysiwyg-color-" + color});
+//     }
+//   };
+// })();
+
 wysihtml.commands.foreColor = (function() {
-  var REG_EXP = /wysiwyg-color-[0-9a-z]+/g;
+  var REG_EXP = /text-(primary|secondary|success|warning|danger|info|dark|light)+|wysiwyg-color-[0-9a-z]+/g;
 
   return {
     exec: function(composer, command, color) {
-      wysihtml.commands.formatInline.exec(composer, command, {className: "wysiwyg-color-" + color, classRegExp: REG_EXP, toggle: true});
+      wysihtml.commands.formatInline.exec(composer, command, {className: color, classRegExp: REG_EXP, toggle: true});
     },
 
     state: function(composer, command, color) {
-      return wysihtml.commands.formatInline.state(composer, command, {className: "wysiwyg-color-" + color});
+      return wysihtml.commands.formatInline.state(composer, command, {className: color});
     }
   };
 })();
@@ -420,7 +434,7 @@ wysihtml.commands.insertBlockQuote = (function() {
     nodeName: "BLOCKQUOTE",
     toggle: true
   };
-  
+
   return {
     exec: function(composer, command) {
       return wysihtml.commands.formatBlock.exec(composer, "formatBlock", nodeOptions);
@@ -484,7 +498,7 @@ wysihtml.commands.insertUnorderedList = (function() {
   };
 })();
 
-wysihtml.commands.italic = (function() { 
+wysihtml.commands.italic = (function() {
   var nodeOptions = {
     nodeName: "I",
     toggle: true
@@ -518,7 +532,7 @@ wysihtml.commands.justifyCenter = (function() {
       return wysihtml.commands.formatBlock.state(composer, "formatBlock", nodeOptions);
     }
   };
-  
+
 })();
 
 wysihtml.commands.justifyFull = (function() {
