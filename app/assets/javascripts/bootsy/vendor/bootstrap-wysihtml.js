@@ -161,54 +161,55 @@
 
             for(i = 0; i < bootstrap_colors.length; i++) {
               c = bootstrap_colors[i];
-              menu += "<div class='wysihtml-colors bg-"+c+"'></div>"+
-              "<a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='text-"+c+"' role='menuitem'>" + locale.colours[c] + "</a>"
+              menu += "<div class='wysihtml-colors bg-"+c+"'></div>" +
+              "<a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='text-"+c+"' role='menuitem'>" +
+              locale.colours[c] + "</a>"
             }
             menu += "<hr class='dropdown-divider'>";
             for(i = 0; i < bootsy_colors.length; i++) {
               c = bootsy_colors[i];
-              menu += "<div class='wysihtml-colors wysiwyg-bgcolor-"+c+"'></div>"+
-              "<a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='wysiwyg-color-"+c+"' role='menuitem'>" + locale.colours[c] + "</a>"
+              menu += "<div class='wysihtml-colors wysiwyg-bgcolor-"+c+"'></div>" +
+              "<a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='foreColor' data-wysihtml-command-value='wysiwyg-color-"+c+"' role='menuitem'>" +
+               locale.colours[c] + "</a>"
             }
 
             return "<li class='dropdown'>" +
             "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' title='" + locale.colours.title + "' id='dropdownFontColorLink'  aria-haspopup='true' aria-expanded='false'>" +
-              "<span class='current-color'>" + locale.colours.default + "</span>" +
+              "<i class='fas fa-paint-brush mr-2'></i><span class='current-color wysihtml-colors wysiwyg-bgcolor-default'>" + locale.colours.default + "</span>" +
             "</a>" +
             "<div class='dropdown-menu' aria-labelledby='dropdownFontColorLink'>" +
             menu +
             "</div>" +
             "</li>";
-        }
-        // "bgcolor": function(locale, options) {
-        //     var size = (options && options.size) ? ' btn-'+options.size : '';
-        //     return "<li class='dropdown'>" +
-        //       "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' title='" + locale.colours.title + "' id='dropdownFontBgColorLink'  aria-haspopup='true' aria-expanded='false'>" +
-        //         "<span class='current-color'><i class='fas fa-paint-roller'></i></span>" +
-        //       "</a>" +
-        //       "<div class='dropdown-menu' aria-labelledby='dropdownBgFontColorLink'>" +
-        //         "<div class='bg-primary' data-wysihtml-command-value='primary'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='primary' role='menuitem'>" + locale.colours.primary + "</a>" +
-        //         "<div class='bg-secondary' data-wysihtml-command-value='secondary'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='secondary' role='menuitem'>" + locale.colours.secondary + "</a>" +
-        //         "<div class='bg-success' data-wysihtml-command-value='success'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='success' role='menuitem'>" + locale.colours.success + "</a>" +
-        //         "<div class='bg-danger' data-wysihtml-command-value='danger'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='danger' role='menuitem'>" + locale.colours.danger + "</a>" +
-        //         "<div class='bg-warning' data-wysihtml-command-value='warning'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='warning' role='menuitem'>" + locale.colours.warning + "</a>" +
-        //         "<div class='bg-info' data-wysihtml-command-value='info'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='info' role='menuitem'>" + locale.colours.info + "</a>" +
-        //         "<div class='bg-light' data-wysihtml-command-value='light'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='light' role='menuitem'>" + locale.colours.light + "</a>" +
-        //         "<div class='bg-dark' data-wysihtml-command-value='dark'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='themeBgColor' data-wysihtml-command-value='dark' role='menuitem'>" + locale.colours.dark + "</a>" +
-        //         "<hr class='dropdown-divider'>"+
-        //         "<div class='wysihtml-colors' data-wysihtml-command-value='silver'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='silver' role='menuitem'>" + locale.colours.silver + "</a>" +
-        //         "<div class='wysihtml-colors' data-wysihtml-command-value='gray'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='gray' role='menuitem'>" + locale.colours.gray + "</a>" +
-        //         "<div class='wysihtml-colors' data-wysihtml-command-value='maroon'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='maroon' role='menuitem'>" + locale.colours.maroon + "</a>" +
-        //         "<div class='wysihtml-colors' data-wysihtml-command-value='red'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='red' role='menuitem'>" + locale.colours.red + "</a>" +
-        //         "<div class='wysihtml-colors' data-wysihtml-command-value='purple'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='purple' role='menuitem'>" + locale.colours.purple + "</a>" +
-        //         "<div class='wysihtml-colors' data-wysihtml-command-value='green'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='green' role='menuitem'>" + locale.colours.green + "</a>" +
-        //         "<div class='wysihtml-colors' data-wysihtml-command-value='olive'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='olive' role='menuitem'>" + locale.colours.olive + "</a>" +
-        //         "<div class='wysihtml-colors' data-wysihtml-command-value='navy'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='navy' role='menuitem'>" + locale.colours.navy + "</a>" +
-        //         "<div class='wysihtml-colors' data-wysihtml-command-value='blue'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='blue' role='menuitem'>" + locale.colours.blue + "</a>" +
-        //         "<div class='wysihtml-colors' data-wysihtml-command-value='orange'></div><a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColorStyle' data-wysihtml-command-value='orange' role='menuitem'>" + locale.colours.orange + "</a>" +
-        //       "</div>" +
-        //     "</li>";
-        // }
+        },
+
+        "bgcolor": function(locale, options) {
+          var size = (options && options.size) ? ' btn-'+options.size : '';
+          var menu = '';
+          var i, c;
+
+          for(i = 0; i < bootstrap_colors.length; i++) {
+            c = bootstrap_colors[i];
+            menu += "<div class='wysihtml-colors bg-"+c+"'></div>"+
+            "<a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColor' data-wysihtml-command-value='bg-"+c+"' role='menuitem'>" + locale.colours[c] + "</a>"
+          }
+          menu += "<hr class='dropdown-divider'>";
+          for(i = 0; i < bootsy_colors.length; i++) {
+            c = bootsy_colors[i];
+            menu += "<div class='wysihtml-colors wysiwyg-bgcolor-"+c+"'></div>"+
+            "<a class='dropdown-item wysihtml-colors-title' data-wysihtml-command='bgColor' data-wysihtml-command-value='wysiwyg-bgcolor-"+c+"' role='menuitem'>" + locale.colours[c] + "</a>"
+          }
+
+          return "<li class='dropdown'>" +
+          "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' title='" + locale.colours.title + "' id='dropdownFontBgColorLink'  aria-haspopup='true' aria-expanded='false'>" +
+            "<i class='fas fa-fill-drip mr-2'></i><span class='current-bgcolor wysihtml-colors wysiwyg-bgcolor-default'>" + locale.colours.default + "</span>" +
+          "</a>" +
+          "<div class='dropdown-menu' aria-labelledby='dropdownFontBgColorLink'>" +
+          menu +
+          "</div>" +
+          "</li>";
+      }
+
     };
 
     var templates = function(key, locale, options) {
@@ -318,7 +319,7 @@
             toolbar.find("a[data-wysihtml-command='bgColor']").click(function(e) {
                 var target = e.target || e.srcElement;
                 var el = $(target);
-                self.toolbar.find('.current-color').text(el.html());
+                self.toolbar.find('.current-bgcolor').text(el.html());
             });
 
             this.el.before(toolbar);
@@ -1230,7 +1231,7 @@
         "font-styles": true,
         "font-size": true,
         "color": false,
-        //"bgcolor": true,
+        "bgcolor": false,
         "emphasis": true,
         "align": true,
         "lists": true,

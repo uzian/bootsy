@@ -43,5 +43,6 @@ $.extend(true, window.Bootsy.options, $.fn.wysihtml.defaultOptions, {
   //   }
   // },
   color: true,
+  bgcolor: true,
   stylesheets: pageStylesheets
 });

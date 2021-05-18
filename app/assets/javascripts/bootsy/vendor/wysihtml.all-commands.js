@@ -376,6 +376,20 @@ wysihtml.commands.foreColor = (function() {
   };
 })();
 
+wysihtml.commands.bgColor = (function() {
+  var REG_EXP = /bg-(primary|secondary|success|warning|danger|info|dark|light)+|wysiwyg-bgcolor-[0-9a-z]+/g;
+
+  return {
+    exec: function(composer, command, color) {
+      wysihtml.commands.formatInline.exec(composer, command, {className: color, classRegExp: REG_EXP, toggle: true});
+    },
+
+    state: function(composer, command, color) {
+      return wysihtml.commands.formatInline.state(composer, command, {className: color});
+    }
+  };
+})();
+
 /* Sets text color by inline styles */
 wysihtml.commands.foreColorStyle = (function() {
   return {
