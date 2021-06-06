@@ -1075,11 +1075,12 @@
                 }
             },
             "style": {
-                "check_attributes": {
-                    "type": "any",
-                    "src": "any",
-                    "charset": "any"
-                }
+                // "check_attributes": {
+                //     "type": "any",
+                //     "src": "any",
+                //     "charset": "any"
+                // }
+                "remove": 1
             },
             "device": {
                 "remove": 1
@@ -1189,11 +1190,12 @@
                 "remove": 1
             },
             "script": {
-                "check_attributes": {
-                    "type": "any",
-                    "src": "any",
-                    "charset": "any"
-                }
+                // "check_attributes": {
+                //     "type": "any",
+                //     "src": "any",
+                //     "charset": "any"
+                // }
+                "remove": 1
             },
             "bdo": {
                 "unwrap": 1
@@ -1211,7 +1213,10 @@
             "ins": {
                 "unwrap": 1
             },
-            "p": wysihtmlParserRulesDefaults.blockLevelEl,
+            //"p": wysihtmlParserRulesDefaults.blockLevelEl,
+            "p": {
+              "unwrap": 1
+            },
             "sub": {},
             "comment": {
                 "remove": 1
