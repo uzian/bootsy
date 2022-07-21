@@ -101,44 +101,7 @@ Bootsy.Modal = function(area) {
 
   // Upload image from user's computer into image gallery
   this.$el.on('submit', '.bootsy-upload-form', function(event, xhr, settings) {
-    var fileSelect = event.target.querySelector('input[type="file"]');
-    var formData = new FormData();
-    var file = fileSelect.files[0];
-    var fileURLInputName = 'image[remote_image_file_url]';
-    var fileURLInput = event.target.querySelector(
-      'input[name="' + fileURLInputName + '"]');
-    var fileURL;
-
-    event.preventDefault();
-
-    formData.append('authenticity_token',
-      event.target.querySelector('input[name="authenticity_token"]').value);
-
-    if (file) {
-      formData.append('image[content]', file, file.name);
-    }
-
-    if (fileURLInput) {
-      fileURL = fileURLInput.value;
-    } else {
-      fileURL = '';
-    }
-
-    formData.append(fileURLInputName, fileURL);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', event.target.action, true);
-    xhr.onload = function () {
-      var data = JSON.parse(xhr.response);
-      if (xhr.status === 200) {
-        this.area.setImageGalleryId(data.gallery_id);
-        this.addImage(data.image);
-        this.setUploadForm(data.form);
-      } else {
-        this.imageUploadFailed(xhr, data);
-      }
-    }.bind(this);
-    xhr.send(formData);
+    this.uploadImage(event, xhr, settings);
   }.bind(this));
 
   this.$el.modal({ show: false });
@@ -208,6 +171,48 @@ Bootsy.Modal.prototype.setUploadForm = function(html) {
     this.showUploadLoadingAnimation();
     uploadInput.closest('form').submit();
   }.bind(this));
+};
+
+// Upload image
+Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings) {
+  var fileSelect = event.target.querySelector('input[type="file"]');
+  var formData = new FormData();
+  var file = fileSelect.files[0];
+  var fileURLInputName = 'image[remote_image_file_url]';
+  var fileURLInput = event.target.querySelector(
+    'input[name="' + fileURLInputName + '"]');
+  var fileURL;
+
+  event.preventDefault();
+
+  formData.append('authenticity_token',
+    event.target.querySelector('input[name="authenticity_token"]').value);
+
+  if (file) {
+    formData.append('image[content]', file, file.name);
+  }
+
+  if (fileURLInput) {
+    fileURL = fileURLInput.value;
+  } else {
+    fileURL = '';
+  }
+
+  formData.append(fileURLInputName, fileURL);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', event.target.action, true);
+  xhr.onload = function () {
+    var data = JSON.parse(xhr.response);
+    if (xhr.status === 200) {
+      this.area.setImageGalleryId(data.gallery_id);
+      this.addImage(data.image);
+      this.setUploadForm(data.form);
+    } else {
+      this.imageUploadFailed(xhr, data);
+    }
+  }.bind(this);
+  xhr.send(formData);
 };
 
 // The image upload failed
