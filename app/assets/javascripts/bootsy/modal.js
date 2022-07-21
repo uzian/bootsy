@@ -62,7 +62,7 @@ Bootsy.Modal = function(area) {
 
   // Check! //
   // Insert image to post body by URL provided
-  this.$el.on('click', '#image-link-control .insert', function(event) {
+  this.$el.on('click', '#image-link-control .insert', function(event, xhr, settings) {
     const imageURL = $($('#link-image-window input')[0]).val();
 
     fetch(imageURL)
@@ -72,8 +72,8 @@ Bootsy.Modal = function(area) {
       console.warn(`Could not fetch image from ${imageURL}. Error:`);
       throw error;
     })
-    .then((image) => {
-      console.log(image);
+    .then((file) => {
+      this.uploadImage(event, xhr, settings, file);
     });
 
 
@@ -88,7 +88,7 @@ Bootsy.Modal = function(area) {
 
     insert = self.area.insertImage.bind(self.area);
     //insert(imageObject);
-  });
+  }.bind(this));
   // -- //
 
   this.$el.on('ajax:before', '.destroy-btn', this.showGalleryLoadingAnimation.bind(this));
@@ -99,15 +99,21 @@ Bootsy.Modal = function(area) {
 
   this.$el.on('click', 'a[href="#refresh-gallery"]', this.requestImageGallery.bind(this));
 
+  // Check! //
   // Upload image from user's computer into image gallery
   this.$el.on('submit', '.bootsy-upload-form', function(event, xhr, settings) {
     event.preventDefault();
 
     var fileSelect = event.target.querySelector('input[type="file"]');
     var file = fileSelect.files[0];
+    var fileURLInputName = 'image[remote_image_file_url]';
+    var fileURLInput = event.target.querySelector(
+    'input[name="' + fileURLInputName + '"]');
+    var token = event.target.querySelector('input[name="authenticity_token"]').value;
 
-    this.uploadImage(event, xhr, settings, file);
+    this.uploadImage(event, xhr, settings, file, fileURLInputName, fileURLInput, token, event.target.action);
   }.bind(this));
+  // -- //
 
   this.$el.modal({ show: false });
 
@@ -180,15 +186,11 @@ Bootsy.Modal.prototype.setUploadForm = function(html) {
 
 // Check! //
 // Upload image
-Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings, file) {
+Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings, file, fileURLInputName, fileURLInput, token, targetAction) {
   var formData = new FormData();
-  var fileURLInputName = 'image[remote_image_file_url]';
-  var fileURLInput = event.target.querySelector(
-    'input[name="' + fileURLInputName + '"]');
   var fileURL;
 
-  formData.append('authenticity_token',
-    event.target.querySelector('input[name="authenticity_token"]').value);
+  formData.append('authenticity_token', token);
 
   if (file) {
     formData.append('image[content]', file, file.name);
@@ -203,7 +205,7 @@ Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings, file) {
   formData.append(fileURLInputName, fileURL);
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', event.target.action, true);
+  xhr.open('POST', targetAction, true);
   xhr.onload = function () {
     var data = JSON.parse(xhr.response);
     if (xhr.status === 200) {
