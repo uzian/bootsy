@@ -48,7 +48,18 @@ Bootsy.Modal = function(area) {
   // Check! //
   // Insert image to post body by URL provided
   this.$el.on('click', '#image-link-control .insert-btn', function(event, xhr, settings) {
-    const imageURL = $($('#link-image-window input')[0]).val();
+    const imageURL = $($('#link-image-window input')[0]).val().trim();
+
+    // Validate image URL
+    if (imageURL == '') {
+      const alert = $('.bootsy-empty-alert');
+
+      alert.removeClass('alert-info');
+      alert.addClass('alert-danger');
+      alert.text('Image URL cannot be empty.');
+      
+      return;
+    }
 
     fetch(imageURL)
     .then((response) => {
@@ -66,6 +77,8 @@ Bootsy.Modal = function(area) {
 
       this.uploadImage(event, xhr, settings, file, fileURLInputName, fileURLInput, token, form.action);
       this.showImageUploadWindow();
+
+      $($('#link-image-window input')[0]).val('');
     });
   }.bind(this));
   // -- //
