@@ -101,7 +101,12 @@ Bootsy.Modal = function(area) {
 
   // Upload image from user's computer into image gallery
   this.$el.on('submit', '.bootsy-upload-form', function(event, xhr, settings) {
-    this.uploadImage(event, xhr, settings);
+    event.preventDefault();
+
+    var fileSelect = event.target.querySelector('input[type="file"]');
+    var file = fileSelect.files[0];
+
+    this.uploadImage(event, xhr, settings, file);
   }.bind(this));
 
   this.$el.modal({ show: false });
@@ -173,17 +178,14 @@ Bootsy.Modal.prototype.setUploadForm = function(html) {
   }.bind(this));
 };
 
+// Check! //
 // Upload image
-Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings) {
-  var fileSelect = event.target.querySelector('input[type="file"]');
+Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings, file) {
   var formData = new FormData();
-  var file = fileSelect.files[0];
   var fileURLInputName = 'image[remote_image_file_url]';
   var fileURLInput = event.target.querySelector(
     'input[name="' + fileURLInputName + '"]');
   var fileURL;
-
-  event.preventDefault();
 
   formData.append('authenticity_token',
     event.target.querySelector('input[name="authenticity_token"]').value);
@@ -214,6 +216,7 @@ Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings) {
   }.bind(this);
   xhr.send(formData);
 };
+// -- //
 
 // The image upload failed
 Bootsy.Modal.prototype.imageUploadFailed = function(xhr, invalidErrors) {
