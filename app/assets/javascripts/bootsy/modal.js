@@ -41,6 +41,8 @@ Bootsy.Modal = function(area) {
       imageObject.align = $(this).data('position');
     }
 
+    imageObject.class = 'full-width';
+
     self.$el.modal('hide');
 
     insert = self.area.insertImage.bind(self.area);

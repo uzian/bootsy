@@ -399,3 +399,7 @@ body.bootsy_text_area.form-control {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
+img.full-width {
+  width: 100%;
+}
