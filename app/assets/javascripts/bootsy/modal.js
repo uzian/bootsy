@@ -64,11 +64,21 @@ Bootsy.Modal = function(area) {
   // Insert image to post body by URL provided
   this.$el.on('click', '#image-link-control .insert', function(event) {
     const imageURL = $($('#link-image-window input')[0]).val();
+
+    fetch(imageURL)
+    .then((response) => {
+      return response.blob();
+    }, (error) => {
+      console.warn(`Could not fetch image from ${imageURL}. Error:`);
+      throw error;
+    })
+    .then((image) => {
+      console.log(image);
+    });
+
+
     // const imageSuffix = '?variant=' + $(this).attr('data-image-size');
     const align = $(this).data('position') || 'inline';
-
-    // imagePrefix might be redundant
-
     const imageObject = {
       src: imageURL, // + imageSuffix,
       align
@@ -77,7 +87,7 @@ Bootsy.Modal = function(area) {
     self.$el.modal('hide');
 
     insert = self.area.insertImage.bind(self.area);
-    insert(imageObject);
+    //insert(imageObject);
   });
   // -- //
 
