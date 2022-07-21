@@ -8,7 +8,6 @@ Bootsy.Modal = function(area) {
   this.$el = area.$el.siblings('.bootsy-modal');
   this.area = area;
 
-  // Check! //
   // Display image URL input field on 'Use link' button click
   this.$el.on('click', '#image-upload-control .use-link-btn', this.showImageLinkWindow);
 
@@ -49,7 +48,6 @@ Bootsy.Modal = function(area) {
     insert(imageObject);
   });
 
-  // Check! //
   // Insert image to post body by URL provided
   this.$el.on('click', '#image-link-control .insert-btn', function(event, xhr, settings) {
     const imageURL = $($('#link-image-window input')[0]).val().trim();
@@ -92,7 +90,6 @@ Bootsy.Modal = function(area) {
       alert.addClass('d-none');
     });
   }.bind(this));
-  // -- //
 
   this.$el.on('ajax:before', '.destroy-btn', this.showGalleryLoadingAnimation.bind(this));
 
@@ -102,7 +99,6 @@ Bootsy.Modal = function(area) {
 
   this.$el.on('click', 'a[href="#refresh-gallery"]', this.requestImageGallery.bind(this));
 
-  // Check! //
   // Upload image from user's computer into image gallery
   this.$el.on('submit', '.bootsy-upload-form', function(event, xhr, settings) {
     event.preventDefault();
@@ -116,7 +112,6 @@ Bootsy.Modal = function(area) {
 
     this.uploadImage(event, xhr, settings, file, fileURLInputName, fileURLInput, token, event.target.action);
   }.bind(this));
-  // -- //
 
   this.$el.modal({ show: false });
 
@@ -187,7 +182,6 @@ Bootsy.Modal.prototype.setUploadForm = function(html) {
   }.bind(this));
 };
 
-// Check! //
 // Upload image
 Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings, file, fileURLInputName, fileURLInput, token, targetAction) {
   var formData = new FormData();
@@ -221,7 +215,6 @@ Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings, file, fileUR
   }.bind(this);
   xhr.send(formData);
 };
-// -- //
 
 // The image upload failed
 Bootsy.Modal.prototype.imageUploadFailed = function(xhr, invalidErrors) {
@@ -293,7 +286,6 @@ Bootsy.Modal.prototype.deleteImage = function(id) {
   }.bind(this));
 };
 
-// Check! //
 Bootsy.Modal.prototype.showImageUploadWindow = function() {
   $('#select-image-window').removeClass('d-none');
   $('#link-image-window').addClass('d-none');
@@ -309,4 +301,3 @@ Bootsy.Modal.prototype.showImageLinkWindow = function() {
   $('#image-upload-control').addClass('d-none');
   $('#image-link-control').removeClass('d-none');
 };
-// -- //

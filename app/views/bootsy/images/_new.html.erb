@@ -4,7 +4,6 @@
 
   <%= render 'bootsy/images/loader', image_class: 'bootsy-upload-loader' %>
 
-  <%# Check! %>
   <%# Buttons for controlling image upload %>
   <div id='image-upload-control'>
     <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class: 'text-light'%>
@@ -19,5 +18,4 @@
 
     <%= button_tag t('bootsy.action.cancel'), type: 'button', class: 'cancel-btn btn btn-secondary' %>
   </div>
-  <%#%>
 <% end %>

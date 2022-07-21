@@ -16,11 +16,9 @@
 
         <div id="select-image-window" class="row bootsy-gallery"></div>
 
-        <%# Check! %>
         <div id="link-image-window" class="container px-3 py-0 d-none">
           <%= text_field_tag 'image-link-input', nil, placeholder: t('bootsy.action.enter_image_url'), class: 'form-control' %>
         </div>
-        <%#%>
 
         <%= render 'bootsy/images/loader', image_class: 'bootsy-gallery-loader' %>
 
