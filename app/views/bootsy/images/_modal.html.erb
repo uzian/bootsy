@@ -14,10 +14,10 @@
           <%= t 'bootsy.no_images_uploaded' %>
         </div>
 
-        <div class="row bootsy-gallery"></div>
+        <div id="select-image-window" class="row bootsy-gallery"></div>
 
         <%# Check %>
-        <div id="link-image-window" class="container px-3">
+        <div id="link-image-window" class="container px-3 d-none">
           <div class="row mb-2">
             <%= text_field_tag 'image-link-input', nil, placeholder: 'Paste image URL here', class: 'form-control' %>
           </div>

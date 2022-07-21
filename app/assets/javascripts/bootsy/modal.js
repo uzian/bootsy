@@ -152,6 +152,9 @@ Bootsy.Modal.prototype.setUploadForm = function(html) {
     this.showUploadLoadingAnimation();
     uploadInput.closest('form').submit();
   }.bind(this));
+
+  // Check //
+  attachChangeModalWindowListeners();
 };
 
 // The image upload failed
@@ -223,3 +226,11 @@ Bootsy.Modal.prototype.deleteImage = function(id) {
     if (this.$el.find('.bootsy-image').length === 0 ) this.showEmptyAlert();
   }.bind(this));
 };
+
+// Check
+function attachChangeModalWindowListeners() {
+  $('#use-link-btn').on('click', function() {
+    $('#select-image-window').addClass('d-none');
+    $('#link-image-window').removeClass('d-none');
+  })
+}
