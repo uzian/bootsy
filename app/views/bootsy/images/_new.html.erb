@@ -4,9 +4,12 @@
 
   <%= render 'bootsy/images/loader', image_class: 'bootsy-upload-loader' %>
 
+  <%# Extract input into modal window %>
+  <%= f.text_field :content, title: 'link-image', value: '', placeholder: 'Paste image URL here' %>
+
   <div class="btn-group">
     <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class:"text-light" %>
-    <%# Rewrite this button tag in better way: %>
-    <%= button_tag 'Link', type: 'button', class:"btn btn-secondary" %>
+    <%# Rewrite button tag in better way %>
+    <%= button_tag 'Link', type: 'button', class:'btn btn-secondary' %>
   </div>
 <% end %>
