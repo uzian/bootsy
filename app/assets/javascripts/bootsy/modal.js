@@ -13,7 +13,7 @@ Bootsy.Modal = function(area) {
   const linkImgWindow = $('#link-image-window');
 
   // Display image URL input field on 'Use link' button click
-  this.$el.on('click', '#image-upload-control .use-link', function() {
+  this.$el.on('click', '#image-upload-control .use-link-btn', function() {
     selectImgWindow.addClass('d-none');
     linkImgWindow.removeClass('d-none');
 
@@ -22,25 +22,19 @@ Bootsy.Modal = function(area) {
   });
 
   // Display uploaded images back on 'cancel' button click
-  this.$el.on('click', '#image-link-control .cancel', function() {
+  this.$el.on('click', '#image-link-control .cancel-btn', function() {
     selectImgWindow.removeClass('d-none');
     linkImgWindow.addClass('d-none');
 
     $('#image-upload-control').removeClass('d-none');
     $('#image-link-control').addClass('d-none');
   });
-
-  // Upload image from image URL
-  this.$el.on('click', '#link-image-window .ok', function() {
-    const imageURL = $($('#link-image-window input')[0]).val();
-
-    // Form submit event happens after user pressed 'Select'
-  });
   // -- //
 
   // In order to avoid form nesting
   this.$el.parents('form').after(this.$el);
 
+  // Insert image to post body from image gallery
   this.$el.on('click', '.bootsy-image .insert', function(event) {
     var img, imageObject;
     var imageSuffix = '?variant=' + $(this).attr('data-image-size');
@@ -66,6 +60,15 @@ Bootsy.Modal = function(area) {
     insert(imageObject);
   });
 
+  // Check! //
+  // Insert image to post body by URL provided
+  this.$el.on('click', '#image-link-control .insert', function(event) {
+    const imageURL = $($('#link-image-window input')[0]).val();
+
+    console.log(imageURL);
+  });
+  // -- //
+
   this.$el.on('ajax:before', '.destroy-btn', this.showGalleryLoadingAnimation.bind(this));
 
   this.$el.on('ajax:success', '.destroy-btn', function(_e, data) {
@@ -74,6 +77,7 @@ Bootsy.Modal = function(area) {
 
   this.$el.on('click', 'a[href="#refresh-gallery"]', this.requestImageGallery.bind(this));
 
+  // Upload image from user's computer into image gallery
   this.$el.on('submit', '.bootsy-upload-form', function(event, xhr, settings) {
     var fileSelect = event.target.querySelector('input[type="file"]');
     var formData = new FormData();
