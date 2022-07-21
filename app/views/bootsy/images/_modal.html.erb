@@ -16,15 +16,9 @@
 
         <div id="select-image-window" class="row bootsy-gallery"></div>
 
-        <%# Check %>
-        <div id="link-image-window" class="container px-3 d-none">
-          <div class="row mb-2">
-            <%= text_field_tag 'image-link-input', nil, placeholder: 'Paste image URL here', class: 'form-control' %>
-          </div>
-          <div class="row justify-content-end">
-            <%= button_tag 'ok', type: 'button', class: 'ok btn btn-secondary mr-2' %>
-            <%= button_tag 'cancel', type: 'button', class: 'cancel btn btn-secondary' %>
-          </div>
+        <%# Check! %>
+        <div id="link-image-window" class="container px-3 py-0 d-none">
+          <%= text_field_tag 'image-link-input', nil, placeholder: 'Paste image URL here', class: 'form-control' %>
         </div>
         <%#%>
 
