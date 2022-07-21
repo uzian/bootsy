@@ -37,7 +37,9 @@ Bootsy.Modal = function(area) {
       alt: img.attr('alt').replace('Thumb_', '')*/
     };
 
-    imageObject.align = $(this).data('position');
+    if ($(this).data('image-size') !== 'full_width') {
+      imageObject.align = $(this).data('position');
+    }
 
     self.$el.modal('hide');
 
