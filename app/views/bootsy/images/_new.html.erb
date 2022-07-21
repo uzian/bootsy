@@ -4,8 +4,15 @@
 
   <%= render 'bootsy/images/loader', image_class: 'bootsy-upload-loader' %>
 
-  <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class: 'text-light'%>
-
-  <%# Check %>
-  <%= button_tag 'Use link', type: 'button', class: 'btn btn-secondary ml-3', id: 'use-img-link-btn'%>
+  <%# Check! %>
+  <%# Buttons for controlling image upload/link %>
+  <div id='image-upload-control'>
+    <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class: 'text-light'%>
+    <%= button_tag 'Use link', type: 'button', class: 'use-link btn btn-secondary ml-3'%>
+  </div>
+  <div id='image-link-control' class='d-none'>
+    <%= button_tag 'Insert', type: 'button', class: 'insert btn btn-secondary mr-2' %>
+    <%= button_tag 'Cancel', type: 'button', class: 'cancel btn btn-secondary' %>
+  </div>
+  <%#%>
 <% end %>

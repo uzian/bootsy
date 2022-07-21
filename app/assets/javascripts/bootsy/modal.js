@@ -13,19 +13,21 @@ Bootsy.Modal = function(area) {
   const linkImgWindow = $('#link-image-window');
 
   // Display image URL input field on 'Use link' button click
-  this.$el.on('click', '#use-img-link-btn', function() {
+  this.$el.on('click', '#image-upload-control .use-link', function() {
     selectImgWindow.addClass('d-none');
     linkImgWindow.removeClass('d-none');
 
-    $($('.bootsy-upload-form .file-input-wrapper')[0]).addClass('d-none');
+    $('#image-upload-control').addClass('d-none');
+    $('#image-link-control').removeClass('d-none');
   });
 
   // Display uploaded images back on 'cancel' button click
-  this.$el.on('click', '#link-image-window .cancel', function() {
+  this.$el.on('click', '#image-link-control .cancel', function() {
     selectImgWindow.removeClass('d-none');
     linkImgWindow.addClass('d-none');
 
-    $($('.bootsy-upload-form .file-input-wrapper')[0]).removeClass('d-none');
+    $('#image-upload-control').removeClass('d-none');
+    $('#image-link-control').addClass('d-none');
   });
 
   // Upload image from image URL
