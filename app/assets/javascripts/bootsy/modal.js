@@ -229,10 +229,23 @@ Bootsy.Modal.prototype.deleteImage = function(id) {
 
 // Check //
 function attachChangeModalWindowListeners() {
-  $('#use-img-link-btn').on('click', function() {
-    $('#select-image-window').addClass('d-none');
-    $('#link-image-window').removeClass('d-none');
+  const selectImgWindow = $('#select-image-window');
+  const linkImgWindow = $('#link-image-window');
+  const uploadBtn = $($('.bootsy-upload-form .file-input-wrapper')[0]);
 
-    $('.bootsy-upload-form .file-input-wrapper').addClass('d-none');
+  // Change modal window content on 'Use link' button click
+  $('#use-img-link-btn').on('click', function() {
+    selectImgWindow.addClass('d-none');
+    linkImgWindow.removeClass('d-none');
+
+    uploadBtn.addClass('d-none');
+  })
+
+  // Change modal window content back on 'cancel' button click
+  $($('#link-image-window .cancel')[0]).on('click', function() {
+    selectImgWindow.removeClass('d-none');
+    linkImgWindow.addClass('d-none');
+
+    uploadBtn.removeClass('d-none');
   })
 }
