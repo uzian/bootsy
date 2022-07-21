@@ -16,7 +16,7 @@ Bootsy.setup do |config|
   #
   # Image versions available
   #  Possible values: :small, :medium, :large, :original and/or :page_width
-  config.image_versions_available = [:small, :medium, :large, :original, :page_width]
+  config.image_versions_available = [:small, :medium, :large, :original, :full_width]
   #
   #
   # SMALL IMAGES
