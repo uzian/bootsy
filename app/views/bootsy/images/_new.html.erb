@@ -7,9 +7,8 @@
   <%# Extract input into modal window %>
   <%= f.text_field :content, title: 'link-image', value: '', placeholder: 'Paste image URL here' %>
 
-  <div class="btn-group">
-    <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class:"text-light" %>
-    <%# Rewrite button tag in better way %>
-    <%= button_tag 'Link', type: 'button', class:'btn btn-secondary' %>
-  </div>
+  <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class:"text-light" %>
+  
+  <%# Rewrite button tag in better way %>
+  <%= button_tag 'Use link', type: 'button', class:'btn btn-secondary' %>
 <% end %>
