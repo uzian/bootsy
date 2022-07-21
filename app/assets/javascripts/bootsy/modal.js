@@ -64,13 +64,13 @@ Bootsy.Modal = function(area) {
   // Insert image to post body by URL provided
   this.$el.on('click', '#image-link-control .insert', function(event) {
     const imageURL = $($('#link-image-window input')[0]).val();
-    const imageSuffix = '?variant=' + $(this).attr('data-image-size');
+    // const imageSuffix = '?variant=' + $(this).attr('data-image-size');
     const align = $(this).data('position') || 'inline';
 
     // imagePrefix might be redundant
 
     const imageObject = {
-      src: imageURL + imageSuffix,
+      src: imageURL, // + imageSuffix,
       align
     }
     
