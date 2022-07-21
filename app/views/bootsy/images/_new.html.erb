@@ -8,16 +8,16 @@
   <%# Buttons for controlling image upload %>
   <div id='image-upload-control'>
     <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class: 'text-light'%>
-    <%= button_tag 'Use link', type: 'button', class: 'use-link-btn btn btn-secondary ml-3'%>
+    <%= button_tag t('bootsy.action.use_link'), type: 'button', class: 'use-link-btn btn btn-secondary ml-3'%>
   </div>
 
   <%# Buttons for controlling image linking %>
   <div id='image-link-control' class='d-none'>
     <div class="d-inline-block">
-      <%= button_tag 'Insert', type: 'button', class: 'insert-btn btn btn-secondary mr-2' %>
+      <%= button_tag t('bootsy.action.insert'), type: 'button', class: 'insert-btn btn btn-secondary mr-2' %>
     </div>
 
-    <%= button_tag 'Cancel', type: 'button', class: 'cancel-btn btn btn-secondary' %>
+    <%= button_tag t('bootsy.action.cancel'), type: 'button', class: 'cancel-btn btn btn-secondary' %>
   </div>
   <%#%>
 <% end %>

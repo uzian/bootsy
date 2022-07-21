@@ -9,6 +9,9 @@ en:
       upload: Upload
       submit_upload: Go
       enter_image_url: Enter image URL...
+      use_link: Use link
+      insert: Insert
+      cancel: Cancel
     image_gallery: Image Gallery
     image:
       s: Image
