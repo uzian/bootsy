@@ -112,6 +112,7 @@ Bootsy.Modal = function(area) {
 
     this.uploadImage(event, xhr, settings, file, fileURLInputName, fileURLInput, token, event.target.action);
   }.bind(this));
+  // -- //
 
   this.$el.modal({ show: false });
 
