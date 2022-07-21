@@ -4,8 +4,8 @@
 
   <%= render 'bootsy/images/loader', image_class: 'bootsy-upload-loader' %>
 
-  <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class: "text-light" %>
+  <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class: 'text-light'%>
 
   <%# Check %>
-  <%= button_tag 'Use link', type: 'button', class: 'btn btn-secondary ml-3', id: 'use-link-btn'%>
+  <%= button_tag 'Use link', type: 'button', class: 'btn btn-secondary ml-3', id: 'use-img-link-btn'%>
 <% end %>

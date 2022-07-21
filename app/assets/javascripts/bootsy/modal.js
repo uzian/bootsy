@@ -227,10 +227,12 @@ Bootsy.Modal.prototype.deleteImage = function(id) {
   }.bind(this));
 };
 
-// Check
+// Check //
 function attachChangeModalWindowListeners() {
-  $('#use-link-btn').on('click', function() {
+  $('#use-img-link-btn').on('click', function() {
     $('#select-image-window').addClass('d-none');
     $('#link-image-window').removeClass('d-none');
+
+    $('.bootsy-upload-form .file-input-wrapper').addClass('d-none');
   })
 }
