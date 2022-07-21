@@ -2,26 +2,36 @@
   <li role="presentation" class="dropdown-header"><%= t 'bootsy.image.size' %></li>
 
   <% Bootsy.image_versions_available.each do |size| %>
-    <li role="presentation" class="dropdown dropdown-submenu">
-      <%= link_to '#', tabindex: '-1', role: 'menuitem', data: { toggle: 'dropdown' }, class: "dropdown-item" do %>
-        <i class="icon-picture"></i>
+    <% unless size == :full_width %>
+      <li role="presentation" class="dropdown dropdown-submenu">
+        <%= link_to '#', tabindex: '-1', role: 'menuitem', data: { toggle: 'dropdown' }, class: "dropdown-item" do %>
+          <i class="icon-picture"></i>
 
-        <%= t size, scope: 'bootsy.image' %>
-      <% end %>
+          <%= t size, scope: 'bootsy.image' %>
+        <% end %>
+          <ul class="dropdown-menu" role="menu">
+            <% [:left, :right, :inline].each do |position| %>
+              <li role="presentation">
+                <%= link_to '#', class: 'dropdown-item insert', tabindex: '-1', role: 'menuitem', 
+                  data: { image_size: size.to_s, position: position.to_s} do %>
+                  <%= t position, scope: 'bootsy.image.position' %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+      </li>
+    <% else %>
+      <%# Do not display submenu with image size options if this item is 'Full Width' option %>
+      <%# Encode all data attributes into 'Full Width' option instead %>
+      <li>
+        <%= link_to '#', tabindex: '-1', role: 'menuitem', class: 'dropdown-item insert',
+          data: { image_size: size.to_s } do %>
+          <i class="icon-picture"></i>
 
-      <% unless size == :full_width %>
-        <ul class="dropdown-menu" role="menu">
-          <% [:left, :right, :inline].each do |position| %>
-            <li role="presentation">
-              <%= link_to '#', class: 'dropdown-item insert', tabindex: '-1', role: 'menuitem', 
-                data: { image_size: size.to_s, position: position.to_s} do %>
-                <%= t position, scope: 'bootsy.image.position' %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-    </li>
+          <%= t size, scope: 'bootsy.image' %>
+        <% end %>
+      </li>
+    <% end %>
   <% end %>
 
   <% if Bootsy.allow_destroy %>
