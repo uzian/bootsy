@@ -13,11 +13,8 @@
 
   <%# Buttons for controlling image linking %>
   <div id='image-link-control' class='d-none'>
-    <div class="dropdown d-inline-block">
-      <%= button_tag 'Insert', type: 'button', class: 'insert-btn btn btn-secondary mr-2', data: {toggle: 'dropdown'}, :'aria-haspopup' => 'true', :'aria-expanded' => 'false' %>
-
-      <%# Dropdown menu that pops up on 'Insert' button click %>
-      <%= render 'bootsy/images/image_dropdown', image: @image %>
+    <div class="d-inline-block">
+      <%= button_tag 'Insert', type: 'button', class: 'insert-btn btn btn-secondary mr-2' %>
     </div>
 
     <%= button_tag 'Cancel', type: 'button', class: 'cancel-btn btn btn-secondary' %>
