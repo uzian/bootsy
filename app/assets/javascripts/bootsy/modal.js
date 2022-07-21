@@ -8,7 +8,7 @@ Bootsy.Modal = function(area) {
   this.$el = area.$el.siblings('.bootsy-modal');
   this.area = area;
 
-  // Check //
+  // Check! //
   const selectImgWindow = $('#select-image-window');
   const linkImgWindow = $('#link-image-window');
 
@@ -26,6 +26,13 @@ Bootsy.Modal = function(area) {
     linkImgWindow.addClass('d-none');
 
     $($('.bootsy-upload-form .file-input-wrapper')[0]).removeClass('d-none');
+  });
+
+  // Upload image from image URL
+  this.$el.on('click', '#link-image-window .ok', function() {
+    const imageURL = $($('#link-image-window input')[0]).val();
+
+    // Form submit event happens after user pressed 'Select'
   });
   // -- //
 
