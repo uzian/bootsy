@@ -8,6 +8,27 @@ Bootsy.Modal = function(area) {
   this.$el = area.$el.siblings('.bootsy-modal');
   this.area = area;
 
+  // Check //
+  const selectImgWindow = $('#select-image-window');
+  const linkImgWindow = $('#link-image-window');
+
+  // Display image URL input field on 'Use link' button click
+  this.$el.on('click', '#use-img-link-btn', function() {
+    selectImgWindow.addClass('d-none');
+    linkImgWindow.removeClass('d-none');
+
+    $($('.bootsy-upload-form .file-input-wrapper')[0]).addClass('d-none');
+  });
+
+  // Display uploaded images back on 'cancel' button click
+  this.$el.on('click', '#link-image-window .cancel', function() {
+    selectImgWindow.removeClass('d-none');
+    linkImgWindow.addClass('d-none');
+
+    $($('.bootsy-upload-form .file-input-wrapper')[0]).removeClass('d-none');
+  });
+  // -- //
+
   // In order to avoid form nesting
   this.$el.parents('form').after(this.$el);
 
@@ -152,9 +173,6 @@ Bootsy.Modal.prototype.setUploadForm = function(html) {
     this.showUploadLoadingAnimation();
     uploadInput.closest('form').submit();
   }.bind(this));
-
-  // Check //
-  attachChangeModalWindowListeners();
 };
 
 // The image upload failed
@@ -226,26 +244,3 @@ Bootsy.Modal.prototype.deleteImage = function(id) {
     if (this.$el.find('.bootsy-image').length === 0 ) this.showEmptyAlert();
   }.bind(this));
 };
-
-// Check //
-function attachChangeModalWindowListeners() {
-  const selectImgWindow = $('#select-image-window');
-  const linkImgWindow = $('#link-image-window');
-  const uploadBtn = $($('.bootsy-upload-form .file-input-wrapper')[0]);
-
-  // Change modal window content on 'Use link' button click
-  $('#use-img-link-btn').on('click', function() {
-    selectImgWindow.addClass('d-none');
-    linkImgWindow.removeClass('d-none');
-
-    uploadBtn.addClass('d-none');
-  })
-
-  // Change modal window content back on 'cancel' button click
-  $($('#link-image-window .cancel')[0]).on('click', function() {
-    selectImgWindow.removeClass('d-none');
-    linkImgWindow.addClass('d-none');
-
-    uploadBtn.removeClass('d-none');
-  })
-}
