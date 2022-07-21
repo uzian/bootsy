@@ -25,7 +25,7 @@ module Bootsy
 
   # Image versions available
   mattr_accessor :image_versions_available
-  @@image_versions_available = [:small, :medium, :large, :original]
+  @@image_versions_available = [:small, :medium, :large, :original, :page_width]
 
   # Whether user can destroy uploaded files
   mattr_accessor :allow_destroy
