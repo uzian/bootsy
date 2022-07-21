@@ -9,26 +9,11 @@ Bootsy.Modal = function(area) {
   this.area = area;
 
   // Check! //
-  const selectImgWindow = $('#select-image-window');
-  const linkImgWindow = $('#link-image-window');
-
   // Display image URL input field on 'Use link' button click
-  this.$el.on('click', '#image-upload-control .use-link-btn', function() {
-    selectImgWindow.addClass('d-none');
-    linkImgWindow.removeClass('d-none');
-
-    $('#image-upload-control').addClass('d-none');
-    $('#image-link-control').removeClass('d-none');
-  });
+  this.$el.on('click', '#image-upload-control .use-link-btn', this.showImageLinkWindow);
 
   // Display uploaded images back on 'cancel' button click
-  this.$el.on('click', '#image-link-control .cancel-btn', function() {
-    selectImgWindow.removeClass('d-none');
-    linkImgWindow.addClass('d-none');
-
-    $('#image-upload-control').removeClass('d-none');
-    $('#image-link-control').addClass('d-none');
-  });
+  this.$el.on('click', '#image-link-control .cancel-btn', this.showImageUploadWindow);
   // -- //
 
   // In order to avoid form nesting
@@ -62,7 +47,7 @@ Bootsy.Modal = function(area) {
 
   // Check! //
   // Insert image to post body by URL provided
-  this.$el.on('click', '#image-link-control .insert', function(event, xhr, settings) {
+  this.$el.on('click', '#image-link-control .insert-btn', function(event, xhr, settings) {
     const imageURL = $($('#link-image-window input')[0]).val();
 
     fetch(imageURL)
@@ -73,21 +58,15 @@ Bootsy.Modal = function(area) {
       throw error;
     })
     .then((file) => {
-      this.uploadImage(event, xhr, settings, file);
+      const form = document.getElementById('new_image');
+      const fileURLInputName = 'image[remote_image_file_url]';
+      const fileURLInput = form.querySelector(
+      'input[name="' + fileURLInputName + '"]');
+      const token = form.querySelector('input[name="authenticity_token"]').value;
+
+      this.uploadImage(event, xhr, settings, file, fileURLInputName, fileURLInput, token, form.action);
+      this.showImageUploadWindow();
     });
-
-
-    // const imageSuffix = '?variant=' + $(this).attr('data-image-size');
-    const align = $(this).data('position') || 'inline';
-    const imageObject = {
-      src: imageURL, // + imageSuffix,
-      align
-    }
-    
-    self.$el.modal('hide');
-
-    insert = self.area.insertImage.bind(self.area);
-    //insert(imageObject);
   }.bind(this));
   // -- //
 
@@ -289,3 +268,21 @@ Bootsy.Modal.prototype.deleteImage = function(id) {
     if (this.$el.find('.bootsy-image').length === 0 ) this.showEmptyAlert();
   }.bind(this));
 };
+
+// Check! //
+Bootsy.Modal.prototype.showImageUploadWindow = function() {
+  $('#select-image-window').removeClass('d-none');
+  $('#link-image-window').addClass('d-none');
+
+  $('#image-upload-control').removeClass('d-none');
+  $('#image-link-control').addClass('d-none');
+};
+
+Bootsy.Modal.prototype.showImageLinkWindow = function() {
+  $('#select-image-window').addClass('d-none');
+  $('#link-image-window').removeClass('d-none');
+
+  $('#image-upload-control').addClass('d-none');
+  $('#image-link-control').removeClass('d-none');
+};
+// -- //
