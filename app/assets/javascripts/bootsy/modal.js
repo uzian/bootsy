@@ -11,8 +11,15 @@ Bootsy.Modal = function(area) {
   // Display image URL input field on 'Use link' button click
   this.$el.on('click', '#image-upload-control .use-link-btn', this.showImageLinkWindow);
 
-  this.$el.on('click', '#image-upload-control .use-link-btn', function(event) {
-    fetch('localhost:3000/user_files.json?filetype=image&page=1&per_page=10')
+  // Display uploaded images back on 'cancel' button click
+  this.$el.on('click', '#new_image .cancel-btn', this.showImageUploadWindow);
+
+  // Display gallery on 'Select from gallery' button click
+  this.$el.on('click', '#image-upload-control .remote-gallery-btn', function() {
+    Bootsy.Modal.prototype.showGalleryWindow();
+
+    // Fetch images from remote gallery and insert them into view
+    fetch('http://localhost:3000/user_files.json?filetype=image&page=1&per_page=10&school_id=1')
       .then((response) => {
         return response.json();
       }, (error) => {
@@ -20,14 +27,8 @@ Bootsy.Modal = function(area) {
       })
       .then((data) => {
         console.log(data);
-      })
+      });
   });
-
-  // Display uploaded images back on 'cancel' button click
-  this.$el.on('click', '#new_image .cancel-btn', this.showImageUploadWindow);
-
-  // Display gallery on 'Select from gallery' button click
-  this.$el.on('click', '#image-upload-control .remote-gallery-btn', this.showGalleryWindow);
 
   // In order to avoid form nesting
   this.$el.parents('form').after(this.$el);
