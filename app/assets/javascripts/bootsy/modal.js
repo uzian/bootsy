@@ -11,9 +11,23 @@ Bootsy.Modal = function(area) {
   // Display image URL input field on 'Use link' button click
   this.$el.on('click', '#image-upload-control .use-link-btn', this.showImageLinkWindow);
 
+  this.$el.on('click', '#image-upload-control .use-link-btn', function(event) {
+    fetch('localhost:3000/user_files.json?filetype=image&page=1&per_page=10')
+      .then((response) => {
+        return response.json();
+      }, (error) => {
+        throw error;
+      })
+      .then((data) => {
+        console.log(data);
+      })
+  });
+
   // Display uploaded images back on 'cancel' button click
-  this.$el.on('click', '#image-link-control .cancel-btn', this.showImageUploadWindow);
-  // -- //
+  this.$el.on('click', '#new_image .cancel-btn', this.showImageUploadWindow);
+
+  // Display gallery on 'Select from gallery' button click
+  this.$el.on('click', '#image-upload-control .remote-gallery-btn', this.showGalleryWindow);
 
   // In order to avoid form nesting
   this.$el.parents('form').after(this.$el);
@@ -287,18 +301,30 @@ Bootsy.Modal.prototype.deleteImage = function(id) {
   }.bind(this));
 };
 
-Bootsy.Modal.prototype.showImageUploadWindow = function() {
-  $('#select-image-window').removeClass('d-none');
+Bootsy.Modal.prototype.clearModal = function() {
+  $('#select-image-window').addClass('d-none');
   $('#link-image-window').addClass('d-none');
-
-  $('#image-upload-control').removeClass('d-none');
+  $('#remote-gallery-window').addClass('d-none');
+  $('#image-upload-control').addClass('d-none');
   $('#image-link-control').addClass('d-none');
+  $('#remote-gallery-control').addClass('d-none');
+}
+
+Bootsy.Modal.prototype.showImageUploadWindow = function() {
+  Bootsy.Modal.prototype.clearModal();
+  $('#upload-image-window').removeClass('d-none');
+  $('#image-upload-control').removeClass('d-none');
 };
 
 Bootsy.Modal.prototype.showImageLinkWindow = function() {
-  $('#select-image-window').addClass('d-none');
+  Bootsy.Modal.prototype.clearModal();
   $('#link-image-window').removeClass('d-none');
-
-  $('#image-upload-control').addClass('d-none');
   $('#image-link-control').removeClass('d-none');
 };
+
+Bootsy.Modal.prototype.showGalleryWindow = function() {
+  Bootsy.Modal.prototype.clearModal();
+  $('#remote-gallery-window').removeClass('d-none');
+  $('#remote-gallery-control').removeClass('d-none');
+};
+

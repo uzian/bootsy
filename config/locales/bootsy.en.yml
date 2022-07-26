@@ -12,6 +12,7 @@ en:
       use_link: Use link
       insert: Insert
       cancel: Cancel
+      select_from_gallery: Select from gallery
     image_gallery: Image Gallery
     image:
       s: Image

@@ -3,7 +3,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h6 class="modal-title"><%= t 'bootsy.image.p' %></h6>        
+        <h6 class="modal-title"><%= t 'bootsy.image.p' %></h6>
         <button type="button" class="close" data-dismiss="modal">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -16,9 +16,11 @@
 
         <div id="select-image-window" class="row bootsy-gallery"></div>
 
-        <div id="link-image-window" class="container px-3 py-0 d-none">
+        <div id="link-image-window" class="px-3 py-0 d-none">
           <%= text_field_tag 'image-link-input', nil, placeholder: t('bootsy.action.enter_image_url'), class: 'form-control' %>
         </div>
+
+        <div id="remote-gallery-window" class="d-none"></div>
 
         <%= render 'bootsy/images/loader', image_class: 'bootsy-gallery-loader' %>
 
