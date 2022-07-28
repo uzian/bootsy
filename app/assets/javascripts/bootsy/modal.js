@@ -82,9 +82,9 @@ Bootsy.Modal = function(area) {
 
     if ($(this).data('image-size') !== 'full_width') {
       imageObject.align = $(this).data('position');
+    } else {
+      imageObject.class = 'full-width';
     }
-
-    imageObject.class = 'full-width';
 
     self.$el.modal('hide');
 
