@@ -19,7 +19,7 @@ Bootsy.Modal = function(area) {
     Bootsy.Modal.prototype.showGalleryWindow();
 
     // Fetch images from remote gallery and insert them into view
-    fetch(Bootsy.config.remoteGalleryURL)
+    fetch(Bootsy.config.remoteGalleryURL + '/user_files.json?filetype=image&page=1&per_page=10&school_id=2')
       .then((response) => {
         return response.json();
       }, (error) => {
@@ -29,9 +29,19 @@ Bootsy.Modal = function(area) {
         const images = data['files'];
         let modal_body = "";
 
+        // For every image filename, fetch actual image file
         for (let i=0; i<images.length; i++){
           const user_file_id = images[i]['id'];
-          const filename= images[i]['filename']
+
+          // const p = fetch(Bootsy.config.remoteGalleryURL)
+          //   .then((response) => {
+          //     return response.blob();
+          //   }, (error) => {
+          //     throw error;
+          //   })
+          //   .then((file) => {
+
+          //   })
 
           // const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
           //       data-toggle="tooltip" title="'+images[i]['filename']+'" \
@@ -104,14 +114,9 @@ Bootsy.Modal = function(area) {
       console.warn(`Could not fetch image from ${imageURL}. Error:`);
       throw error;
     })
+    // Upload fetched image
     .then((file) => {
-      const form = document.getElementById('new_image');
-      const fileURLInputName = 'image[remote_image_file_url]';
-      const fileURLInput = form.querySelector(
-      'input[name="' + fileURLInputName + '"]');
-      const token = form.querySelector('input[name="authenticity_token"]').value;
-
-      this.uploadImage(event, xhr, settings, file, fileURLInputName, fileURLInput, token, form.action);
+      this.uploadImage(event, xhr, settings, file);
       this.showImageUploadWindow();
 
       $($('#link-image-window input')[0]).val('');
@@ -133,20 +138,15 @@ Bootsy.Modal = function(area) {
 
   this.$el.on('click', 'a[href="#refresh-gallery"]', this.requestImageGallery.bind(this));
 
-  // Upload image from user's computer into image gallery
+  // Upload image from user's computer
   this.$el.on('submit', '.bootsy-upload-form', function(event, xhr, settings) {
     event.preventDefault();
 
-    var fileSelect = event.target.querySelector('input[type="file"]');
-    var file = fileSelect.files[0];
-    var fileURLInputName = 'image[remote_image_file_url]';
-    var fileURLInput = event.target.querySelector(
-    'input[name="' + fileURLInputName + '"]');
-    var token = event.target.querySelector('input[name="authenticity_token"]').value;
+    const fileSelect = event.target.querySelector('input[type="file"]');
+    const file = fileSelect.files[0];
 
-    this.uploadImage(event, xhr, settings, file, fileURLInputName, fileURLInput, token, event.target.action);
+    this.uploadImage(event, xhr, settings, file);
   }.bind(this));
-  // -- //
 
   this.$el.modal({ show: false });
 
@@ -218,9 +218,14 @@ Bootsy.Modal.prototype.setUploadForm = function(html) {
 };
 
 // Upload image
-Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings, file, fileURLInputName, fileURLInput, token, targetAction) {
-  var formData = new FormData();
-  var fileURL;
+Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings, file) {
+  const form = document.getElementById('new_image');
+  const fileURLInputName = 'image[remote_image_file_url]';
+  const fileURLInput = form.querySelector(
+  'input[name="' + fileURLInputName + '"]');
+  const token = form.querySelector('input[name="authenticity_token"]').value;
+  const formData = new FormData();
+  let fileURL;
 
   formData.append('authenticity_token', token);
 
@@ -237,7 +242,7 @@ Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings, file, fileUR
   formData.append(fileURLInputName, fileURL);
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', targetAction, true);
+  xhr.open('POST', form.action, true);
   xhr.onload = function () {
     var data = JSON.parse(xhr.response);
     if (xhr.status === 200) {
@@ -321,6 +326,11 @@ Bootsy.Modal.prototype.deleteImage = function(id) {
   }.bind(this));
 };
 
+// Take image file and upload it into the gallery
+// Bootsy.Modal.prototype.insertIntoGallery = function() {
+
+// }
+
 Bootsy.Modal.prototype.clearModal = function() {
   $('#select-image-window').addClass('d-none');
   $('#link-image-window').addClass('d-none');
@@ -332,7 +342,7 @@ Bootsy.Modal.prototype.clearModal = function() {
 
 Bootsy.Modal.prototype.showImageUploadWindow = function() {
   Bootsy.Modal.prototype.clearModal();
-  $('#upload-image-window').removeClass('d-none');
+  $('#select-image-window').removeClass('d-none');
   $('#image-upload-control').removeClass('d-none');
 };
 
@@ -347,4 +357,3 @@ Bootsy.Modal.prototype.showGalleryWindow = function() {
   $('#remote-gallery-window').removeClass('d-none');
   $('#remote-gallery-control').removeClass('d-none');
 };
-
