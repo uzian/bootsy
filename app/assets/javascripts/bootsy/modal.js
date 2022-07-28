@@ -40,7 +40,8 @@ Bootsy.Modal = function(area) {
           //     throw error;
           //   })
           //   .then((file) => {
-
+          //     this.uploadImage(event, xhr, settings, file);
+          //     this.showImageUploadWindow();
           //   })
 
           // const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
@@ -95,15 +96,10 @@ Bootsy.Modal = function(area) {
   // Insert image to post body by URL provided
   this.$el.on('click', '#image-link-control .insert-btn', function(event, xhr, settings) {
     const imageURL = $($('#link-image-window input')[0]).val().trim();
-    const alert = $('.bootsy-empty-alert');
 
     // Validate image URL
     if (imageURL == '') {
-      alert.removeClass('alert-info');
-      alert.addClass('alert-danger');
-      alert.text('Image URL cannot be empty.');
-      alert.addClass('d-block');
-
+      Bootsy.Modal.prototype.alert('Image URL cannot be empty.');
       return;
     }
 
@@ -120,13 +116,7 @@ Bootsy.Modal = function(area) {
       this.showImageUploadWindow();
 
       $($('#link-image-window input')[0]).val('');
-
-      // Clean up alert
-      alert.removeClass('alert-danger');
-      alert.addClass('alert-info');
-      alert.text('')
-      alert.removeClass('d-block');
-      alert.addClass('d-none');
+      Bootsy.Modal.prototype.clearAlert();
     });
   }.bind(this));
 
@@ -357,3 +347,22 @@ Bootsy.Modal.prototype.showGalleryWindow = function() {
   $('#remote-gallery-window').removeClass('d-none');
   $('#remote-gallery-control').removeClass('d-none');
 };
+
+Bootsy.Modal.prototype.alert = function(text) {
+  const alert = $('.bootsy-empty-alert');
+
+  alert.removeClass('alert-info');
+  alert.addClass('alert-danger');
+  alert.text(text);
+  alert.addClass('d-block');
+}
+
+Bootsy.Modal.prototype.clearAlert = function() {
+  const alert = $('.bootsy-empty-alert');
+
+  alert.removeClass('alert-danger');
+  alert.addClass('alert-info');
+  alert.text('')
+  alert.removeClass('d-block');
+  alert.addClass('d-none');
+}
