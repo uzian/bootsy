@@ -44,8 +44,8 @@ Bootsy.Modal = function(area) {
           modal_body += "<div class='mr-1 mb-1 p-1 border id='selector_image_"+user_file_id+"'>"+img+"</div>";
         }
         modal_body = "<div class='d-flex flex-wrap'>"+modal_body+"</div>";
-        $('#remote-gallery-window').html(modal_body);
-        // $('#remote-gallery-window .pagination').html(data['pagination']);
+        $('#remote-gallery-window .gallery').html(modal_body);
+        $('#remote-gallery-window .pagination').html(data['pagination']);
       });
   });
 
