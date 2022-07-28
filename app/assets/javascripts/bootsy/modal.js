@@ -19,14 +19,33 @@ Bootsy.Modal = function(area) {
     Bootsy.Modal.prototype.showGalleryWindow();
 
     // Fetch images from remote gallery and insert them into view
-    fetch('http://localhost:3000/user_files.json?filetype=image&page=1&per_page=10&school_id=1')
+    fetch(Bootsy.config.remoteGalleryURL)
       .then((response) => {
         return response.json();
       }, (error) => {
         throw error;
       })
       .then((data) => {
-        console.log(data);
+        const images = data['files'];
+        let modal_body = "";
+
+        for (let i=0; i<images.length; i++){
+          const user_file_id = images[i]['id'];
+          const filename= images[i]['filename']
+
+          // const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
+          //       data-toggle="tooltip" title="'+images[i]['filename']+'" \
+          //       onclick="'+selected_image_function+'('+user_file_id+')">';
+          // const extra_class = (user_file_id == highlight_id ? ' bg-primary' : '')
+          // modal_body += "<div class='mr-1 mb-1 p-1 border file-index-image"+extra_class+"' id='selector_image_"+user_file_id+"'>"+img+"</div>";
+
+          const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
+                 data-toggle="tooltip" title="'+images[i]['filename']+'">';
+          modal_body += "<div class='mr-1 mb-1 p-1 border id='selector_image_"+user_file_id+"'>"+img+"</div>";
+        }
+        modal_body = "<div class='d-flex flex-wrap'>"+modal_body+"</div>";
+        $('#remote-gallery-window').html(modal_body);
+        // $('#remote-gallery-window .pagination').html(data['pagination']);
       });
   });
 
