@@ -15,8 +15,8 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '#new_image .cancel-btn', this.showImageUploadWindow);
 
   // Display gallery on 'Select from gallery' button click
-  this.$el.on('click', '#image-upload-control .remote-gallery-btn', function() {
-    Bootsy.Modal.prototype.showGalleryWindow();
+  this.$el.on('click', '#image-upload-control .remote-gallery-btn', function(event, xhr, settings) {
+    this.showGalleryWindow();
 
     // Fetch images from remote gallery and insert them into view
     fetch(Bootsy.config.remoteGalleryURL + '/user_files.json?filetype=image&page=1&per_page=10&school_id=2')
@@ -29,20 +29,28 @@ Bootsy.Modal = function(area) {
         const images = data['files'];
         let modal_body = "";
 
+        const urls = [
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5zMuIeTFropt9beUgjjkKjc9igWGovztRrg&usqp=CAU',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg_aM1BI6N2NZg3614bk5IXppVXljCG6opNA&usqp=CAU',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu9E-GvowImZUUUgQjUiJyrZvGdyVMGpVB5w&usqp=CAU',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6ucNwuI-IociftFkxEr11n7D2J2HjKhqBEA&usqp=CAU',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAZx1OCKhKPv9f3FWex5qEgy8-cQgfaowHPw&usqp=CAU'
+        ]
+
         // For every image filename, fetch actual image file
-        for (let i=0; i<images.length; i++){
+        //for (let i=0; i<images.length; i++) {
+        for (let i=0; i<urls.length; i++) {
           const user_file_id = images[i]['id'];
 
-          // const p = fetch(Bootsy.config.remoteGalleryURL)
-          //   .then((response) => {
-          //     return response.blob();
-          //   }, (error) => {
-          //     throw error;
-          //   })
-          //   .then((file) => {
-          //     this.uploadImage(event, xhr, settings, file);
-          //     this.showImageUploadWindow();
-          //   })
+          const p = fetch(urls[i])
+            .then((response) => {
+              return response.blob();
+            }, (error) => {
+              throw error;
+            })
+            .then((file) => {
+              this.uploadImage(event, xhr, settings, file);
+            })
 
           // const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
           //       data-toggle="tooltip" title="'+images[i]['filename']+'" \
@@ -50,15 +58,16 @@ Bootsy.Modal = function(area) {
           // const extra_class = (user_file_id == highlight_id ? ' bg-primary' : '')
           // modal_body += "<div class='mr-1 mb-1 p-1 border file-index-image"+extra_class+"' id='selector_image_"+user_file_id+"'>"+img+"</div>";
 
-          const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
-                 data-toggle="tooltip" title="'+images[i]['filename']+'">';
-          modal_body += "<div class='mr-1 mb-1 p-1 border id='selector_image_"+user_file_id+"'>"+img+"</div>";
+          // const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
+          //        data-toggle="tooltip" title="'+images[i]['title']+'">';
+          // modal_body += "<div class='mr-1 mb-1 p-1 border id='selector_image_"+user_file_id+"'>"+img+"</div>";
         }
-        modal_body = "<div class='d-flex flex-wrap'>"+modal_body+"</div>";
+        //modal_body = "<div class='d-flex flex-wrap'>"+modal_body+"</div>";
+        this.showImageUploadWindow();
         $('#remote-gallery-window .gallery').html(modal_body);
         $('#remote-gallery-window .pagination').html(data['pagination']);
       });
-  });
+  }.bind(this));
 
   // In order to avoid form nesting
   this.$el.parents('form').after(this.$el);
