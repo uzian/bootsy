@@ -17,50 +17,6 @@ Bootsy.Modal = function(area) {
   // Display gallery on 'Select from gallery' button click
   this.$el.on('click', '#image-upload-control .remote-gallery-btn', function(event, xhr, settings) {
     this.showGalleryWindow();
-
-    // Fetch images from remote gallery and insert them into view
-    fetch(Bootsy.config.remoteGalleryURL + '/user_files.json?filetype=image&page=1&per_page=10&school_id=2')
-      .then((response) => {
-        return response.json();
-      }, (error) => {
-        throw error;
-      })
-      .then((data) => {
-        const images = data['files'];
-        const urls = [
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5zMuIeTFropt9beUgjjkKjc9igWGovztRrg&usqp=CAU',
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg_aM1BI6N2NZg3614bk5IXppVXljCG6opNA&usqp=CAU',
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu9E-GvowImZUUUgQjUiJyrZvGdyVMGpVB5w&usqp=CAU',
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6ucNwuI-IociftFkxEr11n7D2J2HjKhqBEA&usqp=CAU',
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAZx1OCKhKPv9f3FWex5qEgy8-cQgfaowHPw&usqp=CAU',
-          'https://wefwefw',
-          'https://wtrykjhfw',
-          'https://wtrykjsdssf'
-        ]
-
-        // For every image filename, fetch actual image file
-        this.clearAlert();
-
-        //for (let i=0; i<images.length; i++) {
-        for (let i=0; i<urls.length; i++) {
-          const p = fetch(urls[i])
-            .then((response) => {
-              return response.blob();
-            }, (error) => {
-              this.alert(`${urls[i]} cannot be fetched.`, true);
-              throw error;
-            })
-            .then((file) => {
-              // Give server some time to upload previous image
-              setTimeout(() => {
-                this.uploadImage(event, xhr, settings, file);
-              }, i*500);
-            });
-        }
-
-        this.showImageUploadWindow();
-        $('#remote-gallery-window .pagination').html(data['pagination']);
-      });
   }.bind(this));
 
   // In order to avoid form nesting
@@ -366,4 +322,23 @@ Bootsy.Modal.prototype.clearAlert = function() {
   alert.html('')
   alert.removeClass('d-block');
   alert.fadeOut(200);
+}
+
+// Function to fetch multiple images from API and upload them into the system
+// Currently not in use!
+Bootsy.Modal.prototype.fetchAll = function(urls) {
+  for (let i=0; i<urls.length; i++) {
+    fetch(urls[i])
+      .then((response) => {
+        return response.blob();
+      }, (error) => {
+        throw error;
+      })
+      .then((file) => {
+        // Give server some time to upload previous image
+        setTimeout(() => {
+          this.uploadImage(event, xhr, settings, file);
+        }, i*500);
+      });
+  }
 }
