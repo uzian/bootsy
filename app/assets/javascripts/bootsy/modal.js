@@ -28,7 +28,6 @@ Bootsy.Modal = function(area) {
       .then((data) => {
         const images = data['files'];
         let modal_body = "";
-
         const urls = [
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5zMuIeTFropt9beUgjjkKjc9igWGovztRrg&usqp=CAU',
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg_aM1BI6N2NZg3614bk5IXppVXljCG6opNA&usqp=CAU',
@@ -40,29 +39,20 @@ Bootsy.Modal = function(area) {
         // For every image filename, fetch actual image file
         //for (let i=0; i<images.length; i++) {
         for (let i=0; i<urls.length; i++) {
-          const user_file_id = images[i]['id'];
-
-          const p = fetch(urls[i])
+          fetch(urls[i])
             .then((response) => {
               return response.blob();
             }, (error) => {
               throw error;
             })
             .then((file) => {
-              this.uploadImage(event, xhr, settings, file);
-            })
-
-          // const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
-          //       data-toggle="tooltip" title="'+images[i]['filename']+'" \
-          //       onclick="'+selected_image_function+'('+user_file_id+')">';
-          // const extra_class = (user_file_id == highlight_id ? ' bg-primary' : '')
-          // modal_body += "<div class='mr-1 mb-1 p-1 border file-index-image"+extra_class+"' id='selector_image_"+user_file_id+"'>"+img+"</div>";
-
-          // const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
-          //        data-toggle="tooltip" title="'+images[i]['title']+'">';
-          // modal_body += "<div class='mr-1 mb-1 p-1 border id='selector_image_"+user_file_id+"'>"+img+"</div>";
+              // Give server some time to upload previous image
+              setTimeout(() => {
+                this.uploadImage(event, xhr, settings, file);
+              }, i*500);
+            });
         }
-        //modal_body = "<div class='d-flex flex-wrap'>"+modal_body+"</div>";
+
         this.showImageUploadWindow();
         $('#remote-gallery-window .gallery').html(modal_body);
         $('#remote-gallery-window .pagination').html(data['pagination']);
@@ -116,7 +106,6 @@ Bootsy.Modal = function(area) {
     .then((response) => {
       return response.blob();
     }, (error) => {
-      console.warn(`Could not fetch image from ${imageURL}. Error:`);
       throw error;
     })
     // Upload fetched image
@@ -324,11 +313,6 @@ Bootsy.Modal.prototype.deleteImage = function(id) {
     if (this.$el.find('.bootsy-image').length === 0 ) this.showEmptyAlert();
   }.bind(this));
 };
-
-// Take image file and upload it into the gallery
-// Bootsy.Modal.prototype.insertIntoGallery = function() {
-
-// }
 
 Bootsy.Modal.prototype.clearModal = function() {
   $('#select-image-window').addClass('d-none');
