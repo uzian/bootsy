@@ -27,22 +27,27 @@ Bootsy.Modal = function(area) {
       })
       .then((data) => {
         const images = data['files'];
-        let modal_body = "";
         const urls = [
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5zMuIeTFropt9beUgjjkKjc9igWGovztRrg&usqp=CAU',
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg_aM1BI6N2NZg3614bk5IXppVXljCG6opNA&usqp=CAU',
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu9E-GvowImZUUUgQjUiJyrZvGdyVMGpVB5w&usqp=CAU',
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6ucNwuI-IociftFkxEr11n7D2J2HjKhqBEA&usqp=CAU',
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAZx1OCKhKPv9f3FWex5qEgy8-cQgfaowHPw&usqp=CAU'
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAZx1OCKhKPv9f3FWex5qEgy8-cQgfaowHPw&usqp=CAU',
+          'https://wefwefw',
+          'https://wtrykjhfw',
+          'https://wtrykjsdssf'
         ]
 
         // For every image filename, fetch actual image file
+        this.clearAlert();
+
         //for (let i=0; i<images.length; i++) {
         for (let i=0; i<urls.length; i++) {
-          fetch(urls[i])
+          const p = fetch(urls[i])
             .then((response) => {
               return response.blob();
             }, (error) => {
+              this.alert(`${urls[i]} cannot be fetched.`, true);
               throw error;
             })
             .then((file) => {
@@ -54,7 +59,6 @@ Bootsy.Modal = function(area) {
         }
 
         this.showImageUploadWindow();
-        $('#remote-gallery-window .gallery').html(modal_body);
         $('#remote-gallery-window .pagination').html(data['pagination']);
       });
   }.bind(this));
@@ -134,6 +138,7 @@ Bootsy.Modal = function(area) {
     const file = fileSelect.files[0];
 
     this.uploadImage(event, xhr, settings, file);
+    this.clearAlert();
   }.bind(this));
 
   this.$el.modal({ show: false });
@@ -264,8 +269,6 @@ Bootsy.Modal.prototype.imageUploadFailed = function(xhr, invalidErrors) {
 
 // Add image to gallery
 Bootsy.Modal.prototype.addImage = function(html) {
-  this.hideEmptyAlert();
-
   $(html).hide().appendTo(this.$el.find('.bootsy-gallery')).fadeIn(200);
 };
 
@@ -341,13 +344,18 @@ Bootsy.Modal.prototype.showGalleryWindow = function() {
   $('#remote-gallery-control').removeClass('d-none');
 };
 
-Bootsy.Modal.prototype.alert = function(text) {
+Bootsy.Modal.prototype.alert = function(text, add=false) {
   const alert = $('.bootsy-empty-alert');
 
   alert.removeClass('alert-info');
   alert.addClass('alert-danger');
-  alert.text(text);
-  alert.addClass('d-block');
+
+  if (add) {
+    alert.html(alert.html() + '<br>' + text);
+  } else {
+    alert.text(text);
+  }
+  alert.fadeIn(200);
 }
 
 Bootsy.Modal.prototype.clearAlert = function() {
@@ -355,7 +363,7 @@ Bootsy.Modal.prototype.clearAlert = function() {
 
   alert.removeClass('alert-danger');
   alert.addClass('alert-info');
-  alert.text('')
+  alert.html('')
   alert.removeClass('d-block');
-  alert.addClass('d-none');
+  alert.fadeOut(200);
 }
