@@ -24,7 +24,9 @@ Bootsy.Modal = function(area) {
 
   // Invoke dropdown menu on image click
   this.$el.on('click', '.bootsy-image', function(event) {
-    const wrapper = $('#dropdown-menu ');
+    console.log(event);
+
+    const wrapper = $('#dropdown-menu');
     const menu = $('#dropdown-menu > .dropdown-menu');
 
     // Reposition the menu under the clicking point
@@ -38,6 +40,9 @@ Bootsy.Modal = function(area) {
     })
 
     // Update data attributes with image-specific data
+    const src = event.target.src.slice(0, event.target.src.indexOf('?variant'));
+    wrapper.attr('data-image-src', src);
+
     // Appear menu
     wrapper.addClass('show');
     menu.addClass('show');
