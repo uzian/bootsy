@@ -22,6 +22,29 @@ Bootsy.Modal = function(area) {
   // In order to avoid form nesting
   this.$el.parents('form').after(this.$el);
 
+  // Invoke dropdown menu on image click
+  this.$el.on('click', '.bootsy-image', function(event) {
+    const wrapper = $('#dropdown-menu ');
+    const menu = $('#dropdown-menu > .dropdown-menu');
+
+    // Reposition the menu under the clicking point
+    const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
+    const offsetY = event.clientY - ($('.bootsy-modal .modal-dialog').outerHeight(true) - $('.bootsy-modal .modal-dialog').height())/2 - 5;
+
+    wrapper.css({
+      'position': 'absolute',
+      'left': String(offsetX) + 'px',
+      'top': String(offsetY) + 'px'
+    })
+
+    // Update data attributes with image-specific data
+    // Appear menu
+    wrapper.addClass('show');
+    menu.addClass('show');
+    // Hide menu on focus lost
+    // Clear out data attributes
+  }.bind(this));
+
   // Insert image to post body from image gallery
   this.$el.on('click', '.bootsy-image .insert', function(event) {
     var img, imageObject;
@@ -50,7 +73,7 @@ Bootsy.Modal = function(area) {
 
     insert = self.area.insertImage.bind(self.area);
     insert(imageObject);
-  });
+  }.bind(this));
 
   // Insert image to post body by URL provided
   this.$el.on('click', '#image-link-control .insert-btn', function(event, xhr, settings) {
