@@ -1,6 +1,3 @@
-<div class="bootsy-image dropdown col-sm-2" data-id="<%= image.id %>">
-  <%= link_to image_tag(image_path(image, variant: :thumbnail)), '#', class: 'thumbnail',
-    data: { toggle: 'dropdown' } %>
-
-  <%= render 'bootsy/images/image_dropdown', image: image %>
+<div class="bootsy-image col-sm-2" data-id="<%= image.id %>">
+  <%= link_to image_tag(image_path(image, variant: :thumbnail)), '#', class: 'thumbnail' %>
 </div>
