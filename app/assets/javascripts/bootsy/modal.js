@@ -47,8 +47,8 @@ Bootsy.Modal = function(area) {
         }
 
         modal_body = "<div class='d-flex flex-wrap'>"+modal_body+"</div>";
-        $('#global-gallery-window').html(modal_body);
-        // $('#pagination').html(response['pagination']);
+        $('#global-gallery-window .gallery').html(modal_body);
+        $('#global-gallery-window .pagination').html(data['pagination']);
       });
   }.bind(this));
 
