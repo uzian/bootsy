@@ -37,15 +37,19 @@ Bootsy.Modal = function(area) {
           // const extra_class = (user_file_id == highlight_id ? ' bg-primary' : '')
           // modal_body += "<div class='mr-1 mb-1 p-1 border file-index-image"+extra_class+"' id='selector_image_"+user_file_id+"'>"+img+"</div>";
 
-          const img = `<img src="${Bootsy.config.remoteGalleryURL}/user_files/${user_file_id}?variant=tiny" \
+          const img = `<img class="bootsy-image" src="${Bootsy.config.remoteGalleryURL}/user_files/${user_file_id}?variant=tiny" \
             data-toggle="tooltip" title="${images[i]['filename']}">`;
-          modal_body += `<div class="mr-1 mb-1 p-1 border" file-index-image id="selector_image_${user_file_id}">${img}</div>`;
+          modal_body += `<div class="mr-1 mb-1 p-1 border" file-index-image id="selector_image_${user_file_id}">
+                          <a class="thumbnail" href="#">
+                            ${img}
+                          </a>
+                        </div>`;
         }
 
         modal_body = "<div class='d-flex flex-wrap'>"+modal_body+"</div>";
         $('#global-gallery-window').html(modal_body);
         // $('#pagination').html(response['pagination']);
-      })
+      });
   }.bind(this));
 
   // In order to avoid form nesting
