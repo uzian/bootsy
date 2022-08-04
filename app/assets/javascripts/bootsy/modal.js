@@ -17,6 +17,35 @@ Bootsy.Modal = function(area) {
   // Display gallery on 'Select from gallery' button click
   this.$el.on('click', '#image-upload-control .global-gallery-btn', function(event, xhr, settings) {
     this.showGalleryWindow();
+
+    fetch(Bootsy.config.remoteGalleryURL + '/user_files.json?filetype=image&page=1&per_page=12&school_id=2')
+      .then((response) => {
+        return response.json();
+      }, (error) => {
+        throw error;
+      })
+      .then((data) => {
+        let modal_body = '';
+        const images = data['files'];
+
+        for (let i=0; i<images.length; i++) {
+          const user_file_id = images[i]['id'];
+
+          // const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
+          //       data-toggle="tooltip" title="'+images[i]['filename']+'" \
+          //       onclick="'+selected_image_function+'('+user_file_id+')">';
+          // const extra_class = (user_file_id == highlight_id ? ' bg-primary' : '')
+          // modal_body += "<div class='mr-1 mb-1 p-1 border file-index-image"+extra_class+"' id='selector_image_"+user_file_id+"'>"+img+"</div>";
+
+          const img = `<img src="${Bootsy.config.remoteGalleryURL}/user_files/${user_file_id}?variant=tiny" \
+            data-toggle="tooltip" title="${images[i]['filename']}">`;
+          modal_body += `<div class="mr-1 mb-1 p-1 border" file-index-image id="selector_image_${user_file_id}">${img}</div>`;
+        }
+
+        modal_body = "<div class='d-flex flex-wrap'>"+modal_body+"</div>";
+        $('#global-gallery-window').html(modal_body);
+        // $('#pagination').html(response['pagination']);
+      })
   }.bind(this));
 
   // In order to avoid form nesting
