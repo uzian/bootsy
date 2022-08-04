@@ -8,7 +8,7 @@
   <div id="image-upload-control">
     <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class: 'text-light'%>
     <%= button_tag t('bootsy.action.use_link'), type: 'button', class: 'use-link-btn btn btn-secondary ml-3'%>
-    <%= button_tag t('bootsy.action.select_from_gallery'), type: 'button', class: 'remote-gallery-btn btn btn-secondary ml-3' %>
+    <%= button_tag t('bootsy.action.select_from_gallery'), type: 'button', class: 'global-gallery-btn btn btn-secondary ml-3' %>
   </div>
 
   <%# Buttons for controlling image linking %>
@@ -18,7 +18,7 @@
   </div>
 
   <%# Buttons for controlling usage of remote gallery %>
-  <div id="remote-gallery-control" class="d-none">
+  <div id="global-gallery-control" class="d-none">
     <%= button_tag t('bootsy.action.cancel'), type: 'button', class: 'cancel-btn btn btn-secondary' %>
   </div>
 <% end %>

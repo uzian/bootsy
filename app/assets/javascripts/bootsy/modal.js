@@ -15,7 +15,7 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '#new_image .cancel-btn', this.showImageUploadWindow);
 
   // Display gallery on 'Select from gallery' button click
-  this.$el.on('click', '#image-upload-control .remote-gallery-btn', function(event, xhr, settings) {
+  this.$el.on('click', '#image-upload-control .global-gallery-btn', function(event, xhr, settings) {
     this.showGalleryWindow();
   }.bind(this));
 
@@ -319,10 +319,10 @@ Bootsy.Modal.prototype.deleteImage = function(id) {
 Bootsy.Modal.prototype.clearModal = function() {
   $('#select-image-window').addClass('d-none');
   $('#link-image-window').addClass('d-none');
-  $('#remote-gallery-window').addClass('d-none');
+  $('#global-gallery-window').addClass('d-none');
   $('#image-upload-control').addClass('d-none');
   $('#image-link-control').addClass('d-none');
-  $('#remote-gallery-control').addClass('d-none');
+  $('#global-gallery-control').addClass('d-none');
 }
 
 Bootsy.Modal.prototype.showImageUploadWindow = function() {
@@ -339,8 +339,8 @@ Bootsy.Modal.prototype.showImageLinkWindow = function() {
 
 Bootsy.Modal.prototype.showGalleryWindow = function() {
   Bootsy.Modal.prototype.clearModal();
-  $('#remote-gallery-window').removeClass('d-none');
-  $('#remote-gallery-control').removeClass('d-none');
+  $('#global-gallery-window').removeClass('d-none');
+  $('#global-gallery-control').removeClass('d-none');
 };
 
 Bootsy.Modal.prototype.alert = function(text, add=false) {
