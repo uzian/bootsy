@@ -18,24 +18,19 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '#image-upload-control .global-gallery-btn', function(event, xhr, settings) {
     this.showGalleryWindow();
 
-    fetch(Bootsy.config.remoteGalleryURL + '/user_files.json?filetype=image&page=1&per_page=12&school_id=2')
+    fetch(Bootsy.config.remoteGalleryURL + '/user_files.json?filetype=image&page=1&per_page=4&school_id=2')
       .then((response) => {
         return response.json();
       }, (error) => {
         throw error;
       })
       .then((data) => {
-        let modal_body = '';
         const images = data['files'];
+        let pagination = data['pagination'];
+        let modal_body = '';
 
         for (let i=0; i<images.length; i++) {
           const user_file_id = images[i]['id'];
-
-          // const img = '<img src="/user_files/'+user_file_id+'?variant=tiny" \
-          //       data-toggle="tooltip" title="'+images[i]['filename']+'" \
-          //       onclick="'+selected_image_function+'('+user_file_id+')">';
-          // const extra_class = (user_file_id == highlight_id ? ' bg-primary' : '')
-          // modal_body += "<div class='mr-1 mb-1 p-1 border file-index-image"+extra_class+"' id='selector_image_"+user_file_id+"'>"+img+"</div>";
 
           const img = `<img class="bootsy-image" src="${Bootsy.config.remoteGalleryURL}/user_files/${user_file_id}?variant=tiny" \
             data-toggle="tooltip" title="${images[i]['filename']}">`;
@@ -46,9 +41,21 @@ Bootsy.Modal = function(area) {
                         </div>`;
         }
 
+        // Update pagination hrefs
+        let start = pagination.indexOf('href="');
+        let end = pagination.indexOf('"', start+6);
+
+        while (start > -1) {
+          const src = Bootsy.config.remoteGalleryURL + pagination.substring(start+6, end);
+          pagination = pagination.substring(0, start+6) + src + pagination.substring(end);
+
+          start = pagination.indexOf('href="', end);
+          end = pagination.indexOf('"', start+6);
+        }
+
         modal_body = "<div class='d-flex flex-wrap'>"+modal_body+"</div>";
         $('#global-gallery-window .gallery').html(modal_body);
-        $('#global-gallery-window .pagination').html(data['pagination']);
+        $('#global-gallery-window .pagination').html(pagination);
       });
   }.bind(this));
 
