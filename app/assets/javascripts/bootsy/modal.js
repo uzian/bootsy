@@ -49,6 +49,9 @@ Bootsy.Modal = function(area) {
 
   // Hide menu on focus lost
   this.$el.on('focusout', '#dropdown-menu', function(event) {
+    // Do not hide if user clicked on child element
+    if ($(event.relatedTarget).parents('#dropdown-menu').length > 0) { return };
+
     const wrapper = $('#dropdown-menu');
     const menu = $('#dropdown-menu > .dropdown-menu');
 
@@ -60,7 +63,7 @@ Bootsy.Modal = function(area) {
   }.bind(this));
 
   // Insert image to post body from image gallery
-  this.$el.on('click', '.bootsy-image .insert', function(event) {
+  this.$el.on('click', '#dropdown-menu .insert', function(event) {
     var img, imageObject;
     var imageSuffix = '?variant=' + $(this).attr('data-image-size');
 
@@ -70,12 +73,15 @@ Bootsy.Modal = function(area) {
       imagePrefix = '';
     }
 
-    img = $(this).parents('.bootsy-image').find('img');
+    // img = $(this).parents('.bootsy-image').find('img');
+    // imageObject = {
+    //   src: img.attr('src').replace('?variant=thumbnail', imageSuffix)/*,
+    //   alt: img.attr('alt').replace('Thumb_', '')*/
+    // };
 
     imageObject = {
-      src: img.attr('src').replace('?variant=thumbnail', imageSuffix)/*,
-      alt: img.attr('alt').replace('Thumb_', '')*/
-    };
+      src: $(this).parents('#dropdown-menu')[0].data('image-src') + imageSuffix
+    }
 
     if ($(this).data('image-size') !== 'full_width') {
       imageObject.align = $(this).data('position');
