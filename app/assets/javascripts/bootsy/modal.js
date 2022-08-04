@@ -24,8 +24,6 @@ Bootsy.Modal = function(area) {
 
   // Invoke dropdown menu on image click
   this.$el.on('click', '.bootsy-image', function(event) {
-    console.log(event);
-
     const wrapper = $('#dropdown-menu');
     const menu = $('#dropdown-menu > .dropdown-menu');
 
@@ -43,10 +41,21 @@ Bootsy.Modal = function(area) {
     const src = event.target.src.slice(0, event.target.src.indexOf('?variant'));
     wrapper.attr('data-image-src', src);
 
-    // Appear menu
+    // Appear menu and set focus to it
     wrapper.addClass('show');
     menu.addClass('show');
-    // Hide menu on focus lost
+    wrapper.focus();
+    console.log(document.activeElement);
+  }.bind(this));
+
+  // Hide menu on focus lost
+  this.$el.on('focusout', '#dropdown-menu', function(event) {
+    const wrapper = $('#dropdown-menu');
+    const menu = $('#dropdown-menu > .dropdown-menu');
+
+    wrapper.removeClass('show');
+    menu.removeClass('show');
+
     // Clear out data attributes
   }.bind(this));
 
