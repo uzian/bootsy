@@ -80,7 +80,7 @@ Bootsy.Modal = function(area) {
     // };
 
     imageObject = {
-      src: $(this).parents('#dropdown-menu')[0].data('image-src') + imageSuffix
+      src: $(this).parents('#dropdown-menu').data('image-src') + imageSuffix
     }
 
     if ($(this).data('image-size') !== 'full_width') {
@@ -93,7 +93,7 @@ Bootsy.Modal = function(area) {
 
     insert = self.area.insertImage.bind(self.area);
     insert(imageObject);
-  }.bind(this));
+  });
 
   // Insert image to post body by URL provided
   this.$el.on('click', '#image-link-control .insert-btn', function(event, xhr, settings) {
