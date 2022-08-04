@@ -45,7 +45,6 @@ Bootsy.Modal = function(area) {
     wrapper.addClass('show');
     menu.addClass('show');
     wrapper.focus();
-    console.log(document.activeElement);
   }.bind(this));
 
   // Hide menu on focus lost
@@ -57,6 +56,7 @@ Bootsy.Modal = function(area) {
     menu.removeClass('show');
 
     // Clear out data attributes
+    wrapper.attr('data-image-src', '');
   }.bind(this));
 
   // Insert image to post body from image gallery
