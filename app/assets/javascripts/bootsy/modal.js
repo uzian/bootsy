@@ -8,6 +8,9 @@ Bootsy.Modal = function(area) {
   this.$el = area.$el.siblings('.bootsy-modal');
   this.area = area;
 
+  // In order to avoid form nesting
+  this.$el.parents('form').after(this.$el);
+
   // Display image URL input field on 'Use link' button click
   this.$el.on('click', '#image-upload-control .use-link-btn', this.showImageLinkWindow);
 
@@ -59,9 +62,6 @@ Bootsy.Modal = function(area) {
       });
   }.bind(this));
 
-  // In order to avoid form nesting
-  this.$el.parents('form').after(this.$el);
-
   // Invoke dropdown menu on image click
   this.$el.on('click', '.bootsy-image', function(event) {
     const wrapper = $('#dropdown-menu');
@@ -102,40 +102,7 @@ Bootsy.Modal = function(area) {
     wrapper.attr('data-image-src', '');
   }.bind(this));
 
-  // Insert image to post body from image gallery
-  this.$el.on('click', '#dropdown-menu .insert', function(event) {
-    var img, imageObject;
-    var imageSuffix = '?variant=' + $(this).attr('data-image-size');
-
-    event.preventDefault();
-
-    if ($(this).data('image-size') === 'original') {
-      imagePrefix = '';
-    }
-
-    // img = $(this).parents('.bootsy-image').find('img');
-    // imageObject = {
-    //   src: img.attr('src').replace('?variant=thumbnail', imageSuffix)/*,
-    //   alt: img.attr('alt').replace('Thumb_', '')*/
-    // };
-
-    imageObject = {
-      src: $(this).parents('#dropdown-menu').data('image-src') + imageSuffix
-    }
-
-    if ($(this).data('image-size') !== 'full_width') {
-      imageObject.align = $(this).data('position');
-    } else {
-      imageObject.class = 'full-width';
-    }
-
-    self.$el.modal('hide');
-
-    insert = self.area.insertImage.bind(self.area);
-    insert(imageObject);
-  });
-
-  // Insert image to post body by URL provided
+  // Upload image by URL provided
   this.$el.on('click', '#image-link-control .insert-btn', function(event, xhr, settings) {
     const imageURL = $($('#link-image-window input')[0]).val().trim();
 
@@ -187,6 +154,39 @@ Bootsy.Modal = function(area) {
       this.requestImageGallery();
     }
   }.bind(this));
+
+  // Insert image to post body from image gallery
+  this.$el.on('click', '#dropdown-menu .insert', function(event) {
+    var img, imageObject;
+    var imageSuffix = '?variant=' + $(this).attr('data-image-size');
+
+    event.preventDefault();
+
+    if ($(this).data('image-size') === 'original') {
+      imagePrefix = '';
+    }
+
+    // img = $(this).parents('.bootsy-image').find('img');
+    // imageObject = {
+    //   src: img.attr('src').replace('?variant=thumbnail', imageSuffix)/*,
+    //   alt: img.attr('alt').replace('Thumb_', '')*/
+    // };
+
+    imageObject = {
+      src: $(this).parents('#dropdown-menu').data('image-src') + imageSuffix
+    }
+
+    if ($(this).data('image-size') !== 'full_width') {
+      imageObject.align = $(this).data('position');
+    } else {
+      imageObject.class = 'full-width';
+    }
+
+    self.$el.modal('hide');
+
+    insert = self.area.insertImage.bind(self.area);
+    insert(imageObject);
+  });
 
   this.hideRefreshButton();
   this.hideEmptyAlert();
