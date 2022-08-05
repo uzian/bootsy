@@ -18,7 +18,7 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '#image-upload-control .global-gallery-btn', function(event, xhr, settings) {
     this.showGalleryWindow();
 
-    fetch(Bootsy.config.remoteGalleryURL + '/user_files.json?filetype=image&page=1&per_page=4&school_id=2')
+    fetch(Bootsy.config.galleryURL + '/user_files.json?filetype=image&page=1&per_page=4&school_id=2')
       .then((response) => {
         return response.json();
       }, (error) => {
@@ -32,7 +32,7 @@ Bootsy.Modal = function(area) {
         for (let i=0; i<images.length; i++) {
           const user_file_id = images[i]['id'];
 
-          const img = `<img class="bootsy-image" src="${Bootsy.config.remoteGalleryURL}/user_files/${user_file_id}?variant=tiny" \
+          const img = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
             data-toggle="tooltip" title="${images[i]['filename']}">`;
           modal_body += `<div class="mr-1 mb-1 p-1 border" file-index-image id="selector_image_${user_file_id}">
                           <a class="thumbnail" href="#">
@@ -46,7 +46,7 @@ Bootsy.Modal = function(area) {
         let end = pagination.indexOf('"', start+6);
 
         while (start > -1) {
-          const src = Bootsy.config.remoteGalleryURL + pagination.substring(start+6, end);
+          const src = Bootsy.config.galleryURL + pagination.substring(start+6, end);
           pagination = pagination.substring(0, start+6) + src + pagination.substring(end);
 
           start = pagination.indexOf('href="', end);

@@ -2,5 +2,5 @@
 window.Bootsy = window.Bootsy || {};
 
 Bootsy.config = {
-  remoteGalleryURL: 'http://localhost:3000'
+  galleryURL: 'http://localhost:3000' // -- Keep empty string if gallery is on the same origin
 }
