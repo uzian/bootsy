@@ -28,35 +28,10 @@ Bootsy.Modal = function(area) {
         throw error;
       })
       .then((data) => {
-        const images = data['files'];
-        let pagination = data['pagination'];
-        let modal_body = '';
+        let modal_body, pagination;
+        [modal_body, pagination] = this.parseGalleryResponse(data);
 
-        for (let i=0; i<images.length; i++) {
-          const user_file_id = images[i]['id'];
-
-          const img = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
-            data-toggle="tooltip" title="${images[i]['filename']}">`;
-          modal_body += `<div class="mr-1 mb-1 p-1 border" file-index-image id="selector_image_${user_file_id}">
-                          <a class="thumbnail" href="#">
-                            ${img}
-                          </a>
-                        </div>`;
-        }
-
-        // Update pagination hrefs
-        let start = pagination.indexOf('href="');
-        let end = pagination.indexOf('"', start+6);
-
-        while (start > -1) {
-          const src = Bootsy.config.galleryURL + pagination.substring(start+6, end);
-          pagination = pagination.substring(0, start+6) + src + pagination.substring(end);
-
-          start = pagination.indexOf('href="', end);
-          end = pagination.indexOf('"', start+6);
-        }
-
-        modal_body = "<div class='d-flex flex-wrap'>"+modal_body+"</div>";
+        modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
         $('#global-gallery-window .gallery').html(modal_body);
         $('#global-gallery-window .pagination').html(pagination);
       });
@@ -100,6 +75,44 @@ Bootsy.Modal = function(area) {
 
     // Clear out data attributes
     wrapper.attr('data-image-src', '');
+  }.bind(this));
+
+  // Paginate through images in gallery
+  this.$el.on('click', '.pagination .page-link', function(event) {
+    event.preventDefault();
+    // Make clicked pagination button active
+    $('.page-item').removeClass('active');
+    $(event.currentTarget).parents('.page-item').addClass('active');
+
+    const url = $(event.currentTarget).attr('href');
+    const pageId = $(event.currentTarget).text();
+
+    // Check whether this page was accessed before
+    if ($(`div[data-page-id="${pageId}"]`).length > 0) {
+      // If it was - display it and hide all others
+      const pages = $('div[data-page-id]');
+      this.showPage(pages, pageId);
+    } else {
+      // Otherwise, fetch images and create new page
+      fetch(url)
+        .then((response) => {
+          return response.json();
+        }, (error) => {
+          throw error;
+        })
+        .then((data) => {
+          let modal_body, pagination;
+          [modal_body, pagination] = this.parseGalleryResponse(data);
+
+          modal_body = `<div class="d-flex flex-wrap" data-page-id="${pageId}">`+modal_body+"</div>";
+          $('#global-gallery-window .gallery').append(modal_body);
+          $('#global-gallery-window .pagination').html(pagination);
+        })
+        .then(() => {
+          const pages = $('div[data-page-id]');
+          this.showPage(pages, pageId);
+        });
+    }
   }.bind(this));
 
   // Upload image by URL provided
@@ -405,6 +418,50 @@ Bootsy.Modal.prototype.clearAlert = function() {
   alert.html('')
   alert.removeClass('d-block');
   alert.fadeOut(200);
+}
+
+Bootsy.Modal.prototype.showPage = function(pages, pageId) {
+  pages.each((i, page) => {
+    if ($(page).data('page-id') === Number(pageId)) {
+      $(page).removeClass('d-none');
+      $(page).addClass('d-flex');
+    } else {
+      $(page).addClass('d-none');
+      $(page).removeClass('d-flex');
+    }
+  });
+}
+
+Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
+  const images = data['files'];
+  let pagination = data['pagination'];
+  let modal_body = '';
+
+  for (let i=0; i<images.length; i++) {
+    const user_file_id = images[i]['id'];
+
+    const img = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
+      data-toggle="tooltip" title="${images[i]['filename']}">`;
+    modal_body += `<div class="mr-1 mb-1 p-1 border" file-index-image id="selector_image_${user_file_id}">
+                    <a class="thumbnail" href="#">
+                      ${img}
+                    </a>
+                  </div>`;
+  }
+
+  // Update pagination hrefs
+  let start = pagination.indexOf('href="');
+  let end = pagination.indexOf('"', start+6);
+
+  while (start > -1) {
+    const src = Bootsy.config.galleryURL + pagination.substring(start+6, end);
+    pagination = pagination.substring(0, start+6) + src + pagination.substring(end);
+
+    start = pagination.indexOf('href="', end);
+    end = pagination.indexOf('"', start+6);
+  }
+
+  return [modal_body, pagination];
 }
 
 // Function to fetch multiple images from API and upload them into the system
