@@ -1,4 +1,3 @@
-//= require bootsy/config
 //= require bootsy/vendor/wysihtml
 //= require bootsy/vendor/wysihtml.all-commands
 //= require bootsy/vendor/wysihtml.table_editing

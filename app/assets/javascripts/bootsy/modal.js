@@ -21,7 +21,9 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '#image-upload-control .global-gallery-btn', function(event, xhr, settings) {
     this.showGalleryWindow();
 
-    fetch(Bootsy.config.galleryURL + '/user_files.json?filetype=image&page=1&per_page=4&school_id=2')
+    fetch(Bootsy.config.galleryURL + `/user_files.json?filetype=image&page=${Bootsy.config.page}
+                                      &per_page=${Bootsy.config.perPage}
+                                      &school_id=${Bootsy.config.schoolId}`)
       .then((response) => {
         return response.json();
       }, (error) => {
