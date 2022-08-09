@@ -55,7 +55,7 @@ Bootsy.Modal = function(area) {
     })
 
     // Update data attributes with image-specific data
-    const src = event.target.src.slice(0, event.target.src.indexOf('?variant'));
+    const src = event.currentTarget.src.slice(0, event.currentTarget.src.indexOf('?variant'));
     wrapper.attr('data-image-src', src);
 
     // Appear menu and set focus to it
@@ -170,14 +170,13 @@ Bootsy.Modal = function(area) {
     }
   }.bind(this));
 
-  // Insert image to post body from image gallery
+  // Insert image to post body
   this.$el.on('click', '#dropdown-menu .insert', function(event) {
-    var img, imageObject;
-    var imageSuffix = '?variant=' + $(this).attr('data-image-size');
+    const imageSuffix = '?variant=' + $(this).attr('data-image-size');
 
     event.preventDefault();
 
-    if ($(this).data('image-size') === 'original') {
+    if ($(this).attr('data-image-size') === 'original') {
       imagePrefix = '';
     }
 
@@ -187,12 +186,12 @@ Bootsy.Modal = function(area) {
     //   alt: img.attr('alt').replace('Thumb_', '')*/
     // };
 
-    imageObject = {
-      src: $(this).parents('#dropdown-menu').data('image-src') + imageSuffix
+    const imageObject = {
+      src: $(this).parents('#dropdown-menu').attr('data-image-src') + imageSuffix
     }
 
-    if ($(this).data('image-size') !== 'full_width') {
-      imageObject.align = $(this).data('position');
+    if ($(this).attr('data-image-size') !== 'full_width') {
+      imageObject.align = $(this).attr('data-position');
     } else {
       imageObject.class = 'full-width';
     }
@@ -424,7 +423,7 @@ Bootsy.Modal.prototype.clearAlert = function() {
 
 Bootsy.Modal.prototype.showPage = function(pages, pageId) {
   pages.each((i, page) => {
-    if ($(page).data('page-id') === Number(pageId)) {
+    if ($(page).attr('data-page-id') === Number(pageId)) {
       $(page).removeClass('d-none');
       $(page).addClass('d-flex');
     } else {
@@ -444,7 +443,7 @@ Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
 
     const img = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
       data-toggle="tooltip" title="${images[i]['filename']}">`;
-    modal_body += `<div class="mr-1 mb-1 p-1 border" file-index-image id="selector_image_${user_file_id}">
+    modal_body += `<div class="mr-1 mb-1 p-1 border" id="selector_image_${user_file_id}">
                     <a class="thumbnail" href="#">
                       ${img}
                     </a>
