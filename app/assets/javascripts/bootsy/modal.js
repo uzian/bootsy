@@ -21,9 +21,7 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '#image-upload-control .global-gallery-btn', function(event, xhr, settings) {
     this.showGalleryWindow();
 
-    fetch(Bootsy.config.galleryURL + `/user_files.json?filetype=image&page=${Bootsy.config.page}
-                                      &per_page=${Bootsy.config.perPage}
-                                      &school_id=${Bootsy.config.schoolId}`)
+    fetch(Bootsy.config.galleryURL + `/user_files.json?filetype=image&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`)
       .then((response) => {
         return response.json();
       }, (error) => {
@@ -423,7 +421,7 @@ Bootsy.Modal.prototype.clearAlert = function() {
 
 Bootsy.Modal.prototype.showPage = function(pages, pageId) {
   pages.each((i, page) => {
-    if ($(page).attr('data-page-id') === Number(pageId)) {
+    if ($(page).attr('data-page-id') === pageId) {
       $(page).removeClass('d-none');
       $(page).addClass('d-flex');
     } else {
