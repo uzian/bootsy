@@ -32,8 +32,8 @@ Bootsy.Modal = function(area) {
         [modal_body, pagination] = this.parseGalleryResponse(data);
 
         modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
-        $('#global-gallery-window .gallery').html(modal_body);
-        $('#global-gallery-window .pagination').html(pagination);
+        $('#global-gallery-window .gallery-wrapper').html(modal_body);
+        $('#global-gallery-window .pagination-wrapper').html(pagination);
       });
   }.bind(this));
 
@@ -80,12 +80,36 @@ Bootsy.Modal = function(area) {
   // Paginate through images in gallery
   this.$el.on('click', '.pagination .page-link', function(event) {
     event.preventDefault();
-    // Make clicked pagination button active
-    $('.page-item').removeClass('active');
-    $(event.currentTarget).parents('.page-item').addClass('active');
 
-    const url = $(event.currentTarget).attr('href');
-    const pageId = $(event.currentTarget).text();
+    const paginationBtns = $('.pagination .page-item');
+    let nextActive = event.currentTarget;
+    let url = $(event.currentTarget).attr('href');
+    let pageId = $(event.currentTarget).text();
+
+    // If text content is arrow - replace it with approprite page number
+    if (pageId === '\u2192') {
+      pageId = String(Number($('.page-item.active').text()) + 1);
+      nextActive = $('.page-item.active').next().children()[0];
+      url = $(nextActive).attr('href');
+    } else if (pageId === '\u2190') {
+      pageId = String(Number($('.page-item.active').text()) - 1);
+      nextActive = $('.page-item.active').prev().children()[0];
+      url = $(nextActive).attr('href');
+    }
+
+    // Make clicked pagination button active
+    $('.page-item.active').removeClass('active');
+    $(nextActive).parent().addClass('active');
+
+    // // Disable/enable arrows
+    if (pageId === '1') {
+      $(paginationBtns[0]).addClass('disabled');
+    } else if (pageId === $(paginationBtns.get(-2)).text()) {
+      $(paginationBtns.get(-1)).addClass('disabled');
+    } else {
+      $(paginationBtns[0]).removeClass('disabled');
+      $(paginationBtns.get(-1)).removeClass('disabled');
+    }
 
     // Check whether this page was accessed before
     if ($(`div[data-page-id="${pageId}"]`).length > 0) {
@@ -105,8 +129,8 @@ Bootsy.Modal = function(area) {
           [modal_body, pagination] = this.parseGalleryResponse(data);
 
           modal_body = `<div class="d-flex flex-wrap" data-page-id="${pageId}">`+modal_body+"</div>";
-          $('#global-gallery-window .gallery').append(modal_body);
-          $('#global-gallery-window .pagination').html(pagination);
+          $('#global-gallery-window .gallery-wrapper').append(modal_body);
+          // $('#global-gallery-window .pagination-wrapper').html(pagination);
         })
         .then(() => {
           const pages = $('div[data-page-id]');

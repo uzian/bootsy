@@ -403,3 +403,7 @@ body.bootsy_text_area.form-control {
 img.full-width {
   width: 100%;
 }
+
+.pagination .page-item {
+  cursor: pointer;
+}
