@@ -130,7 +130,6 @@ Bootsy.Modal = function(area) {
 
           modal_body = `<div class="d-flex flex-wrap" data-page-id="${pageId}">`+modal_body+"</div>";
           $('#global-gallery-window .gallery-wrapper').append(modal_body);
-          // $('#global-gallery-window .pagination-wrapper').html(pagination);
         })
         .then(() => {
           const pages = $('div[data-page-id]');
