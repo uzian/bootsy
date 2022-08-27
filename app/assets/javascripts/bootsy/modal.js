@@ -39,8 +39,24 @@ Bootsy.Modal = function(area) {
 
   // Invoke dropdown menu on image click
   this.$el.on('click', '.bootsy-image', function(event) {
+    // Check if clicked element is image tag, or contains image tag
+    let imgTag;
+
+    if ($(event.currentTarget).attr('src')) {
+      imgTag = event.currentTarget;
+    } else {
+      imgTag = $(event.currentTarget).find('img');
+    }
+
+    // If image tag was not found - abort the dropdown menu invocation
+    if (!imgTag) { return }
+
+    // Update data attributes with image-specific data
     const wrapper = $('#dropdown-menu');
     const menu = $('#dropdown-menu > .dropdown-menu');
+    const src = $(imgTag).attr('src').slice(0, $(imgTag).attr('src').indexOf('?variant'));
+
+    wrapper.attr('data-image-src', src);
 
     // Reposition the menu under the clicking point
     const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
@@ -51,10 +67,6 @@ Bootsy.Modal = function(area) {
       'left': String(offsetX) + 'px',
       'top': String(offsetY) + 'px'
     })
-
-    // Update data attributes with image-specific data
-    const src = event.currentTarget.src.slice(0, event.currentTarget.src.indexOf('?variant'));
-    wrapper.attr('data-image-src', src);
 
     // Appear menu and set focus to it
     wrapper.addClass('show');
