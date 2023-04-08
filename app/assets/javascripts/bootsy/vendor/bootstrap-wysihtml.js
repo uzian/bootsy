@@ -412,7 +412,7 @@
             var self = this;
             var insertLinkModal = toolbar.find('.bootstrap-wysihtml-insert-link-modal');
             var urlInput = insertLinkModal.find('.bootstrap-wysihtml-insert-link-url');
-            var asButton = insertLinkModal.find('.bootstrap-wysihtml-insert-link-btn').prop('checked')
+            var asButton = insertLinkModal.find('.bootstrap-wysihtml-insert-link-btn');
             var insertButton = insertLinkModal.find('a.btn-primary');
             var initialValue = urlInput.val();
             var caretBookmark;
@@ -425,12 +425,12 @@
                   self.editor.composer.selection.setBookmark(caretBookmark);
                   caretBookmark = null;
                 }
-                console.log
+
                 self.editor.composer.commands.exec("createLink", {
                     href: url,
                     target: "_blank",
                     rel: "nofollow",
-                    class: asButton ? "btn btn-primary mt-1 ml-1" : ""
+                    class: asButton.prop('checked') ? "btn btn-primary mt-1 ml-1" : ""
                 });
             };
             var pressedEnter = false;
