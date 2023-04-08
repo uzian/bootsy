@@ -108,7 +108,11 @@
                       "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" +
                     "</div>" +
                     "<div class='modal-body'>" +
-                      "<input value='http://' class='bootstrap-wysihtml-insert-link-url form-control input-lg'>" +
+                      "<input value='http://' class='bootstrap-wysihtml-insert-link-url form-control input-lg'><br>" +
+                      "<div class='form-check'>"+
+                        "<input class='form-check-input bootstrap-wysihtml-insert-link-btn' type='checkbox' value='1' name='link_as_button' id='link_as_button'>"+
+                        "<label class='form-check-label' for='link_as_button'>" + locale.link.show_as_button + "</label>"+
+                      "</div>"+
                     "</div>" +
                     "<div class='modal-footer'>" +
                       "<a href='#' class='btn btn-secondary' data-dismiss='modal'>" + locale.link.cancel + "</a>" +
@@ -408,6 +412,7 @@
             var self = this;
             var insertLinkModal = toolbar.find('.bootstrap-wysihtml-insert-link-modal');
             var urlInput = insertLinkModal.find('.bootstrap-wysihtml-insert-link-url');
+            var asButton = insertLinkModal.find('.bootstrap-wysihtml-insert-link-btn').prop('checked')
             var insertButton = insertLinkModal.find('a.btn-primary');
             var initialValue = urlInput.val();
             var caretBookmark;
@@ -420,10 +425,12 @@
                   self.editor.composer.selection.setBookmark(caretBookmark);
                   caretBookmark = null;
                 }
+                console.log
                 self.editor.composer.commands.exec("createLink", {
                     href: url,
                     target: "_blank",
-                    rel: "nofollow"
+                    rel: "nofollow",
+                    class: asButton ? "btn btn-primary mt-1 ml-1" : ""
                 });
             };
             var pressedEnter = false;

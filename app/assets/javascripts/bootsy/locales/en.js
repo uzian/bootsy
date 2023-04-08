@@ -33,6 +33,7 @@
     link: {
       insert: 'Insert link',
       cancel: 'Cancel',
+      show_as_button: 'Show as button',
       target: 'Open link in new window'
     },
     image: {
