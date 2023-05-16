@@ -34,7 +34,8 @@ module Bootsy
 
       text_area(object_name, method, text_area_options(options)) +
         modal(options, container) +
-        gallery_id_param(object_name, container, options)
+        # gallery_id_param(object_name, container, options)
+        gallery_id_param(options)
     end
 
     private
@@ -108,12 +109,20 @@ module Bootsy
       )
     end
 
-    def gallery_id_param(object_name, container, options)
-      return unless enable_uploader?(options) && container.new_record?
+    # def gallery_id_param(object_name, container, options)
+    #   return unless enable_uploader?(options) && container.new_record?
 
-      hidden_field(
-        object_name,
+    #   hidden_field(
+    #     object_name,
+    #     :bootsy_image_gallery_id,
+    #     class: 'bootsy_image_gallery_id'
+    #   ) # -> Post.bootsy_image_gallery_id
+    # end
+
+    def gallery_id_param(options)
+      hidden_field_tag(
         :bootsy_image_gallery_id,
+        options[:data][:gallery_id],
         class: 'bootsy_image_gallery_id'
       )
     end
