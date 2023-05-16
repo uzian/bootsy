@@ -106,7 +106,7 @@ module Bootsy
 
       options.deep_merge!(
         data: { gallery_id: gallery.id }
-      )
+      ) if gallery
     end
 
     # def gallery_id_param(object_name, container, options)
