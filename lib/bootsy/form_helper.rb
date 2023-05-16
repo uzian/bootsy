@@ -104,11 +104,9 @@ module Bootsy
       return unless resource_id && resource_type
       gallery = Bootsy::ImageGallery.where(bootsy_resource_id: resource_id, bootsy_resource_type: resource_type).first
 
-      if gallery
-        options.deep_merge!(
-          data: { gallery_id: gallery.id }
-        )
-      end
+      options.deep_merge!(
+        data: { gallery_id: gallery.id }
+      ) if gallery
     end
 
     # def gallery_id_param(object_name, container, options)
