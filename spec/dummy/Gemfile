@@ -26,3 +26,5 @@ gem 'rubocop'
 gem 'sham_rack', require: false
 gem 'mini_magick'
 gem 'selenium-webdriver'
+gem 'awesome_print'
+gem 'byebug'

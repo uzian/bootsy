@@ -29,7 +29,8 @@ module Bootsy
     def bootsy_area(object_name, method, options = {})
       container = options[:container] || options[:object]
 
-      set_gallery_id(container, options)
+      # set_gallery_id(container, options)
+      set_gallery_id(options)
 
       text_area(object_name, method, text_area_options(options)) +
         modal(options, container) +
@@ -87,12 +88,23 @@ module Bootsy
       )
     end
 
-    def set_gallery_id(container, options)
-      return unless enable_uploader?(options)
+    # def set_gallery_id(container, options)
+    #   return unless enable_uploader?(options)
 
-      container.bootsy_image_gallery_id ||= Bootsy::ImageGallery.create!.id
+    #   container.bootsy_image_gallery_id ||= Bootsy::ImageGallery.create!.id
+    #   options.deep_merge!(
+    #     data: { gallery_id: container.bootsy_image_gallery_id }
+    #   )
+    # end
+
+    def set_gallery_id(options)
+      resource_id = options[:resource_id]
+      resource_type = options[:resource_type]
+      return unless resource_id && resource_type
+      gallery = Bootsy::ImageGallery.where(bootsy_resource_id: resource_id, bootsy_resource_type: resource_type).first
+
       options.deep_merge!(
-        data: { gallery_id: container.bootsy_image_gallery_id }
+        data: { gallery_id: gallery.id }
       )
     end
 

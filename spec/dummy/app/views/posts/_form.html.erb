@@ -18,7 +18,7 @@
 
   <div class="form-group">
     <%= f.label :content %>
-    <%= f.bootsy_area :content, editor_options: { html:true }, rows: 16, class: 'form-control' %>
+    <%= f.bootsy_area :content, editor_options: { html:true }, resource_id: @resource_id, resource_type: @resource_type, rows: 16, class: 'form-control' %>
   </div>
 
   <div class="actions">

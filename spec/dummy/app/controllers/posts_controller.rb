@@ -10,6 +10,8 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    @resource_id = 0
+    @resource_type = 'User'
 
     return unless params[:with_comment]
 
