@@ -26,3 +26,4 @@ gem 'pry-rails'
 gem 'rspec-rails'
 gem 'rubocop'
 gem 'sham_rack', require: false
+gem 'byebug'

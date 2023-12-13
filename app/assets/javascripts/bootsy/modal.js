@@ -58,6 +58,10 @@ Bootsy.Modal = function(area) {
 
     wrapper.attr('data-image-src', src);
 
+    // Update delete button's destination
+    const imgId = $(imgTag).attr('src').slice($(imgTag).attr('src').lastIndexOf('/')+1, $(imgTag).attr('src').indexOf('?variant'));
+    $('#delete-image').attr('href', '/bootsy/images/' + imgId);
+
     // Reposition the menu under the clicking point
     const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
     const offsetY = event.clientY - ($('.bootsy-modal .modal-dialog').outerHeight(true) - $('.bootsy-modal .modal-dialog').height())/2 - 5;
