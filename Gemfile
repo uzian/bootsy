@@ -12,6 +12,7 @@ gem 'sqlite3'
 gem 'font-awesome-sass'
 gem 'mini_magick'
 gem 'image_processing'
+gem 'net-smtp'
 
 gemspec
 

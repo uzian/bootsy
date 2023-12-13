@@ -126,6 +126,10 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     minitest (5.16.2)
+    net-protocol (0.2.2)
+      timeout
+    net-smtp (0.4.0)
+      net-protocol
     nio4r (2.5.8)
     nokogiri (1.13.7-x86_64-linux)
       racc (~> 1.4)
@@ -238,6 +242,7 @@ GEM
     sqlite3 (1.4.4)
     thor (1.2.1)
     tilt (2.0.10)
+    timeout (0.4.1)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.2.0)
@@ -263,6 +268,7 @@ DEPENDENCIES
   image_processing
   jquery-rails
   mini_magick
+  net-smtp
   pry-rails
   puma
   rails (~> 6.1)
