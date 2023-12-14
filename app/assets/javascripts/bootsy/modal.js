@@ -273,6 +273,7 @@ Bootsy.Modal.prototype.showEmptyAlert = function() {
 };
 
 Bootsy.Modal.prototype.hideEmptyAlert = function() {
+  this.$el.find('.bootsy-empty-alert').text('');
   this.$el.find('.bootsy-empty-alert').fadeOut(200);
 };
 
