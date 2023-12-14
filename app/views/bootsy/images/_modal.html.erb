@@ -40,3 +40,8 @@
     </div>
   </div>
 </div>
+
+<%= javascript_tag do %>
+  window.Bootsy.translations = window.Bootsy.translations || {};
+  window.Bootsy.translations['noImagesUploaded'] = "<%= t('bootsy.no_images_uploaded') %>";
+<% end %>
