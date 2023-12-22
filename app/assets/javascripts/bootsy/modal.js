@@ -268,7 +268,7 @@ Bootsy.Modal.prototype.hideUploadLoadingAnimation = function() {
 
 // Alert for empty gallery
 Bootsy.Modal.prototype.showEmptyAlert = function() {
-  this.$el.find('.bootsy-empty-alert').text(window.Bootsy.translations['noImagesUploaded']);
+  this.$el.find('.bootsy-empty-alert').text(I18n.bootsy.no_images_uploaded);
   this.$el.find('.bootsy-empty-alert').fadeIn(200);
 };
 
