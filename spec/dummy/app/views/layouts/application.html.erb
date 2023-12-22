@@ -36,4 +36,8 @@
       </footer>
     </div>
   </body>
+
+  <%= javascript_tag do %>
+    window.I18n = <%= current_translations.to_json.html_safe %>
+  <% end %>
 </html>
