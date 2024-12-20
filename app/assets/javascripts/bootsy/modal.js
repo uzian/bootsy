@@ -423,6 +423,7 @@ Bootsy.Modal.prototype.clearModal = function() {
   $('#image-upload-control').addClass('d-none');
   $('#image-link-control').addClass('d-none');
   $('#global-gallery-control').addClass('d-none');
+  $('#videos-control').addClass('d-none');
 }
 
 Bootsy.Modal.prototype.showImageUploadWindow = function() {
