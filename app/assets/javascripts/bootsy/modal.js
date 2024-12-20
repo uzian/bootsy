@@ -40,6 +40,21 @@ Bootsy.Modal = function(area) {
   // Display videos selection on 'Videos' button click
   this.$el.on('click', '#image-upload-control .videos-btn', function(event, xhr, settings) {
     this.showVideosWindow();
+
+    fetch(Bootsy.config.galleryURL + `/user_files.json?filetype=video&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`)
+      .then((response) => {
+        return response.json();
+      }, (error) => {
+        throw error;
+      })
+      .then((data) => {
+        let modal_body, pagination;
+        [modal_body, pagination] = this.parseGalleryResponse(data);
+
+        modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
+        $('#videos-window .gallery-wrapper').html(modal_body);
+        $('#videos-window .pagination-wrapper').html(pagination);
+      });
   }.bind(this))
 
   // Invoke dropdown menu on image click
