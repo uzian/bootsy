@@ -13,6 +13,7 @@ en:
       insert: Insert
       cancel: Cancel
       select_from_gallery: Select from gallery
+      select_video: Videos
     image_gallery: Image Gallery
     image:
       s: Image

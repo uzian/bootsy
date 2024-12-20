@@ -37,6 +37,11 @@ Bootsy.Modal = function(area) {
       });
   }.bind(this));
 
+  // Display videos selection on 'Videos' button click
+  this.$el.on('click', '#image-upload-control .videos-btn', function(event, xhr, settings) {
+    this.showVideosWindow();
+  }.bind(this))
+
   // Invoke dropdown menu on image click
   this.$el.on('click', '.bootsy-image', function(event) {
     // Check if clicked element is image tag, or contains image tag
@@ -436,6 +441,12 @@ Bootsy.Modal.prototype.showGalleryWindow = function() {
   Bootsy.Modal.prototype.clearModal();
   $('#global-gallery-window').removeClass('d-none');
   $('#global-gallery-control').removeClass('d-none');
+};
+
+Bootsy.Modal.prototype.showVideosWindow = function() {
+  Bootsy.Modal.prototype.clearModal();
+  $('#videos-window').removeClass('d-none');
+  $('#videos-control').removeClass('d-none');
 };
 
 Bootsy.Modal.prototype.alert = function(text, add=false) {
