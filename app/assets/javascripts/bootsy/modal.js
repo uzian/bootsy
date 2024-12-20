@@ -435,6 +435,7 @@ Bootsy.Modal.prototype.clearModal = function() {
   $('#select-image-window').addClass('d-none');
   $('#link-image-window').addClass('d-none');
   $('#global-gallery-window').addClass('d-none');
+  $('#videos-window').addClass('d-none');
   $('#image-upload-control').addClass('d-none');
   $('#image-link-control').addClass('d-none');
   $('#global-gallery-control').addClass('d-none');
