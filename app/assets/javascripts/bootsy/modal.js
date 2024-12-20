@@ -503,20 +503,29 @@ Bootsy.Modal.prototype.showPage = function(pages, pageId) {
 }
 
 Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
-  const images = data['files'];
+  const files = data['files'];
+  const filetype = files[0]['filetype'] || 'image';
   let pagination = data['pagination'];
   let modal_body = '';
 
-  for (let i=0; i<images.length; i++) {
-    const user_file_id = images[i]['id'];
+  for (let i=0; i<files.length; i++) {
+    const user_file_id = files[i]['id'];
+    let tag;
 
-    const img = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
-      data-toggle="tooltip" title="${images[i]['filename']}">`;
+    if (filetype === 'image') {
+      tag = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
+              data-toggle="tooltip" title="${files[i]['filename']}">`;
+    } else if (filetype === 'video') {
+      tag = `<video class="bootsy-image" muted playsinline preload="metadata">
+              <source src="${Bootsy.config.galleryURL}/user_files/${user_file_id}" />
+              Your browser doesn't support videos
+            </video>`;
+    }
     modal_body += `<div class="mr-1 mb-1 p-1 border" id="selector_image_${user_file_id}">
-                    <a class="thumbnail" href="#">
-                      ${img}
-                    </a>
-                  </div>`;
+      <a class="thumbnail" href="#">
+        ${tag}
+      </a>
+    </div>`;
   }
 
   // Update pagination hrefs
