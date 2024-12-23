@@ -57,45 +57,59 @@ Bootsy.Modal = function(area) {
       });
   }.bind(this))
 
-  // Invoke dropdown menu on image click
+  // Invoke dropdown menu on image/video click
   this.$el.on('click', '.bootsy-image', function(event) {
-    // Check if clicked element is image tag, or contains image tag
-    let imgTag;
-
-    if ($(event.currentTarget).attr('src')) {
-      imgTag = event.currentTarget;
-    } else {
-      imgTag = $(event.currentTarget).find('img');
-    }
-
-    // If image tag was not found - abort the dropdown menu invocation
-    if (!imgTag) { return }
-
-    // Update data attributes with image-specific data
     const wrapper = $('#dropdown-menu');
     const menu = $('#dropdown-menu > .dropdown-menu');
-    const src = $(imgTag).attr('src').slice(0, $(imgTag).attr('src').indexOf('?variant'));
+    let invokeMenu = false;
 
-    wrapper.attr('data-image-src', src);
+    if ($(event.currentTarget).is('video')) {
+      const vidTag = event.currentTarget;
+      invokeMenu = true;
 
-    // Update delete button's destination
-    const imgId = $(imgTag).attr('src').slice($(imgTag).attr('src').lastIndexOf('/')+1, $(imgTag).attr('src').indexOf('?variant'));
-    $('#delete-image').attr('href', '/bootsy/images/' + imgId);
+      // Update data attributes with video-specific data
+      const src = $(vidTag).find('source').first().attr('src');
+      wrapper.attr('data-image-src', src);
+      wrapper.attr('data-type', 'video');
 
-    // Reposition the menu under the clicking point
-    const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
-    const offsetY = event.clientY - ($('.bootsy-modal .modal-dialog').outerHeight(true) - $('.bootsy-modal .modal-dialog').height())/2 - 5;
+    } else if ($(event.currentTarget).is('img') || $(event.currentTarget).find('img').length > 0) {
+      const imgTag = $(event.currentTarget).is('img') ? event.currentTarget : $(event.currentTarget).find('img')[0];
+      invokeMenu = true;
 
-    wrapper.css({
-      'position': 'absolute',
-      'left': String(offsetX) + 'px',
-      'top': String(offsetY) + 'px'
-    })
+      // Update data attributes with image-specific data
+      const src = $(imgTag).attr('src').slice(0, $(imgTag).attr('src').indexOf('?variant'));
+      wrapper.attr('data-image-src', src);
+      wrapper.attr('data-type', 'image');
 
-    // Appear menu and set focus to it
-    wrapper.addClass('show');
-    menu.addClass('show');
-    wrapper.focus();
+      // Update delete button's destination
+      const imgId = $(imgTag).attr('src').slice($(imgTag).attr('src').lastIndexOf('/')+1, $(imgTag).attr('src').indexOf('?variant'));
+      $('#delete-image').attr('href', '/bootsy/images/' + imgId);
+    }
+
+    if (invokeMenu) {
+      // If current screen is select-image-window or link-image-window (i.e. image is being attached to this page only)
+      // - display "delete" option. Hide it otherwise.
+      if ($(event.currentTarget).closest('#select-image-window, #link-image-window').length > 0) {
+        $('#delete-image').show();
+      } else {
+        $('#delete-image').hide();
+      }
+
+      // Reposition the menu under the clicking point
+      const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
+      const offsetY = event.clientY - ($('.bootsy-modal .modal-dialog').outerHeight(true) - $('.bootsy-modal .modal-dialog').height())/2 - 5;
+
+      wrapper.css({
+        'position': 'absolute',
+        'left': String(offsetX) + 'px',
+        'top': String(offsetY) + 'px'
+      })
+
+      // Appear menu and set focus to it
+      wrapper.addClass('show');
+      menu.addClass('show');
+      wrapper.focus();
+    }
   }.bind(this));
 
   // Hide menu on focus lost
