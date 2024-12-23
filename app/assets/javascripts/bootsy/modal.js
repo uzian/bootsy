@@ -87,14 +87,6 @@ Bootsy.Modal = function(area) {
     }
 
     if (invokeMenu) {
-      // If current screen is select-image-window or link-image-window (i.e. image is being attached to this page only)
-      // - display "delete" option. Hide it otherwise.
-      if ($(event.currentTarget).closest('#select-image-window, #link-image-window').length > 0) {
-        $('#delete-image').show();
-      } else {
-        $('#delete-image').hide();
-      }
-
       // Reposition the menu under the clicking point
       const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
       const offsetY = event.clientY - ($('.bootsy-modal .modal-dialog').outerHeight(true) - $('.bootsy-modal .modal-dialog').height())/2 - 5;
@@ -104,6 +96,14 @@ Bootsy.Modal = function(area) {
         'left': String(offsetX) + 'px',
         'top': String(offsetY) + 'px'
       })
+
+      // If current screen is select-image-window or link-image-window (i.e. image is being attached to this page only)
+      // - display "delete" option. Hide it otherwise.
+      if ($(event.currentTarget).closest('#select-image-window, #link-image-window').length > 0) {
+        $('#delete-image').show();
+      } else {
+        $('#delete-image').hide();
+      }
 
       // Appear menu and set focus to it
       wrapper.addClass('show');
