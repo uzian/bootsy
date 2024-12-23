@@ -89,3 +89,15 @@ Bootsy.Area.prototype.insertImage = function(image) {
 
   this.editor.composer.commands.exec('insertImage', image);
 };
+
+// Insert video in the text
+Bootsy.Area.prototype.insertVideo = function(video) {
+  this.editor.currentView.element.focus();
+
+  if (this.caretBookmark) {
+    this.editor.composer.selection.setBookmark(this.caretBookmark);
+    this.caretBookmark = null;
+  }
+
+  this.editor.composer.commands.exec('insertVideo', video);
+};

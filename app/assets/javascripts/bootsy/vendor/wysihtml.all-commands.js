@@ -298,6 +298,81 @@ wysihtml.commands.insertImage = (function() {
   };
 })();
 
+wysihtml.commands.insertVideo = (function() {
+  var NODE_NAME = "VIDEO";
+  return {
+    exec: function(composer, command, value) {
+      value = typeof(value) === "object" ? value : { src: value };
+
+      var doc     = composer.doc,
+          video   = this.state(composer),
+          textNode,
+          parent;
+      var source = doc.createElement("SOURCE");
+
+      video = doc.createElement(NODE_NAME);
+      source.setAttribute("src", value.src);
+      video.appendChild(source);
+
+      for (var i in value) {
+        if (i !== "src") {
+          video.setAttribute(i === "className" ? "class" : i, value[i]);
+        }
+      }
+
+      composer.selection.insertNode(video);
+      if (wysihtml.browser.hasProblemsSettingCaretAfterImg()) {
+        textNode = doc.createTextNode(wysihtml.INVISIBLE_SPACE);
+        composer.selection.insertNode(textNode);
+        composer.selection.setAfter(textNode);
+      } else {
+        composer.selection.setAfter(video);
+      }
+    },
+
+    state: function(composer) {
+      var doc = composer.doc,
+          selectedNode,
+          text,
+          videosInSelection;
+
+      if (!wysihtml.dom.hasElementWithTagName(doc, NODE_NAME)) {
+        return false;
+      }
+
+      selectedNode = composer.selection.getSelectedNode();
+      if (!selectedNode) {
+        return false;
+      }
+
+      if (selectedNode.nodeName === NODE_NAME) {
+        // This works perfectly in IE
+        return selectedNode;
+      }
+
+      if (selectedNode.nodeType !== wysihtml.ELEMENT_NODE) {
+        return false;
+      }
+
+      text = composer.selection.getText();
+      text = wysihtml.lang.string(text).trim();
+      if (text) {
+        return false;
+      }
+
+      videosInSelection = composer.selection.getNodes(wysihtml.ELEMENT_NODE, function(node) {
+        return node.nodeName === "VIDEO";
+      });
+
+      if (videosInSelection.length !== 1) {
+        return false;
+      }
+
+      return videosInSelection[0];
+    }
+  }
+})();
+
 wysihtml.commands.fontSize = (function() {
   var REG_EXP = /wysiwyg-font-size-[0-9a-z\-]+/g;
 

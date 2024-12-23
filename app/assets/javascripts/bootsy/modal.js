@@ -241,36 +241,41 @@ Bootsy.Modal = function(area) {
     }
   }.bind(this));
 
-  // Insert image to post body
+  // Insert image/video to post body
   this.$el.on('click', '#dropdown-menu .insert', function(event) {
-    const imageSuffix = '?variant=' + $(this).attr('data-image-size');
+    let suffix = '?variant=' + $(this).attr('data-image-size');
 
     event.preventDefault();
 
     if ($(this).attr('data-image-size') === 'original') {
-      imagePrefix = '';
+      suffix = '';
     }
 
-    // img = $(this).parents('.bootsy-image').find('img');
-    // imageObject = {
-    //   src: img.attr('src').replace('?variant=thumbnail', imageSuffix)/*,
-    //   alt: img.attr('alt').replace('Thumb_', '')*/
-    // };
-
-    const imageObject = {
-      src: $(this).parents('#dropdown-menu').attr('data-image-src') + imageSuffix
+    const mediaObject = {
+      src: $(this).parents('#dropdown-menu').attr('data-image-src') + suffix
     }
+    const mediaType = $(this).parents('#dropdown-menu').attr('data-type');
 
     if ($(this).attr('data-image-size') !== 'full_width') {
-      imageObject.align = $(this).attr('data-position');
+      mediaObject.align = $(this).attr('data-position');
     } else {
-      imageObject.class = 'full-width';
+      mediaObject.class = 'full-width';
     }
 
     self.$el.modal('hide');
 
-    insert = self.area.insertImage.bind(self.area);
-    insert(imageObject);
+    switch(mediaType) {
+      case 'image':
+        insert = self.area.insertImage.bind(self.area);
+        insert(mediaObject);
+        break;
+      case 'video':
+        insert = self.area.insertVideo.bind(self.area);
+        insert(mediaObject);
+        break;
+      default:
+        throw new Error(`Unknown data-type attribute's value: ${mediaType}`);
+    }
   });
 
   this.hideRefreshButton();
