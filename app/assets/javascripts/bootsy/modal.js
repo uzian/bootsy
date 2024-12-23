@@ -516,16 +516,16 @@ Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
       tag = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
               data-toggle="tooltip" title="${files[i]['filename']}">`;
     } else if (filetype === 'video') {
-      tag = `<video class="bootsy-image" muted playsinline preload="metadata">
+      tag = `<video class="bootsy-image" muted playsinline preload="metadata" width="100" height="100">
               <source src="${Bootsy.config.galleryURL}/user_files/${user_file_id}" />
               Your browser doesn't support videos
             </video>`;
     }
     modal_body += `<div class="mr-1 mb-1 p-1 border" id="selector_image_${user_file_id}">
-      <a class="thumbnail" href="#">
-        ${tag}
-      </a>
-    </div>`;
+                    <a class="thumbnail" href="javascript:;">
+                      ${tag}
+                    </a>
+                  </div>`;
   }
 
   // Update pagination hrefs
