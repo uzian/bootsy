@@ -113,7 +113,7 @@ Bootsy.Modal = function(area) {
     wrapper.attr('data-image-src', '');
   }.bind(this));
 
-  // Paginate through images in gallery
+  // Paginate through images/videos in gallery
   this.$el.on('click', '.pagination .page-link', function(event) {
     event.preventDefault();
 
@@ -137,7 +137,7 @@ Bootsy.Modal = function(area) {
     $('.page-item.active').removeClass('active');
     $(nextActive).parent().addClass('active');
 
-    // // Disable/enable arrows
+    // Disable/enable arrows
     if (pageId === '1') {
       $(paginationBtns[0]).addClass('disabled');
     } else if (pageId === $(paginationBtns.get(-2)).text()) {
@@ -153,7 +153,7 @@ Bootsy.Modal = function(area) {
       const pages = $('div[data-page-id]');
       this.showPage(pages, pageId);
     } else {
-      // Otherwise, fetch images and create new page
+      // Otherwise, fetch images/videos and create new page
       fetch(url)
         .then((response) => {
           return response.json();
@@ -165,7 +165,7 @@ Bootsy.Modal = function(area) {
           [modal_body, pagination] = this.parseGalleryResponse(data);
 
           modal_body = `<div class="d-flex flex-wrap" data-page-id="${pageId}">`+modal_body+"</div>";
-          $('#global-gallery-window .gallery-wrapper').append(modal_body);
+          $(':not(.d-none) > .gallery-wrapper').append(modal_body);
         })
         .then(() => {
           const pages = $('div[data-page-id]');
