@@ -100,9 +100,9 @@ Bootsy.Modal = function(area) {
       // If current screen is select-image-window or link-image-window (i.e. image is being attached to this page only)
       // - display "delete" option. Hide it otherwise.
       if ($(event.currentTarget).closest('#select-image-window, #link-image-window').length > 0) {
-        $('#delete-image').show();
+        $('#delete-image').addClass('d-none');
       } else {
-        $('#delete-image').hide();
+        $('#delete-image').removeClass('d-none');
       }
 
       // Appear menu and set focus to it
