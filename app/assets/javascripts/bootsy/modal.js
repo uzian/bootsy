@@ -270,6 +270,27 @@ Bootsy.Modal = function(area) {
         insert(mediaObject);
         break;
       case 'video':
+        // Set video's width.
+        // Responsiveness cannot be achievent with Bootstrap's .embed-responsive-item, because
+        // it requires a <div> wrapper, which doesn't work with wysihtml.
+        switch($(this).attr('data-image-size')) {
+          case "thumbnail":
+            mediaObject.width = 60;
+            break;
+          case "tiny":
+            mediaObject.width = 100;
+            break;
+          case "small":
+            mediaObject.width = 160;
+            break;
+          case "medium":
+            mediaObject.width = 360;
+            break;
+          case "large":
+            mediaObject.width = 760;
+            break;
+        }
+
         insert = self.area.insertVideo.bind(self.area);
         insert(mediaObject);
         break;

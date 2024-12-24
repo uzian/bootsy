@@ -321,7 +321,6 @@ wysihtml.commands.insertVideo = (function() {
           video.setAttribute(i === "className" ? "class" : i, value[i]);
         }
       }
-      video.setAttribute("muted", true);
       video.setAttribute("controls", true);
       video.setAttribute("playsinline", true);
       video.setAttribute("preload", "metadata");

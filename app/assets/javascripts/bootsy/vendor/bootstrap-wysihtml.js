@@ -999,7 +999,8 @@
                     "muted": "any",
                     "preload": "any",
                     "controls": "any",
-                    "playsinline": "any"
+                    "playsinline": "any",
+                    "width": "dimension"
                 }
             },
             "strong": {},
