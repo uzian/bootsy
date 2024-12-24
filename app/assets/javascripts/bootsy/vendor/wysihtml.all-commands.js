@@ -309,10 +309,12 @@ wysihtml.commands.insertVideo = (function() {
           textNode,
           parent;
       var source = doc.createElement("SOURCE");
+      var videoText = doc.createTextNode("Your browser doesn't support videos or didn't recognize video's format");
 
       video = doc.createElement(NODE_NAME);
       source.setAttribute("src", value.src);
       video.appendChild(source);
+      video.appendChild(videoText);
 
       for (var i in value) {
         if (i !== "src") {
