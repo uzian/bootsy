@@ -995,7 +995,12 @@
                 "remove": 1
             },
             "video": {
-                "remove": 1
+                "check_attributes": {
+                    "muted": "any",
+                    "preload": "any",
+                    "controls": "any",
+                    "playsinline": "any"
+                }
             },
             "strong": {},
             "canvas": {
@@ -1042,7 +1047,9 @@
                 "remove": 1
             },
             "source": {
-                "remove": 1
+                "check_attributes": {
+                    "src": "src"
+                }
             },
             "aside": wysihtmlParserRulesDefaults.makeDiv,
             "frame": {
