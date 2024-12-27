@@ -325,6 +325,7 @@ wysihtml.commands.insertVideo = (function() {
       video.setAttribute("playsinline", true);
       video.setAttribute("preload", "metadata");
 
+      composer.selection.insertNode(doc.createElement("BR"));
       composer.selection.insertNode(video);
       if (wysihtml.browser.hasProblemsSettingCaretAfterImg()) {
         textNode = doc.createTextNode(wysihtml.INVISIBLE_SPACE);
