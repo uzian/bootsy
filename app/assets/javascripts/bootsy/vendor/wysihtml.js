@@ -15463,7 +15463,7 @@ wysihtml.views.View = Base.extend(
 
     // Make sure that when pressing backspace/delete on selected images deletes the image and it's anchor
     if (keyCode === wysihtml.BACKSPACE_KEY || keyCode === wysihtml.DELETE_KEY) {
-      if (target && target.nodeName === "IMG") {
+      if (target && ["IMG", "VIDEO"].includes(target.nodeName)) {
         event.preventDefault();
         parent = target.parentNode;
         parent.removeChild(target);// delete the <img>
