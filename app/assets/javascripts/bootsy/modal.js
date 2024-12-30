@@ -109,9 +109,16 @@ Bootsy.Modal = function(area) {
 
   // Invoke dropdown menu on video click
   this.$el.on('click', '.bootsy-video', function(event) {
+    const srcTag = $(event.currentTarget).find('source')[0];
     const wrapper = $('#videos-dropdown');
     const menu = $('#videos-dropdown > .dropdown-menu');
 
+    if (!srcTag) { return; }
+
+    // Update data-video-src attribute according to clicked video
+    wrapper.attr('data-image-src', $(srcTag).attr('src'));
+
+    // Reposition the menu under the clicking point
     const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
     const offsetY = event.clientY - ($('.bootsy-modal .modal-dialog').outerHeight(true) - $('.bootsy-modal .modal-dialog').height())/2 - 5;
 
@@ -279,7 +286,12 @@ Bootsy.Modal = function(area) {
 
     insert = self.area.insertImage.bind(self.area);
     insert(mediaObject);
-  });
+  }.bind(this));
+
+  // Insert video
+  this.$el.on('click', '#videos-dropdown .insert', function() {
+
+  }.bind(this));
 
   this.hideRefreshButton();
   this.hideEmptyAlert();
