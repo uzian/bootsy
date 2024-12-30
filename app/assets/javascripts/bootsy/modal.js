@@ -116,7 +116,7 @@ Bootsy.Modal = function(area) {
     if (!srcTag) { return; }
 
     // Update data-video-src attribute according to clicked video
-    wrapper.attr('data-image-src', $(srcTag).attr('src'));
+    wrapper.attr('data-video-src', $(srcTag).attr('src'));
 
     // Reposition the menu under the clicking point
     const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
@@ -145,7 +145,8 @@ Bootsy.Modal = function(area) {
     menus.removeClass('show');
 
     // Clear out data attributes
-    wrappers.attr('data-image-src', '');
+    wrappers.removeAttr('data-image-src');
+    wrappers.removeAttr('data-video-src');
   }.bind(this));
 
   // Paginate through images/videos in gallery
@@ -293,7 +294,7 @@ Bootsy.Modal = function(area) {
     event.preventDefault();
 
     const video = {
-      src: $(this).parents('#videos-dropdown').attr('data-video-src'),
+      src: $('#videos-dropdown').attr('data-video-src'),
       class: $(event.currentTarget).attr('data-video-size') == 'full_width' ? 'full-width' : 'video-default-size'
     }
 
