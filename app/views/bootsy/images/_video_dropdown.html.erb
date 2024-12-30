@@ -3,7 +3,7 @@
 
   <% Bootsy.video_versions_available.each do |size| %>
     <li>
-      <%= link_to 'javascript:;', tabindex: '-1', role: 'menuitem', class: 'dropdown-item insert', data: { image_size: size.to_s } do %>
+      <%= link_to 'javascript:;', tabindex: '-1', role: 'menuitem', class: 'dropdown-item insert', data: { video_size: size.to_s } do %>
         <i class="icon-picture"></i>
 
         <%= t size, scope: 'bootsy.image' %>

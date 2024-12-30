@@ -405,6 +405,11 @@ body.bootsy_text_area.form-control {
   width: 100%;
 }
 
+.video-default-size {
+  width: 640px;
+  height: 480px;
+}
+
 .pagination .page-item {
   cursor: pointer;
 }

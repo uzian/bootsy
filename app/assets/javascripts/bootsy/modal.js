@@ -136,7 +136,7 @@ Bootsy.Modal = function(area) {
   // Hide menus on focus lost
   this.$el.on('focusout', '#dropdown-menu, #videos-dropdown', function(event) {
     // Do not hide if user clicked on child element
-    if ($(event.relatedTarget).parents('#dropdown-menu').length > 0) { return };
+    if ($(event.relatedTarget).parents('#dropdown-menu, #videos-dropdown').length > 0) { return };
 
     const wrappers = $('#dropdown-menu, #videos-dropdown');
     const menus = $('#dropdown-menu > .dropdown-menu, #videos-dropdown > .dropdown-menu');
@@ -272,25 +272,35 @@ Bootsy.Modal = function(area) {
       suffix = '';
     }
 
-    const mediaObject = {
+    const image = {
       src: $(this).parents('#dropdown-menu').attr('data-image-src') + suffix
     }
 
     if ($(this).attr('data-image-size') !== 'full_width') {
-      mediaObject.align = $(this).attr('data-position');
+      image.align = $(this).attr('data-position');
     } else {
-      mediaObject.class = 'full-width';
+      image.class = 'full-width';
     }
 
     self.$el.modal('hide');
 
     insert = self.area.insertImage.bind(self.area);
-    insert(mediaObject);
+    insert(image);
   }.bind(this));
 
-  // Insert video
-  this.$el.on('click', '#videos-dropdown .insert', function() {
+  // Insert video to post body
+  this.$el.on('click', '#videos-dropdown .insert', function(event) {
+    event.preventDefault();
 
+    const video = {
+      src: $(this).parents('#videos-dropdown').attr('data-video-src'),
+      class: $(event.currentTarget).attr('data-video-size') == 'full_width' ? 'full-width' : 'video-default-size'
+    }
+
+    self.$el.modal('hide');
+
+    insert = self.area.insertVideo.bind(self.area);
+    insert(video);
   }.bind(this));
 
   this.hideRefreshButton();
