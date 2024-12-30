@@ -63,23 +63,13 @@ Bootsy.Modal = function(area) {
     const menu = $('#dropdown-menu > .dropdown-menu');
     let invokeMenu = false;
 
-    if ($(event.currentTarget).is('video')) {
-      const vidTag = event.currentTarget;
-      invokeMenu = true;
-
-      // Update data attributes with video-specific data
-      const src = $(vidTag).find('source').first().attr('src');
-      wrapper.attr('data-image-src', src);
-      wrapper.attr('data-type', 'video');
-
-    } else if ($(event.currentTarget).is('img') || $(event.currentTarget).find('img').length > 0) {
+    if ($(event.currentTarget).is('img') || $(event.currentTarget).find('img').length > 0) {
       const imgTag = $(event.currentTarget).is('img') ? event.currentTarget : $(event.currentTarget).find('img')[0];
       invokeMenu = true;
 
       // Update data attributes with image-specific data
       const src = $(imgTag).attr('src').slice(0, $(imgTag).attr('src').indexOf('?variant'));
       wrapper.attr('data-image-src', src);
-      wrapper.attr('data-type', 'image');
 
       // Update delete button's destination
       const imgId = $(imgTag).attr('src').slice($(imgTag).attr('src').lastIndexOf('/')+1, $(imgTag).attr('src').indexOf('?variant'));
@@ -100,9 +90,9 @@ Bootsy.Modal = function(area) {
       // If current screen is select-image-window or link-image-window (i.e. image is being attached to this page only)
       // - display "delete" option. Hide it otherwise.
       if ($(event.currentTarget).closest('#select-image-window, #link-image-window').length > 0) {
-        $('#delete-image').hide();
-      } else {
         $('#delete-image').show();
+      } else {
+        $('#delete-image').hide();
       }
 
       // Appear menu and set focus to it
@@ -241,7 +231,7 @@ Bootsy.Modal = function(area) {
     }
   }.bind(this));
 
-  // Insert image/video to post body
+  // Insert image to post body
   this.$el.on('click', '#dropdown-menu .insert', function(event) {
     let suffix = '?variant=' + $(this).attr('data-image-size');
 
@@ -254,7 +244,6 @@ Bootsy.Modal = function(area) {
     const mediaObject = {
       src: $(this).parents('#dropdown-menu').attr('data-image-src') + suffix
     }
-    const mediaType = $(this).parents('#dropdown-menu').attr('data-type');
 
     if ($(this).attr('data-image-size') !== 'full_width') {
       mediaObject.align = $(this).attr('data-position');
@@ -264,39 +253,8 @@ Bootsy.Modal = function(area) {
 
     self.$el.modal('hide');
 
-    switch(mediaType) {
-      case 'image':
-        insert = self.area.insertImage.bind(self.area);
-        insert(mediaObject);
-        break;
-      case 'video':
-        // Set video's width.
-        // Responsiveness cannot be achievent with Bootstrap's .embed-responsive-item, because
-        // it requires a <div> wrapper, which doesn't work with wysihtml.
-        switch($(this).attr('data-image-size')) {
-          case "thumbnail":
-            mediaObject.width = 60;
-            break;
-          case "tiny":
-            mediaObject.width = 100;
-            break;
-          case "small":
-            mediaObject.width = 160;
-            break;
-          case "medium":
-            mediaObject.width = 360;
-            break;
-          case "large":
-            mediaObject.width = 760;
-            break;
-        }
-
-        insert = self.area.insertVideo.bind(self.area);
-        insert(mediaObject);
-        break;
-      default:
-        throw new Error(`Unknown data-type attribute's value: ${mediaType}`);
-    }
+    insert = self.area.insertImage.bind(self.area);
+    insert(mediaObject);
   });
 
   this.hideRefreshButton();
