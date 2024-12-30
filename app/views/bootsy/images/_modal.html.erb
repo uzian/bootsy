@@ -27,7 +27,16 @@
 
         <div id="videos-window" class="d-none">
           <div class="gallery-wrapper"></div>
-          <div class="pagination-wrapper"></div>
+          <div class="pagination-wrapper mb-4"></div>
+          <div id='external-videos-control'>
+            <span class="ml-1">
+              <%= "#{t('bootsy.action.or').capitalize!} #{t('bootsy.action.use_link').downcase!}" %>
+            </span>
+            <div class='form-inline mt-2'>
+              <%= text_field_tag 'video-link-input', nil, placeholder: t('bootsy.action.enter_video_url'), class: 'form-control mr-3' %>
+              <%= button_tag t('bootsy.action.insert'), type: 'button', id: 'insert-external-video-btn', class: 'cancel-btn btn btn-primary' %>
+            </div>
+          </div>
         </div>
 
         <%= render 'bootsy/images/loader', image_class: 'bootsy-gallery-loader' %>

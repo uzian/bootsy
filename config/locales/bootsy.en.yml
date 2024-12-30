@@ -9,6 +9,7 @@ en:
       upload: Upload
       submit_upload: Go
       enter_image_url: Enter image URL...
+      enter_video_url: Enter video URL...
       use_link: Use link
       insert: Insert
       cancel: Cancel
