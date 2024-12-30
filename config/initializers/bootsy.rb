@@ -45,6 +45,7 @@ Bootsy.setup do |config|
   # Height limit for large images
   # config.large_image[:height] = 760
   #
+  config.video_versions_available = [:default, :full_width]
   #
   # Whether user can destroy uploaded files
   # config.allow_destroy = true

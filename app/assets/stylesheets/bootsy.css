@@ -370,7 +370,8 @@ textarea.bootsy:required:invalid {
   min-height: 120px;
 }
 
-.bootsy-image {
+.bootsy-image,
+.bootsy-video {
   margin-bottom: 15px;
 }
 

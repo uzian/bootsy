@@ -57,7 +57,7 @@ Bootsy.Modal = function(area) {
       });
   }.bind(this))
 
-  // Invoke dropdown menu on image/video click
+  // Invoke dropdown menu on image click
   this.$el.on('click', '.bootsy-image', function(event) {
     const wrapper = $('#dropdown-menu');
     const menu = $('#dropdown-menu > .dropdown-menu');
@@ -102,19 +102,38 @@ Bootsy.Modal = function(area) {
     }
   }.bind(this));
 
-  // Hide menu on focus lost
-  this.$el.on('focusout', '#dropdown-menu', function(event) {
+  // Invoke dropdown menu on video click
+  this.$el.on('click', '.bootsy-video', function(event) {
+    const wrapper = $('#videos-dropdown');
+    const menu = $('#videos-dropdown > .dropdown-menu');
+
+    const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
+    const offsetY = event.clientY - ($('.bootsy-modal .modal-dialog').outerHeight(true) - $('.bootsy-modal .modal-dialog').height())/2 - 5;
+
+    wrapper.css({
+      'position': 'absolute',
+      'left': String(offsetX) + 'px',
+      'top': String(offsetY) + 'px'
+    });
+
+    wrapper.addClass('show');
+    menu.addClass('show');
+    wrapper.focus();
+  }.bind(this));
+
+  // Hide menus on focus lost
+  this.$el.on('focusout', '#dropdown-menu, #videos-dropdown', function(event) {
     // Do not hide if user clicked on child element
     if ($(event.relatedTarget).parents('#dropdown-menu').length > 0) { return };
 
-    const wrapper = $('#dropdown-menu');
-    const menu = $('#dropdown-menu > .dropdown-menu');
+    const wrappers = $('#dropdown-menu, #videos-dropdown');
+    const menus = $('#dropdown-menu > .dropdown-menu, #videos-dropdown > .dropdown-menu');
 
-    wrapper.removeClass('show');
-    menu.removeClass('show');
+    wrappers.removeClass('show');
+    menus.removeClass('show');
 
     // Clear out data attributes
-    wrapper.attr('data-image-src', '');
+    wrappers.attr('data-image-src', '');
   }.bind(this));
 
   // Paginate through images/videos in gallery
@@ -514,7 +533,7 @@ Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
       tag = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
               data-toggle="tooltip" title="${files[i]['filename']}">`;
     } else if (filetype === 'video') {
-      tag = `<video class="bootsy-image" muted playsinline preload="metadata" width="100" height="100">
+      tag = `<video class="bootsy-video" muted playsinline preload="metadata" width="100" height="100">
               <source src="${Bootsy.config.galleryURL}/user_files/${user_file_id}" />
               Your browser doesn't support videos
             </video>`;

@@ -27,6 +27,9 @@ module Bootsy
   mattr_accessor :image_versions_available
   @@image_versions_available = [:small, :medium, :large, :original, :full_width]
 
+  mattr_accessor :video_versions_available
+  @@video_versions_available = [:default, :full_width]
+
   # Whether user can destroy uploaded files
   mattr_accessor :allow_destroy
   @@allow_destroy = true
