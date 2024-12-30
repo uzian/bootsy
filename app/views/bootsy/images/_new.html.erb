@@ -5,7 +5,7 @@
   <%= render 'bootsy/images/loader', image_class: 'bootsy-upload-loader' %>
 
   <%# Buttons for controlling image upload %>
-  <div id="image-upload-control">
+  <div id="image-upload-control" class="modal-control">
     <%= f.file_field :content, title: t('bootsy.action.upload'), accept: 'image/*', class: 'text-light mb-2'%>
     <%= button_tag t('bootsy.action.use_link'), type: 'button', class: 'use-link-btn btn btn-secondary ml-3 mb-2'%>
     <%= button_tag t('bootsy.action.select_from_gallery'), type: 'button', class: 'global-gallery-btn btn btn-secondary ml-3 mb-2' %>
@@ -13,18 +13,18 @@
   </div>
 
   <%# Buttons for controlling image linking %>
-  <div id="image-link-control" class="d-none">
+  <div id="image-link-control" class="d-none modal-control">
     <%= button_tag t('bootsy.action.insert'), type: 'button', class: 'insert-btn btn btn-secondary mb-2' %>
     <%= button_tag t('bootsy.action.cancel'), type: 'button', class: 'cancel-btn btn btn-secondary ml-2 mb-2' %>
   </div>
 
   <%# Buttons for controlling usage of remote gallery %>
-  <div id="global-gallery-control" class="d-none">
+  <div id="global-gallery-control" class="d-none modal-control">
     <%= button_tag t('bootsy.action.cancel'), type: 'button', class: 'cancel-btn btn btn-secondary mb-2' %>
   </div>
 
   <%# Buttons for controlling video selection %>
-  <div id="videos-control" class="d-none">
+  <div id="videos-control" class="d-none modal-control">
     <%= button_tag t('bootsy.action.cancel'), type: 'button', class: 'cancel-btn btn btn-secondary mb-2' %>
   </div>
 <% end %>

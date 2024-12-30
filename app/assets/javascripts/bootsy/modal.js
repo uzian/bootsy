@@ -55,7 +55,12 @@ Bootsy.Modal = function(area) {
         $('#videos-window .gallery-wrapper').html(modal_body);
         $('#videos-window .pagination-wrapper').html(pagination);
       });
-  }.bind(this))
+  }.bind(this));
+
+  // Remove "no uploaded images on screen switch"
+  this.$el.on('click', '.modal-control button', function() {
+    this.hideEmptyAlert();
+  }.bind(this));
 
   // Invoke dropdown menu on image click
   this.$el.on('click', '.bootsy-image', function(event) {
