@@ -379,6 +379,10 @@ wysihtml.commands.insertVideo = (function() {
   }
 })();
 
+wysihtml.commands.insertIframe = (function() {
+
+})();
+
 wysihtml.commands.fontSize = (function() {
   var REG_EXP = /wysiwyg-font-size-[0-9a-z\-]+/g;
 
