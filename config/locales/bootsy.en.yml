@@ -15,7 +15,7 @@ en:
       cancel: Cancel
       select_from_gallery: Select from gallery
       select_video: Videos
-      youtube_vimeo: YouTube/Viemo
+      youtube_vimeo: YouTube/Vimeo
     image_gallery: Image Gallery
     image:
       s: Image
@@ -41,3 +41,4 @@ en:
   errors:
     messages:
       extension_whitelist_error: "You are not allowed to upload %{extension} files, allowed types: %{allowed_types}"
+      invalid_iframe_url: Invalid YouTube/Vimeo URL

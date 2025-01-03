@@ -313,10 +313,10 @@ Bootsy.Modal = function(area) {
     }
     const tag = $('#videos-dropdown').attr('data-insert-as');
 
-    self.$el.modal('hide');
-
     insert = self.area.insertVideo.bind(self.area, video, tag);
     insert();
+
+    self.$el.modal('hide');
   }.bind(this));
 
   this.hideRefreshButton();

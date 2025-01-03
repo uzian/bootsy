@@ -413,8 +413,10 @@ wysihtml.commands.insertIframe = (function() {
       }
 
       else {
-        Bootsy.Modal.prototype.alert("Unsupported video platform");
-        return;
+        if (window.Bootsy.translations) {
+          Bootsy.Modal.prototype.alert(window.Bootsy.translations['invalidIframeURL']);
+        }
+        throw new Error("Invalid YouTube/Vimeo URL");
       }
 
       iframe = doc.createElement(NODE_NAME);
