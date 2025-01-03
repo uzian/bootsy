@@ -825,7 +825,8 @@
                     "height": "any",
                     "frameborder": "any",
                     "style": "any",
-                    "id": "any"
+                    "id": "any",
+                    "allowfullscreen": "any"
                 }
             },
             "figcaption": {
