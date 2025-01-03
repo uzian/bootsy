@@ -304,7 +304,7 @@ Bootsy.Modal = function(area) {
 
     insert = self.area.insertImage.bind(self.area);
     insert(image);
-  }.bind(this));
+  });
 
   // Insert video to post body
   this.$el.on('click', '#videos-dropdown .insert', function(event) {
@@ -320,7 +320,7 @@ Bootsy.Modal = function(area) {
     insert();
 
     self.$el.modal('hide');
-  }.bind(this));
+  });
 
   this.hideRefreshButton();
   this.hideEmptyAlert();
