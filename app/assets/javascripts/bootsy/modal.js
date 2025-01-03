@@ -21,20 +21,30 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '#image-upload-control .global-gallery-btn', function(event, xhr, settings) {
     this.showGalleryWindow();
 
-    fetch(Bootsy.config.galleryURL + `/user_files.json?filetype=image&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`)
-      .then((response) => {
-        return response.json();
-      }, (error) => {
-        throw error;
-      })
-      .then((data) => {
-        let modal_body, pagination;
-        [modal_body, pagination] = this.parseGalleryResponse(data);
+    this.fetchFromServer({filetype: 'image'})
+        .then((data) => {
+          let modal_body, pagination;
+          [modal_body, pagination] = this.parseGalleryResponse(data);
 
-        modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
-        $('#global-gallery-window .gallery-wrapper').html(modal_body);
-        $('#global-gallery-window .pagination-wrapper').html(pagination);
-      });
+          modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
+          $('#global-gallery-window .gallery-wrapper').html(modal_body);
+          $('#global-gallery-window .pagination-wrapper').html(pagination);
+        });
+
+    // fetch(Bootsy.config.galleryURL + `/user_files.json?filetype=image&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`)
+    //   .then((response) => {
+    //     return response.json();
+    //   }, (error) => {
+    //     throw error;
+    //   })
+    //   .then((data) => {
+    //     let modal_body, pagination;
+    //     [modal_body, pagination] = this.parseGalleryResponse(data);
+
+    //     modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
+    //     $('#global-gallery-window .gallery-wrapper').html(modal_body);
+    //     $('#global-gallery-window .pagination-wrapper').html(pagination);
+    //   });
   }.bind(this));
 
   // Display videos selection on 'Videos' button click
@@ -57,7 +67,7 @@ Bootsy.Modal = function(area) {
       });
   }.bind(this));
 
-  // Remove "no uploaded images on screen switch"
+  // Remove alerts on screen switch
   this.$el.on('click', '.modal-control button', function() {
     this.hideEmptyAlert();
   }.bind(this));
@@ -320,6 +330,12 @@ Bootsy.Modal = function(area) {
     insert();
 
     self.$el.modal('hide');
+  });
+
+  // Seacrh for images/videos
+  this.$el.on('click', '.search-btn', function(event) {
+    const keyword = $(this).parents('.input-group').find('.searchbar').first().val();
+
   });
 
   this.hideRefreshButton();
@@ -604,6 +620,16 @@ Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
   }
 
   return [modal_body, pagination];
+}
+
+Bootsy.Modal.prototype.fetchFromServer = function(opts) {
+  const url = Bootsy.config.galleryURL + `/user_files.json?filetype=${opts.filetype}&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
+
+  return  fetch(url).then((response) => {
+            return response.json();
+          }, (error) => {
+            throw error;
+          });
 }
 
 // Function to fetch multiple images from API and upload them into the system
