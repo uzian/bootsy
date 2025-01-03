@@ -21,13 +21,29 @@
         </div>
 
         <div id="global-gallery-window" class="d-none">
+          <div class='input-group mb-5'>
+            <%= text_field_tag 'gallery-search', nil, placeholder: t('bootsy.action.search'), class: 'searchbar form-control' %>
+            <div class='input-group-append'>
+              <button class='search-btn btn btn-primary'>
+                <i class='fas fa-search'></i>
+              </button>
+            </div>
+          </div>
           <div class="gallery-wrapper"></div>
           <div class="pagination-wrapper"></div>
         </div>
 
         <div id="videos-window" class="d-none">
+          <div class='input-group mb-5'>
+            <%= text_field_tag 'video-search', nil, placeholder: t('bootsy.action.search'), class: 'searchbar form-control' %>
+            <div class='input-group-append'>
+              <button class='search-btn btn btn-primary'>
+                <i class='fas fa-search'></i>
+              </button>
+            </div>
+          </div>
           <div class="gallery-wrapper"></div>
-          <div class="pagination-wrapper mb-4"></div>
+          <div class="pagination-wrapper mb-5"></div>
           <div id='external-videos-control'>
             <span class="ml-1">
               <%= t('bootsy.action.youtube_vimeo') %>
