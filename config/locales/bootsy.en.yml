@@ -42,3 +42,4 @@ en:
     messages:
       extension_whitelist_error: "You are not allowed to upload %{extension} files, allowed types: %{allowed_types}"
       invalid_iframe_url: Invalid YouTube/Vimeo URL
+      image_fetch_failed: There is a network error or image's owner doesn't permit it's usage.

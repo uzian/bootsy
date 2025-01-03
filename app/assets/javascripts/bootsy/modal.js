@@ -230,7 +230,6 @@ Bootsy.Modal = function(area) {
 
     // Validate image URL
     if (imageURL == '') {
-      Bootsy.Modal.prototype.alert('Image URL cannot be empty.');
       return;
     }
 
@@ -238,6 +237,10 @@ Bootsy.Modal = function(area) {
     .then((response) => {
       return response.blob();
     }, (error) => {
+      console.log(window.Bootsy.translations['imageFetchFailed']);
+      if (window.Bootsy.translations) {
+        Bootsy.Modal.prototype.alert(window.Bootsy.translations['imageFetchFailed']);
+      }
       throw error;
     })
     // Upload fetched image
