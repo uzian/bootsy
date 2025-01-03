@@ -405,6 +405,10 @@ body.bootsy_text_area.form-control {
   width: 100%;
 }
 
+iframe.full-width {
+  height: 480px;
+}
+
 .video-default-size {
   width: 640px;
   height: 480px;

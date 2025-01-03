@@ -105,6 +105,7 @@ Bootsy.Area.prototype.insertVideo = function(video, tag) {
       break;
     case 'iframe':
       this.editor.composer.commands.exec('insertIframe', video);
+      $("#video-link-input").val("");
       break;
     default:
       throw new Error(`Don't know which tag to use to insert video. data-insert-as is ${tag}`);

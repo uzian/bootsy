@@ -322,7 +322,6 @@ wysihtml.commands.insertVideo = (function() {
         }
       }
       video.setAttribute("controls", true);
-      video.setAttribute("playsinline", true);
       video.setAttribute("preload", "metadata");
 
       composer.selection.insertNode(doc.createElement("BR"));
@@ -380,7 +379,106 @@ wysihtml.commands.insertVideo = (function() {
 })();
 
 wysihtml.commands.insertIframe = (function() {
+  var NODE_NAME = "IFRAME";
+  return {
+    exec: function(composer, command, value) {
+      value = typeof(value) === "object" ? value : { src: value };
 
+      var doc     = composer.doc,
+          iframe  = this.state(composer),
+          textNode,
+          parent;
+
+      // Process url. urls used in browser's search bar cannot be used as is
+      // - they need to be modified to be acceptable in <iframe>
+      let videoUrl = value.src.trim();
+      let iframeSrc = "";
+
+      // Process YouTube URLs
+      if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
+        const youtubeRegex = /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([\w-]{11})/;
+        const match = youtubeRegex.exec(videoUrl);
+        if (match && match[1]) {
+          iframeSrc = `https://www.youtube.com/embed/${match[1]}`;
+        }
+      }
+
+      // Process Vimeo URLs
+      else if (videoUrl.includes("vimeo.com")) {
+        const vimeoRegex = /vimeo\.com\/(?:video\/)?(\d+)/;
+        const match = vimeoRegex.exec(videoUrl);
+        if (match && match[1]) {
+          iframeSrc = `https://player.vimeo.com/video/${match[1]}`;
+        }
+      }
+
+      else {
+        Bootsy.Modal.prototype.alert("Unsupported video platform");
+        return;
+      }
+
+      iframe = doc.createElement(NODE_NAME);
+      iframe.setAttribute("src", iframeSrc);
+      iframe.setAttribute("allowfullscreen", true);
+
+      for (var i in value) {
+        if (i !== "src") {
+          iframe.setAttribute(i === "className" ? "class" : i, value[i]);
+        }
+      }
+
+      composer.selection.insertNode(doc.createElement("BR"));
+      composer.selection.insertNode(iframe);
+      if (wysihtml.browser.hasProblemsSettingCaretAfterImg()) {
+        textNode = doc.createTextNode(wysihtml.INVISIBLE_SPACE);
+        composer.selection.insertNode(textNode);
+        composer.selection.setAfter(textNode);
+      } else {
+        composer.selection.setAfter(iframe);
+      }
+    },
+
+    state: function(composer) {
+      var doc = composer.doc,
+          selectedNode,
+          text,
+          iframesInSelection;
+
+      if (!wysihtml.dom.hasElementWithTagName(doc, NODE_NAME)) {
+        return false;
+      }
+
+      selectedNode = composer.selection.getSelectedNode();
+      if (!selectedNode) {
+        return false;
+      }
+
+      if (selectedNode.nodeName === NODE_NAME) {
+        // This works perfectly in IE
+        return selectedNode;
+      }
+
+      if (selectedNode.nodeType !== wysihtml.ELEMENT_NODE) {
+        return false;
+      }
+
+      text = composer.selection.getText();
+      text = wysihtml.lang.string(text).trim();
+      if (text) {
+        return false;
+      }
+
+      iframesInSelection = composer.selection.getNodes(wysihtml.ELEMENT_NODE, function(node) {
+        return node.nodeName === "VIDEO";
+      });
+
+      if (iframesInSelection.length !== 1) {
+        return false;
+      }
+
+      return iframesInSelection[0];
+    }
+  }
 })();
 
 wysihtml.commands.fontSize = (function() {
