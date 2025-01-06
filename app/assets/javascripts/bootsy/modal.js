@@ -600,19 +600,19 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
       tag = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
               data-toggle="tooltip" title="${filename}">`;
     } else if (filetype === 'video') {
-      tag = `<div class="col">
-              <video class="bootsy-video" muted playsinline preload="metadata" width="100" height="100">
-                <source src="${Bootsy.config.galleryURL}/user_files/${user_file_id}" />
-                Your browser doesn't support videos
-              </video>
-              <div class="bg-light">
-                <small>${filename}</small>
-              </div>
-            </div>`;
+      tag = `<video class="bootsy-video" muted playsinline preload="metadata" width="100" height="100">
+              <source src="${Bootsy.config.galleryURL}/user_files/${user_file_id}" />
+              Your browser doesn't support videos
+            </video>`;
     }
     modal_body += `<div class="mr-1 mb-1 p-1 border" id="selector_image_${user_file_id}">
                     <a class="thumbnail" href="javascript:;">
-                      ${tag}
+                      <div class="col">
+                        ${tag}
+                        <div class="bg-light">
+                          <small>${filename}</small>
+                        </div>
+                      </div>
                     </a>
                   </div>`;
   }
