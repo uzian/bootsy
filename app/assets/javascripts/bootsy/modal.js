@@ -192,7 +192,7 @@ Bootsy.Modal = function(area) {
         })
         .then((data) => {
           let modal_body, pagination;
-          [modal_body, pagination] = this.parseGalleryResponse(data);
+          [modal_body, pagination] = this.parseBackendResponse(data);
 
           modal_body = `<div class="d-flex flex-wrap" data-page-id="${pageId}">`+modal_body+"</div>";
           $(':not(.d-none) > .gallery-wrapper').append(modal_body);
@@ -566,7 +566,7 @@ Bootsy.Modal.prototype.showPage = function(pages, pageId) {
   });
 }
 
-Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
+Bootsy.Modal.prototype.parseBackendResponse = function(data) {
   const files = data['files'];
   const filetype = files[0]['filetype'] || 'image';
   let pagination = data['pagination'];
@@ -574,16 +574,22 @@ Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
 
   for (let i=0; i<files.length; i++) {
     const user_file_id = files[i]['id'];
+    const filename = files[i]['filename'];
     let tag;
 
     if (filetype === 'image') {
       tag = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
-              data-toggle="tooltip" title="${files[i]['filename']}">`;
+              data-toggle="tooltip" title="${filename}">`;
     } else if (filetype === 'video') {
-      tag = `<video class="bootsy-video" muted playsinline preload="metadata" width="100" height="100">
-              <source src="${Bootsy.config.galleryURL}/user_files/${user_file_id}" />
-              Your browser doesn't support videos
-            </video>`;
+      tag = `<div class="col">
+              <video class="bootsy-video" muted playsinline preload="metadata" width="100" height="100">
+                <source src="${Bootsy.config.galleryURL}/user_files/${user_file_id}" />
+                Your browser doesn't support videos
+              </video>
+              <div class="bg-light">
+                <small>${filename}</small>
+              </div>
+            </div>`;
     }
     modal_body += `<div class="mr-1 mb-1 p-1 border" id="selector_image_${user_file_id}">
                     <a class="thumbnail" href="javascript:;">
@@ -643,7 +649,7 @@ Bootsy.Modal.prototype.fetchAll = function(urls) {
 // Note that the screen you want to update should have div.gallery-wrapper and div.pagination-wrapper
 Bootsy.Modal.prototype.updateScreen = function(selector, data) {
   let modal_body, pagination;
-  [modal_body, pagination] = this.parseGalleryResponse(data);
+  [modal_body, pagination] = this.parseBackendResponse(data);
 
   modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
   $(`${selector} .gallery-wrapper`).html(modal_body);
