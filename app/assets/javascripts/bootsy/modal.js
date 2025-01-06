@@ -21,43 +21,23 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '#image-upload-control .global-gallery-btn', function(event, xhr, settings) {
     this.showGalleryWindow();
 
-    fetch(Bootsy.config.galleryURL + `/user_files.json?filetype=image&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`)
-      .then((response) => {
-        return response.json();
-      }, (error) => {
-        throw error;
-      })
-      .then((data) => {
-        let modal_body, pagination;
-        [modal_body, pagination] = this.parseGalleryResponse(data);
-
-        modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
-        $('#global-gallery-window .gallery-wrapper').html(modal_body);
-        $('#global-gallery-window .pagination-wrapper').html(pagination);
-      });
+    this.fetchFromBackend({filetype: 'image'})
+        .then((data) => {
+          this.updateScreen('#global-gallery-window', data)
+        });
   }.bind(this));
 
   // Display videos selection on 'Videos' button click
   this.$el.on('click', '#image-upload-control .videos-btn', function(event, xhr, settings) {
     this.showVideosWindow();
 
-    fetch(Bootsy.config.galleryURL + `/user_files.json?filetype=video&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`)
-      .then((response) => {
-        return response.json();
-      }, (error) => {
-        throw error;
-      })
-      .then((data) => {
-        let modal_body, pagination;
-        [modal_body, pagination] = this.parseGalleryResponse(data);
-
-        modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
-        $('#videos-window .gallery-wrapper').html(modal_body);
-        $('#videos-window .pagination-wrapper').html(pagination);
-      });
+    this.fetchFromBackend({filetype: 'video'})
+        .then((data) => {
+          this.updateScreen('#videos-window', data)
+        });
   }.bind(this));
 
-  // Remove "no uploaded images on screen switch"
+  // Remove alerts on screen switch
   this.$el.on('click', '.modal-control button', function() {
     this.hideEmptyAlert();
   }.bind(this));
@@ -212,7 +192,7 @@ Bootsy.Modal = function(area) {
         })
         .then((data) => {
           let modal_body, pagination;
-          [modal_body, pagination] = this.parseGalleryResponse(data);
+          [modal_body, pagination] = this.parseBackendResponse(data);
 
           modal_body = `<div class="d-flex flex-wrap" data-page-id="${pageId}">`+modal_body+"</div>";
           $(':not(.d-none) > .gallery-wrapper').append(modal_body);
@@ -321,6 +301,45 @@ Bootsy.Modal = function(area) {
 
     self.$el.modal('hide');
   });
+
+  // Search for images/videos
+  this.$el.on('click', '.search-btn', function(event) {
+    const keyword = $(event.currentTarget).parents('.input-group').find('.searchbar').first().val();
+    const filetype = $(event.currentTarget).parent().data('filetype');
+
+    this.fetchFromBackend({
+          filetype: filetype,
+          search: keyword
+        })
+        .then((data) => {
+          switch(filetype) {
+            case 'image':
+              this.updateScreen('#global-gallery-window', data);
+              break;
+            case 'video':
+              this.updateScreen('#videos-window', data);
+              break;
+          }
+        });
+  }.bind(this));
+
+  // Reset searchbar and show all images/videos
+  this.$el.on('click', '.reset-search', function(event) {
+    $(event.currentTarget).parents('.input-group').find('.searchbar').first().val('');
+    const filetype = $(event.currentTarget).parent().data('filetype');
+
+    this.fetchFromBackend({filetype: filetype})
+        .then((data) => {
+          switch(filetype) {
+            case 'image':
+              this.updateScreen('#global-gallery-window', data);
+              break;
+            case 'video':
+              this.updateScreen('#videos-window', data);
+              break;
+          }
+        });
+  }.bind(this));
 
   this.hideRefreshButton();
   this.hideEmptyAlert();
@@ -565,19 +584,21 @@ Bootsy.Modal.prototype.showPage = function(pages, pageId) {
   });
 }
 
-Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
+Bootsy.Modal.prototype.parseBackendResponse = function(data) {
   const files = data['files'];
+  if (!files || files.length == 0) { return ['', '']; }
   const filetype = files[0]['filetype'] || 'image';
   let pagination = data['pagination'];
   let modal_body = '';
 
   for (let i=0; i<files.length; i++) {
     const user_file_id = files[i]['id'];
+    const filename = files[i]['filename'];
     let tag;
 
     if (filetype === 'image') {
       tag = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
-              data-toggle="tooltip" title="${files[i]['filename']}">`;
+              data-toggle="tooltip" title="${filename}">`;
     } else if (filetype === 'video') {
       tag = `<video class="bootsy-video" muted playsinline preload="metadata" width="100" height="100">
               <source src="${Bootsy.config.galleryURL}/user_files/${user_file_id}" />
@@ -586,7 +607,12 @@ Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
     }
     modal_body += `<div class="mr-1 mb-1 p-1 border" id="selector_image_${user_file_id}">
                     <a class="thumbnail" href="javascript:;">
-                      ${tag}
+                      <div class="col">
+                        ${tag}
+                        <div class="bg-light">
+                          <small>${filename}</small>
+                        </div>
+                      </div>
                     </a>
                   </div>`;
   }
@@ -606,6 +632,17 @@ Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
   return [modal_body, pagination];
 }
 
+Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
+  let url = Bootsy.config.galleryURL + `/user_files.json?filetype=${opts.filetype}&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
+  if (opts.search) { url += `&search=${opts.search}`; }
+
+  return  fetch(url).then((response) => {
+            return response.json();
+          }, (error) => {
+            throw error;
+          });
+}
+
 // Function to fetch multiple images from API and upload them into the system
 // Currently not in use!
 Bootsy.Modal.prototype.fetchAll = function(urls) {
@@ -622,5 +659,21 @@ Bootsy.Modal.prototype.fetchAll = function(urls) {
           this.uploadImage(event, xhr, settings, file);
         }, i*500);
       });
+  }
+}
+
+// Updates screen with new data fetched from server.
+// Normally is used after fetchFromBackend() function like so:
+// this.fetchFromBackend().then((data) => { this.updateScreen('#screen-id', data) })
+// Note that the screen you want to update should have div.gallery-wrapper and div.pagination-wrapper
+Bootsy.Modal.prototype.updateScreen = function(selector, data) {
+  try {
+    let [modal_body, pagination] = this.parseBackendResponse(data);
+
+    modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
+    $(`${selector} .gallery-wrapper`).html(modal_body);
+    $(`${selector} .pagination-wrapper`).html(pagination);
+  } catch (error) {
+    console.error("Couldn't update screen. Error: ", error);
   }
 }

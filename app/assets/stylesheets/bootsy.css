@@ -417,3 +417,7 @@ iframe.full-width {
 .pagination .page-item {
   cursor: pointer;
 }
+
+.gallery-wrapper .col {
+  width: min-content;
+}
