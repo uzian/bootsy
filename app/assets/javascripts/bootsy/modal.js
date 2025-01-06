@@ -568,6 +568,7 @@ Bootsy.Modal.prototype.showPage = function(pages, pageId) {
 
 Bootsy.Modal.prototype.parseBackendResponse = function(data) {
   const files = data['files'];
+  if (!files || files.length == 0) { return; }
   const filetype = files[0]['filetype'] || 'image';
   let pagination = data['pagination'];
   let modal_body = '';
@@ -648,10 +649,13 @@ Bootsy.Modal.prototype.fetchAll = function(urls) {
 // this.fetchFromBackend().then((data) => { this.updateScreen('#screen-id', data) })
 // Note that the screen you want to update should have div.gallery-wrapper and div.pagination-wrapper
 Bootsy.Modal.prototype.updateScreen = function(selector, data) {
-  let modal_body, pagination;
-  [modal_body, pagination] = this.parseBackendResponse(data);
+  try {
+    let [modal_body, pagination] = this.parseBackendResponse(data);
 
-  modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
-  $(`${selector} .gallery-wrapper`).html(modal_body);
-  $(`${selector} .pagination-wrapper`).html(pagination);
+    modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
+    $(`${selector} .gallery-wrapper`).html(modal_body);
+    $(`${selector} .pagination-wrapper`).html(pagination);
+  } catch (error) {
+    console.error("Couldn't update screen. Error: ", error);
+  }
 }
