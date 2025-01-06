@@ -22,7 +22,7 @@ Bootsy.Modal = function(area) {
     this.showGalleryWindow();
 
     this.fetchFromBackend({filetype: 'image'})
-        .then(updateScreen('#global-gallery-window', data));
+        .then(this.updateScreen('#global-gallery-window', data));
   }.bind(this));
 
   // Display videos selection on 'Videos' button click
@@ -30,7 +30,7 @@ Bootsy.Modal = function(area) {
     this.showVideosWindow();
 
     this.fetchFromBackend({filetype: 'video'})
-        .then(updateScreen('#videos-window', data));
+        .then(this.updateScreen('#videos-window', data));
   }.bind(this));
 
   // Remove alerts on screen switch
@@ -310,10 +310,10 @@ Bootsy.Modal = function(area) {
         .then((data) => {
           switch(filetype) {
             case 'image':
-              updateScreen('#global-gallery-window', data);
+              this.updateScreen('#global-gallery-window', data);
               break;
             case 'video':
-              updateScreen('#videos-window', data);
+              this.updateScreen('#videos-window', data);
               break;
           }
         });
@@ -635,7 +635,7 @@ Bootsy.Modal.prototype.fetchAll = function(urls) {
 
 // Updates screen with new data fetched from server.
 // Normally is used after fetchFromBackend() function like so:
-// fetchFromBackend().then(updateScreen('#screen-id', data))
+// this.fetchFromBackend().then(this.updateScreen('#screen-id', data))
 // Note that the screen you want to update should have div.gallery-wrapper and div.pagination-wrapper
 Bootsy.Modal.prototype.updateScreen = function(selector, data) {
   let modal_body, pagination;
