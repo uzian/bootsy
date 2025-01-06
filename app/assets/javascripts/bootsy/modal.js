@@ -22,49 +22,15 @@ Bootsy.Modal = function(area) {
     this.showGalleryWindow();
 
     this.fetchFromBackend({filetype: 'image'})
-        .then((data) => {
-          let modal_body, pagination;
-          [modal_body, pagination] = this.parseGalleryResponse(data);
-
-          modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
-          $('#global-gallery-window .gallery-wrapper').html(modal_body);
-          $('#global-gallery-window .pagination-wrapper').html(pagination);
-        });
-
-    // fetch(Bootsy.config.galleryURL + `/user_files.json?filetype=image&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`)
-    //   .then((response) => {
-    //     return response.json();
-    //   }, (error) => {
-    //     throw error;
-    //   })
-    //   .then((data) => {
-    //     let modal_body, pagination;
-    //     [modal_body, pagination] = this.parseGalleryResponse(data);
-
-    //     modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
-    //     $('#global-gallery-window .gallery-wrapper').html(modal_body);
-    //     $('#global-gallery-window .pagination-wrapper').html(pagination);
-    //   });
+        .then(updateScreen('#global-gallery-window', data));
   }.bind(this));
 
   // Display videos selection on 'Videos' button click
   this.$el.on('click', '#image-upload-control .videos-btn', function(event, xhr, settings) {
     this.showVideosWindow();
 
-    fetch(Bootsy.config.galleryURL + `/user_files.json?filetype=video&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`)
-      .then((response) => {
-        return response.json();
-      }, (error) => {
-        throw error;
-      })
-      .then((data) => {
-        let modal_body, pagination;
-        [modal_body, pagination] = this.parseGalleryResponse(data);
-
-        modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
-        $('#videos-window .gallery-wrapper').html(modal_body);
-        $('#videos-window .pagination-wrapper').html(pagination);
-      });
+    this.fetchFromBackend({filetype: 'video'})
+        .then(updateScreen('#videos-window', data));
   }.bind(this));
 
   // Remove alerts on screen switch
@@ -335,8 +301,23 @@ Bootsy.Modal = function(area) {
   // Seacrh for images/videos
   this.$el.on('click', '.search-btn', function(event) {
     const keyword = $(this).parents('.input-group').find('.searchbar').first().val();
+    const filetype = $(this).data('filetype');
 
-  });
+    this.fetchFromBackend({
+          filetype: filetype,
+          search: keyword
+        })
+        .then((data) => {
+          switch(filetype) {
+            case 'image':
+              updateScreen('#global-gallery-window', data);
+              break;
+            case 'video':
+              updateScreen('#videos-window', data);
+              break;
+          }
+        });
+  }.bind(this));
 
   this.hideRefreshButton();
   this.hideEmptyAlert();
@@ -623,7 +604,8 @@ Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
 }
 
 Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
-  const url = Bootsy.config.galleryURL + `/user_files.json?filetype=${opts.filetype}&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
+  let url = Bootsy.config.galleryURL + `/user_files.json?filetype=${opts.filetype}&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
+  if (opts.search) { url += `&search=${opts.search}`; }
 
   return  fetch(url).then((response) => {
             return response.json();
@@ -649,4 +631,17 @@ Bootsy.Modal.prototype.fetchAll = function(urls) {
         }, i*500);
       });
   }
+}
+
+// Updates screen with new data fetched from server.
+// Normally is used after fetchFromBackend() function like so:
+// fetchFromBackend().then(updateScreen('#screen-id', data))
+// Note that the screen you want to update should have div.gallery-wrapper and div.pagination-wrapper
+Bootsy.Modal.prototype.updateScreen = function(selector, data) {
+  let modal_body, pagination;
+  [modal_body, pagination] = this.parseGalleryResponse(data);
+
+  modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
+  $(`${selector} .gallery-wrapper`).html(modal_body);
+  $(`${selector} .pagination-wrapper`).html(pagination);
 }

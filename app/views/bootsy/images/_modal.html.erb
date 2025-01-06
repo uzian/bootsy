@@ -24,7 +24,7 @@
           <div class='input-group mb-5'>
             <%= text_field_tag 'gallery-search', nil, placeholder: t('bootsy.action.search'), class: 'searchbar form-control' %>
             <div class='input-group-append'>
-              <button class='search-btn btn btn-primary'>
+              <button class='search-btn btn btn-primary' data-filetype='image'>
                 <i class='fas fa-search'></i>
               </button>
             </div>
@@ -37,7 +37,7 @@
           <div class='input-group mb-5'>
             <%= text_field_tag 'video-search', nil, placeholder: t('bootsy.action.search'), class: 'searchbar form-control' %>
             <div class='input-group-append'>
-              <button class='search-btn btn btn-primary'>
+              <button class='search-btn btn btn-primary' data-filetype='video'>
                 <i class='fas fa-search'></i>
               </button>
             </div>
