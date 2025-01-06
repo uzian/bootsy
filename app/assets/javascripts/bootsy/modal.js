@@ -21,7 +21,7 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '#image-upload-control .global-gallery-btn', function(event, xhr, settings) {
     this.showGalleryWindow();
 
-    this.fetchFromServer({filetype: 'image'})
+    this.fetchFromBackend({filetype: 'image'})
         .then((data) => {
           let modal_body, pagination;
           [modal_body, pagination] = this.parseGalleryResponse(data);
@@ -622,7 +622,7 @@ Bootsy.Modal.prototype.parseGalleryResponse = function(data) {
   return [modal_body, pagination];
 }
 
-Bootsy.Modal.prototype.fetchFromServer = function(opts) {
+Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
   const url = Bootsy.config.galleryURL + `/user_files.json?filetype=${opts.filetype}&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
 
   return  fetch(url).then((response) => {
