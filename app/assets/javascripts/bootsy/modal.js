@@ -302,15 +302,33 @@ Bootsy.Modal = function(area) {
     self.$el.modal('hide');
   });
 
-  // Seacrh for images/videos
+  // Search for images/videos
   this.$el.on('click', '.search-btn', function(event) {
     const keyword = $(event.currentTarget).parents('.input-group').find('.searchbar').first().val();
-    const filetype = $(event.currentTarget).data('filetype');
+    const filetype = $(event.currentTarget).parent().data('filetype');
 
     this.fetchFromBackend({
           filetype: filetype,
           search: keyword
         })
+        .then((data) => {
+          switch(filetype) {
+            case 'image':
+              this.updateScreen('#global-gallery-window', data);
+              break;
+            case 'video':
+              this.updateScreen('#videos-window', data);
+              break;
+          }
+        });
+  }.bind(this));
+
+  // Reset searchbar and show all images/videos
+  this.$el.on('click', '.reset-search', function(event) {
+    $(event.currentTarget).parents('.input-group').find('.searchbar').first().val('');
+    const filetype = $(event.currentTarget).parent().data('filetype');
+
+    this.fetchFromBackend({filetype: filetype})
         .then((data) => {
           switch(filetype) {
             case 'image':
