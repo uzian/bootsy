@@ -304,8 +304,8 @@ Bootsy.Modal = function(area) {
 
   // Seacrh for images/videos
   this.$el.on('click', '.search-btn', function(event) {
-    const keyword = $(this).parents('.input-group').find('.searchbar').first().val();
-    const filetype = $(this).data('filetype');
+    const keyword = $(event.currentTarget).parents('.input-group').find('.searchbar').first().val();
+    const filetype = $(event.currentTarget).data('filetype');
 
     this.fetchFromBackend({
           filetype: filetype,
