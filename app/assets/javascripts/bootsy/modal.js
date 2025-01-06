@@ -568,7 +568,7 @@ Bootsy.Modal.prototype.showPage = function(pages, pageId) {
 
 Bootsy.Modal.prototype.parseBackendResponse = function(data) {
   const files = data['files'];
-  if (!files || files.length == 0) { return; }
+  if (!files || files.length == 0) { return ['', '']; }
   const filetype = files[0]['filetype'] || 'image';
   let pagination = data['pagination'];
   let modal_body = '';
