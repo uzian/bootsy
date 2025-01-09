@@ -21,7 +21,6 @@ en:
     image:
       s: Image
       p: Images
-      media: Media files
       size: Size
       large: Large
       medium: Medium
@@ -39,6 +38,9 @@ en:
     no_images_uploaded: There are currently no uploaded images.
     js:
       alert_unsaved: You have unsaved changes.
+    video:
+      s: Video
+      p: Videos
   errors:
     messages:
       extension_whitelist_error: "You are not allowed to upload %{extension} files, allowed types: %{allowed_types}"

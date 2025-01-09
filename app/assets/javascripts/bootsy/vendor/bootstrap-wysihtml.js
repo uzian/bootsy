@@ -152,7 +152,7 @@
         "video": function(locale, options) {
             const size = (options && options.size) ? ` btn-${options.size}` : '';
             return `<li>
-                        <a class='btn btn-secondary ${size}' title='${locale.video.insert}' tabindex='-1'><i class='fas fa-video'></i></a>
+                        <a id='videos-btn' class='btn btn-secondary ${size}' data-wysihtml-command='customCommand' title='${locale.video.insert}' tabindex='-1'><i class='fas fa-video'></i></a>
                     </li>`;
         },
 
