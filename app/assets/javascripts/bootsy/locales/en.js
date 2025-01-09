@@ -40,6 +40,10 @@
       insert: 'Insert image',
       cancel: 'Cancel'
     },
+    video: {
+      insert: 'Insert video',
+      cancel: 'Cancel'
+    },
     html: {
       edit: 'Edit HTML'
     },
