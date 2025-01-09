@@ -11,11 +11,6 @@ Bootsy.Modal = function(area) {
   // In order to avoid form nesting
   this.$el.parents('form').after(this.$el);
 
-  // Remove alerts on screen switch
-  this.$el.on('click', '.modal-control button', function() {
-    this.hideEmptyAlert();
-  }.bind(this));
-
   // Invoke dropdown menu on image click
   this.$el.on('click', '.bootsy-image', function(event) {
     const wrapper = $('#dropdown-menu');
@@ -117,7 +112,7 @@ Bootsy.Modal = function(area) {
     wrappers.removeAttr('data-video-src');
   }.bind(this));
 
-  // Paginate through images/videos in gallery
+  // Paginate through images/videos in galleries
   this.$el.on('click', '.pagination .page-link', function(event) {
     event.preventDefault();
 
@@ -168,8 +163,8 @@ Bootsy.Modal = function(area) {
           let modal_body, pagination;
           [modal_body, pagination] = this.parseBackendResponse(data);
 
-          modal_body = `<div class="d-flex flex-wrap" data-page-id="${pageId}">`+modal_body+"</div>";
-          $(':not(.d-none) > .gallery-wrapper').append(modal_body);
+          modal_body = `<div class="d-flex flex-wrap" data-page-id="${pageId}">${modal_body}</div>`;
+          $('.bootsy-modal:not(.d-none) .gallery-wrapper').append(modal_body);
         })
         .then(() => {
           const pages = $('div[data-page-id]');
@@ -335,9 +330,9 @@ Bootsy.Modal.prototype.init = function() {
   $('#images-modal').on('shown.bs.modal', function() {
     if ($('#images-modal .gallery-wrapper').children().length == 0) {
       this.fetchFromBackend({filetype: 'image'})
-      .then((data) => {
-        this.updateGallery('#images-modal', data)
-      });
+          .then((data) => {
+            this.updateGallery('#images-modal', data)
+          });
     }
   }.bind(this));
 
