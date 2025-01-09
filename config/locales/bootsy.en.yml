@@ -36,6 +36,7 @@ en:
         right: Right
         inline: Inline
     no_images_uploaded: There are currently no uploaded images.
+    no_videos_uploaded: There are currently no uploaded videos.
     js:
       alert_unsaved: You have unsaved changes.
     video:

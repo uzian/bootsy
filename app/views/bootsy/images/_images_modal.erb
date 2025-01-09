@@ -1,8 +1,18 @@
-<div id="images-modal" class="modal fade bootsy-modal d-none" tabindex="-1" role="dialog" data-no-turbolink data-gallery-id="<%= container.bootsy_image_gallery_id %>">
+<div id="images-modal" class="modal fade bootsy-modal d-none" tabindex="-1" role="dialog" data-no-turbolink>
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
+
       <div class="modal-header">
         <h6 class="modal-title"><%= t 'bootsy.image.p' %></h6>
+        <div class='input-group mb-5'>
+          <%= text_field_tag 'images-search', nil, placeholder: t('bootsy.action.search'), class: 'searchbar form-control' %>
+          <div class='input-group-append align-items-center' data-filetype='image'>
+            <button class='search-btn btn btn-primary mr-2'>
+              <i class='fas fa-search'></i>
+            </button>
+            <i class='reset-search fa-solid fa-rotate-left text-secondary'></i>
+          </div>
+        </div>
         <button type="button" class="close" data-dismiss="modal">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -13,6 +23,11 @@
           <%= t 'bootsy.no_images_uploaded' %>
         </div>
 
+
+
+
+        <% if false %>
+
         <div id="select-image-window" class="row bootsy-gallery"></div>
 
         <div id="link-image-window" class="px-3 py-0 d-none">
@@ -20,15 +35,7 @@
         </div>
 
         <div id="global-gallery-window" class="d-none">
-          <div class='input-group mb-5'>
-            <%= text_field_tag 'gallery-search', nil, placeholder: t('bootsy.action.search'), class: 'searchbar form-control' %>
-            <div class='input-group-append align-items-center' data-filetype='image'>
-              <button class='search-btn btn btn-primary mr-2'>
-                <i class='fas fa-search'></i>
-              </button>
-              <i class='reset-search fa-solid fa-rotate-left text-secondary'></i>
-            </div>
-          </div>
+
           <div class="gallery-wrapper"></div>
           <div class="pagination-wrapper"></div>
         </div>
@@ -59,6 +66,9 @@
         <%= render 'bootsy/images/loader', image_class: 'bootsy-gallery-loader' %>
 
         <%= refresh_btn %>
+
+        <% end %>
+
       </div>
 
       <div class="modal-footer">
@@ -67,11 +77,6 @@
       <%# Dropdown menu for images insertion %>
       <div id="dropdown-menu" class="dropdown" tabindex=-2>
         <%= render 'bootsy/images/image_dropdown' %>
-      </div>
-
-      <%# Dropdown menu for videos insertion %>
-      <div id="videos-dropdown" class="dropdown" tabindex=-2>
-        <%= render 'bootsy/images/video_dropdown' %>
       </div>
     </div>
   </div>
