@@ -11,29 +11,19 @@ Bootsy.Modal = function(area) {
   // In order to avoid form nesting
   this.$el.parents('form').after(this.$el);
 
-  // Display image URL input field on 'Use link' button click
-  this.$el.on('click', '#image-upload-control .use-link-btn', this.showImageLinkWindow);
-
-  // Display uploaded images back on 'cancel' button click
-  this.$el.on('click', '#new_image .cancel-btn', this.showImageUploadWindow);
-
-  // Display gallery on 'Select from gallery' button click
-  this.$el.on('click', '#image-upload-control .global-gallery-btn', function(event, xhr, settings) {
-    this.showGalleryWindow();
-
+  // Display images' gallery when modal is opened
+  this.$el.find('#images-modal').on('shown.bs.modal', function() {
     this.fetchFromBackend({filetype: 'image'})
         .then((data) => {
-          this.updateScreen('#global-gallery-window', data)
+          this.updateGallery('#images-modal', data)
         });
   }.bind(this));
 
-  // Display videos selection on 'Videos' button click
-  this.$el.on('click', '#image-upload-control .videos-btn', function(event, xhr, settings) {
-    this.showVideosWindow();
-
+  // Display videos' gallery when modal is opened
+  this.$el.find('#videos-modal').on('shown.bs.modal', function() {
     this.fetchFromBackend({filetype: 'video'})
         .then((data) => {
-          this.updateScreen('#videos-window', data)
+          this.updateGallery('#images-modal', data)
         });
   }.bind(this));
 
@@ -223,14 +213,6 @@ Bootsy.Modal = function(area) {
       }
       throw error;
     })
-    // Upload fetched image
-    .then((file) => {
-      this.uploadImage(event, xhr, settings, file);
-      this.showImageUploadWindow();
-
-      $($('#link-image-window input')[0]).val('');
-      Bootsy.Modal.prototype.clearAlert();
-    });
   }.bind(this));
 
   this.$el.on('ajax:before', '.destroy-btn', this.showGalleryLoadingAnimation.bind(this));
@@ -314,10 +296,10 @@ Bootsy.Modal = function(area) {
         .then((data) => {
           switch(filetype) {
             case 'image':
-              this.updateScreen('#global-gallery-window', data);
+              this.updateGallery('#images-modal', data);
               break;
             case 'video':
-              this.updateScreen('#videos-window', data);
+              this.updateGallery('#videos-modal', data);
               break;
           }
         });
@@ -332,10 +314,10 @@ Bootsy.Modal = function(area) {
         .then((data) => {
           switch(filetype) {
             case 'image':
-              this.updateScreen('#global-gallery-window', data);
+              this.updateGallery('#images-modal', data);
               break;
             case 'video':
-              this.updateScreen('#videos-window', data);
+              this.updateGallery('#videos-modal', data);
               break;
           }
         });
@@ -524,30 +506,6 @@ Bootsy.Modal.prototype.clearModal = function() {
   $('#videos-control').addClass('d-none');
 }
 
-Bootsy.Modal.prototype.showImageUploadWindow = function() {
-  Bootsy.Modal.prototype.clearModal();
-  $('#select-image-window').removeClass('d-none');
-  $('#image-upload-control').removeClass('d-none');
-};
-
-Bootsy.Modal.prototype.showImageLinkWindow = function() {
-  Bootsy.Modal.prototype.clearModal();
-  $('#link-image-window').removeClass('d-none');
-  $('#image-link-control').removeClass('d-none');
-};
-
-Bootsy.Modal.prototype.showGalleryWindow = function() {
-  Bootsy.Modal.prototype.clearModal();
-  $('#global-gallery-window').removeClass('d-none');
-  $('#global-gallery-control').removeClass('d-none');
-};
-
-Bootsy.Modal.prototype.showVideosWindow = function() {
-  Bootsy.Modal.prototype.clearModal();
-  $('#videos-window').removeClass('d-none');
-  $('#videos-control').removeClass('d-none');
-};
-
 Bootsy.Modal.prototype.alert = function(text, add=false) {
   const alert = $('.bootsy-empty-alert');
 
@@ -662,11 +620,11 @@ Bootsy.Modal.prototype.fetchAll = function(urls) {
   }
 }
 
-// Updates screen with new data fetched from server.
+// Updates modal's gallery with new data fetched from server.
 // Normally is used after fetchFromBackend() function like so:
-// this.fetchFromBackend().then((data) => { this.updateScreen('#screen-id', data) })
-// Note that the screen you want to update should have div.gallery-wrapper and div.pagination-wrapper
-Bootsy.Modal.prototype.updateScreen = function(selector, data) {
+// this.fetchFromBackend().then((data) => { this.updateGallery('#modal-id', data) })
+// Note that the modal you want to update should have div.gallery-wrapper and div.pagination-wrapper
+Bootsy.Modal.prototype.updateGallery = function(selector, data) {
   try {
     let [modal_body, pagination] = this.parseBackendResponse(data);
 
@@ -674,6 +632,6 @@ Bootsy.Modal.prototype.updateScreen = function(selector, data) {
     $(`${selector} .gallery-wrapper`).html(modal_body);
     $(`${selector} .pagination-wrapper`).html(pagination);
   } catch (error) {
-    console.error("Couldn't update screen. Error: ", error);
+    console.error("Couldn't update modal's gallery. Error: ", error);
   }
 }
