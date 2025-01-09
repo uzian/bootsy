@@ -11,22 +11,6 @@ Bootsy.Modal = function(area) {
   // In order to avoid form nesting
   this.$el.parents('form').after(this.$el);
 
-  // Display images' gallery when modal is opened
-  this.$el.find('#images-modal').on('shown.bs.modal', function() {
-    this.fetchFromBackend({filetype: 'image'})
-        .then((data) => {
-          this.updateGallery('#images-modal', data)
-        });
-  }.bind(this));
-
-  // Display videos' gallery when modal is opened
-  this.$el.find('#videos-modal').on('shown.bs.modal', function() {
-    this.fetchFromBackend({filetype: 'video'})
-        .then((data) => {
-          this.updateGallery('#images-modal', data)
-        });
-  }.bind(this));
-
   // Remove alerts on screen switch
   this.$el.on('click', '.modal-control button', function() {
     this.hideEmptyAlert();
@@ -325,6 +309,47 @@ Bootsy.Modal = function(area) {
 
   this.hideRefreshButton();
   this.hideEmptyAlert();
+};
+
+// Initialization logic
+Bootsy.Modal.prototype.init = function() {
+  // Toggle between modals, depending on which button invoked it
+  $('#images-btn').on('click', () => {
+    $('#images-modal').removeClass('d-none');
+    $('#videos-modal').addClass('d-none');
+  });
+
+  $('#videos-btn').on('click', () => {
+    $('#videos-modal').removeClass('d-none');
+    $('#images-modal').addClass('d-none');
+  });
+
+  // When one of modals is closed - close another one automatically
+  $('#images-modal, #videos-modal').on('hidden.bs.modal', () => {
+    $('#images-modal').modal('hide');
+    $('#videos-modal').modal('hide');
+  });
+
+
+  // Fetch images' gallery when modal is opened for the first time.
+  $('#images-modal').on('shown.bs.modal', function() {
+    if ($('#images-modal .gallery-wrapper').children().length == 0) {
+      this.fetchFromBackend({filetype: 'image'})
+      .then((data) => {
+        this.updateGallery('#images-modal', data)
+      });
+    }
+  }.bind(this));
+
+  // Fetch videos' gallery when modal is opened for the first time.
+  $('#videos-modal').on('shown.bs.modal', function() {
+    if ($('#videos-modal .gallery-wrapper').children().length == 0) {
+      this.fetchFromBackend({filetype: 'video'})
+          .then((data) => {
+            this.updateGallery('#videos-modal', data)
+          });
+    }
+  }.bind(this));
 };
 
 // Show modal

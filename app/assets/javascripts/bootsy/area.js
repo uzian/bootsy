@@ -74,23 +74,7 @@ Bootsy.Area.prototype.init = function() {
       return true;
     }.bind(this));
 
-    // Toggle between modals, depending on which button invoked it
-    $('#images-btn').on('click', () => {
-      $('#images-modal').removeClass('d-none');
-      $('#videos-modal').addClass('d-none');
-    });
-
-    $('#videos-btn').on('click', () => {
-      $('#videos-modal').removeClass('d-none');
-      $('#images-modal').addClass('d-none');
-    });
-
-    // When one of modals is closed - close another one automatically
-    $('#images-modal, #videos-modal').on('hidden.bs.modal', () => {
-      $('#images-modal').modal('hide');
-      $('#videos-modal').modal('hide');
-    });
-
+    this.modal.init();
     this.$el.data('bootsy-initialized', true);
   }
 };

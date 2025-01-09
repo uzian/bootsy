@@ -3,7 +3,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h6 class="modal-title mr-2"><%= t 'bootsy.video.p' %></h6>
+        <h6 class="modal-title mr-5"><%= t 'bootsy.video.p' %></h6>
         <div class="input-group">
           <%= text_field_tag "videos-search", nil, placeholder: t("bootsy.action.search"), class: "searchbar" %>
           <div class="input-group-append align-items-center" data-filetype="video">
@@ -25,6 +25,7 @@
 
         <div class="gallery-wrapper"></div>
         <div class="pagination-wrapper"></div>
+        <%= render 'bootsy/images/loader', image_class: 'bootsy-gallery-loader' %>
       </div>
 
       <div class="modal-footer">
