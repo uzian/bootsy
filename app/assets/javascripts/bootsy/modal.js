@@ -194,14 +194,6 @@ Bootsy.Modal = function(area) {
     })
   }.bind(this));
 
-  this.$el.on('ajax:before', '.destroy-btn', this.showGalleryLoadingAnimation.bind(this));
-
-  this.$el.on('ajax:success', '.destroy-btn', function(_e, data) {
-    this.deleteImage(data.id);
-  }.bind(this));
-
-  this.$el.on('click', 'a[href="#refresh-gallery"]', this.requestImageGallery.bind(this));
-
   // Upload image from user's computer
   this.$el.on('submit', '.bootsy-upload-form', function(event, xhr, settings) {
     event.preventDefault();
@@ -211,14 +203,6 @@ Bootsy.Modal = function(area) {
 
     this.uploadImage(event, xhr, settings, file);
     this.clearAlert();
-  }.bind(this));
-
-  this.$el.modal({ show: false });
-
-  this.$el.on('shown.bs.modal', function() {
-    if (this.$el.data('gallery-loaded') !== true) {
-      this.requestImageGallery();
-    }
   }.bind(this));
 
   // Insert image to post body
@@ -302,6 +286,7 @@ Bootsy.Modal = function(area) {
         });
   }.bind(this));
 
+  this.$el.modal({ show: false });
   this.hideRefreshButton();
   this.hideEmptyAlert();
 };
@@ -468,51 +453,6 @@ Bootsy.Modal.prototype.imageUploadFailed = function(xhr, invalidErrors) {
 // Add image to gallery
 Bootsy.Modal.prototype.addImage = function(html) {
   $(html).hide().appendTo(this.$el.find('.bootsy-gallery')).fadeIn(200);
-};
-
-// Set image gallery
-Bootsy.Modal.prototype.requestImageGallery = function() {
-  this.hideRefreshButton();
-  this.showGalleryLoadingAnimation();
-
-  $.ajax({
-    url: '/bootsy/images',
-    type: 'GET',
-    cache: false,
-    data: {
-      image_gallery_id: this.area.$el.data('gallery-id')
-    },
-    dataType: 'json',
-    success: function(data) {
-      this.hideRefreshButton();
-      this.hideGalleryLoadingAnimation();
-      this.$el.find('.bootsy-gallery .bootsy-image').remove();
-
-      $.each(data.images, function(index, value) {
-        this.addImage(value);
-      }.bind(this));
-
-      if (data.images.length === 0) this.showEmptyAlert();
-
-      this.setUploadForm(data.form);
-
-      this.$el.data('gallery-loaded', true);
-    }.bind(this),
-    error: this.imageUploadFailed.bind(this)
-  });
-};
-
-// Delete image
-Bootsy.Modal.prototype.deleteImage = function(id) {
-  var image = this.$el.find('.bootsy-image[data-id="' + id + '"]');
-
-  this.hideGalleryLoadingAnimation();
-
-  image.hide(200, function() {
-    image.remove();
-
-    if (this.$el.find('.bootsy-image').length === 0 ) this.showEmptyAlert();
-  }.bind(this));
 };
 
 Bootsy.Modal.prototype.clearModal = function() {
