@@ -1311,6 +1311,10 @@
                 insert: "Insert image",
                 cancel: "Cancel"
             },
+            image: {
+                insert: "Insert video",
+                cancel: "Cancel"
+            },
             html: {
                 edit: "Edit HTML"
             },
