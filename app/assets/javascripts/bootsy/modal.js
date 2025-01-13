@@ -20,8 +20,9 @@ Bootsy.Modal = function(area) {
 
   // Invoke dropdown menu on image click
   this.$el.on("click", ".bootsy-image", function(event) {
-    if ($(event.currentTarget).is("img") || $(event.currentTarget).find("img").length > 0) {
-      const imgTag = $(event.currentTarget).is("img") ? event.currentTarget : $(event.currentTarget).find("img")[0];
+    const imgTag = $(event.currentTarget).is("img") ? event.currentTarget : $(event.currentTarget).find("img")[0];
+
+    if (imgTag) {
       const attrs = {
         "data-url": $(imgTag).attr("src").slice(0, $(imgTag).attr("src").indexOf("?variant")),
         "data-source": "local"
@@ -606,6 +607,6 @@ Bootsy.Modal.prototype.invokeMenu = function(menuType, attrs, event) {
   });
 
   menu.addClass("show");
-  menu.find(".dropdown-meun").addClass("show");
+  menu.children(".dropdown-menu").addClass("show");
   menu.focus();
 }
