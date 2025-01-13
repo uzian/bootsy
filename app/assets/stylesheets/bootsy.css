@@ -421,3 +421,9 @@ iframe.full-width {
 .gallery-wrapper .col {
   width: min-content;
 }
+
+#images-dropdown,
+#videos-dropdown {
+  transition: none !important;
+  -webkit-transition: none !important;
+}

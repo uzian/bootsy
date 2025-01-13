@@ -73,20 +73,20 @@ Bootsy.Modal = function(area) {
   }.bind(this));
 
   // Hide menus on focus lost
-  // this.$el.on('focusout', '#images-menu, #videos-menu', function(event) {
-  //   // Do not hide if user clicked on child element
-  //   if ($(event.relatedTarget).parents('#images-menu, #videos-menu').length > 0) { return };
+  this.$el.on('focusout', '#images-menu, #videos-menu', function(event) {
+    // Do not hide if user clicked on child element
+    if ($(event.relatedTarget).parents('#images-menu, #videos-menu').length > 0) { return };
 
-  //   const wrappers = $('#images-menu, #videos-menu');
-  //   const menus = $('#images-menu > .dropdown-menu, #videos-menu > .dropdown-menu');
+    const wrappers = $('#images-menu, #videos-menu');
+    const menus = $('#images-menu > .dropdown-menu, #videos-menu > .dropdown-menu');
 
-  //   wrappers.removeClass('show');
-  //   menus.removeClass('show');
+    wrappers.removeClass('show');
+    menus.removeClass('show');
 
-  //   // Clear out data attributes
-  //   wrappers.removeAttr('data-image-src');
-  //   wrappers.removeAttr('data-video-src');
-  // }.bind(this));
+    // Clear out data attributes
+    wrappers.removeAttr('data-image-src');
+    wrappers.removeAttr('data-video-src');
+  }.bind(this));
 
   // Paginate through images/videos
   this.$el.on('click', '.pagination .page-link', function(event) {
