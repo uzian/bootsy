@@ -4,8 +4,8 @@ window.Bootsy = window.Bootsy || {};
 Bootsy.constants = Bootsy.constants || {};
 
 Bootsy.constants.menuTypes = {
-  images: 0,
-  videos: 1
+  images: Symbol("images"),
+  videos: Symbol("videos")
 }
 
 
@@ -607,4 +607,13 @@ Bootsy.Modal.prototype.updateGallery = function(selector, data) {
 }
 
 // Invokes dropdown menus for inserting images and videos
-Bootsy.Modal.prototype.invokeMenu = function() {}
+Bootsy.Modal.prototype.invokeMenu = function(menuType) {
+  switch (menuType) {
+    case value:
+
+      break;
+
+    default:
+      break;
+  }
+}
