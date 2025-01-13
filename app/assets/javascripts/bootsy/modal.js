@@ -19,48 +19,15 @@ Bootsy.Modal = function(area) {
   this.$el.parents('form').after(this.$el);
 
   // Invoke dropdown menu on image click
-  this.$el.on('click', '.bootsy-image', function(event) {
-    const wrapper = $('#images-menu');
-    const menu = $('#images-menu > .dropdown-menu');
-    let invokeMenu = false;
-
-    if ($(event.currentTarget).is('img') || $(event.currentTarget).find('img').length > 0) {
-      const imgTag = $(event.currentTarget).is('img') ? event.currentTarget : $(event.currentTarget).find('img')[0];
-      invokeMenu = true;
-
-      // Update data attributes with image-specific data
-      const src = $(imgTag).attr('src').slice(0, $(imgTag).attr('src').indexOf('?variant'));
-      wrapper.attr('data-image-src', src);
-      wrapper.attr('data-source', 'local');
-
-      // Update delete button's destination
-      const imgId = $(imgTag).attr('src').slice($(imgTag).attr('src').lastIndexOf('/')+1, $(imgTag).attr('src').indexOf('?variant'));
-      $('#delete-image').attr('href', '/bootsy/images/' + imgId);
-    }
-
-    if (invokeMenu) {
-      // Reposition the menu under the clicking point
-      const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
-      const offsetY = event.clientY - ($('.bootsy-modal .modal-dialog').outerHeight(true) - $('.bootsy-modal .modal-dialog').height())/2 - 5;
-
-      wrapper.css({
-        'position': 'absolute',
-        'left': String(offsetX) + 'px',
-        'top': String(offsetY) + 'px'
-      })
-
-      // If current screen is select-image-window or link-image-window (i.e. image is being attached to this page only)
-      // - display "delete" option. Hide it otherwise.
-      if ($(event.currentTarget).closest('#select-image-window, #link-image-window').length > 0) {
-        $('#delete-image').show();
-      } else {
-        $('#delete-image').hide();
+  this.$el.on("click", ".bootsy-image", function(event) {
+    if ($(event.currentTarget).is("img") || $(event.currentTarget).find("img").length > 0) {
+      const imgTag = $(event.currentTarget).is("img") ? event.currentTarget : $(event.currentTarget).find("img")[0];
+      const attrs = {
+        "data-url": $(imgTag).attr("src").slice(0, $(imgTag).attr("src").indexOf("?variant")),
+        "data-source": "local"
       }
 
-      // Appear menu and set focus to it
-      wrapper.addClass('show');
-      menu.addClass('show');
-      wrapper.focus();
+      this.invokeMenu(Bootsy.constants.menuTypes.images, attrs, event);
     }
   }.bind(this));
 
@@ -607,15 +574,38 @@ Bootsy.Modal.prototype.updateGallery = function(selector, data) {
 }
 
 // Invokes dropdown menus for inserting images and videos
-Bootsy.Modal.prototype.invokeMenu = function(menuType, attrs) {
+Bootsy.Modal.prototype.invokeMenu = function(menuType, attrs, event) {
+  let menu, modal;
+
   switch (menuType) {
     case Bootsy.constants.menuTypes.images:
-
+      menu = $("#images-menu");
+      modal = $("#images-modal .modal-dialog");
       break;
     case Bootsy.constants.menuTypes.videos:
-
+      menu = $("#videos-menu");
+      modal = $("#videos-modal .modal-dialog");
       break;
     default:
       throw new Error("First argument passed to invokeMenu() should be one of Bootsy.constants.menuTypes values");
   }
+
+  // Add data attributes to menu
+  for (const [key, value] of Object.entries(attrs)) {
+    $(menu).attr(key, value);
+  }
+
+  // Reposition the menu under the clicking point
+  const offsetX = event.clientX - ($(window).width() - modal.width())/2 + 5;
+  const offsetY = event.clientY - (modal.outerHeight(true) - modal.height())/2 - 5;
+
+  menu.css({
+    position: "absolute",
+    left: `${offsetX}px`,
+    top: `${offsetY}px`
+  });
+
+  menu.addClass("show");
+  menu.find(".dropdown-meun").addClass("show");
+  menu.focus();
 }
