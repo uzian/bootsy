@@ -20,8 +20,8 @@ Bootsy.Modal = function(area) {
 
   // Invoke dropdown menu on image click
   this.$el.on('click', '.bootsy-image', function(event) {
-    const wrapper = $('#dropdown-menu');
-    const menu = $('#dropdown-menu > .dropdown-menu');
+    const wrapper = $('#images-menu');
+    const menu = $('#images-menu > .dropdown-menu');
     let invokeMenu = false;
 
     if ($(event.currentTarget).is('img') || $(event.currentTarget).find('img').length > 0) {
@@ -66,8 +66,8 @@ Bootsy.Modal = function(area) {
 
   // Invoke dropdown menu on video click
   this.$el.on('click', '.bootsy-video, #insert-external-video-btn', function(event) {
-    const wrapper = $('#videos-dropdown');
-    const menu = $('#videos-dropdown > .dropdown-menu');
+    const wrapper = $('#videos-menu');
+    const menu = $('#videos-menu > .dropdown-menu');
     const srcTag = $(event.currentTarget).find('source')[0];
     const inputTag = $('#video-link-input')[0];
 
@@ -105,12 +105,12 @@ Bootsy.Modal = function(area) {
   }.bind(this));
 
   // Hide menus on focus lost
-  this.$el.on('focusout', '#dropdown-menu, #videos-dropdown', function(event) {
+  this.$el.on('focusout', '#images-menu, #videos-menu', function(event) {
     // Do not hide if user clicked on child element
-    if ($(event.relatedTarget).parents('#dropdown-menu, #videos-dropdown').length > 0) { return };
+    if ($(event.relatedTarget).parents('#images-menu, #videos-menu').length > 0) { return };
 
-    const wrappers = $('#dropdown-menu, #videos-dropdown');
-    const menus = $('#dropdown-menu > .dropdown-menu, #videos-dropdown > .dropdown-menu');
+    const wrappers = $('#images-menu, #videos-menu');
+    const menus = $('#images-menu > .dropdown-menu, #videos-menu > .dropdown-menu');
 
     wrappers.removeClass('show');
     menus.removeClass('show');
@@ -214,7 +214,7 @@ Bootsy.Modal = function(area) {
   }.bind(this));
 
   // Insert image to post body
-  this.$el.on('click', '#dropdown-menu .insert', function(event) {
+  this.$el.on('click', '#images-menu .insert', function(event) {
     let suffix = '?variant=' + $(this).attr('data-image-size');
 
     event.preventDefault();
@@ -224,7 +224,7 @@ Bootsy.Modal = function(area) {
     }
 
     const image = {
-      src: $(this).parents('#dropdown-menu').attr('data-image-src') + suffix
+      src: $(this).parents('#images-menu').attr('data-image-src') + suffix
     }
 
     if ($(this).attr('data-image-size') !== 'full_width') {
@@ -240,14 +240,14 @@ Bootsy.Modal = function(area) {
   });
 
   // Insert video to post body
-  this.$el.on('click', '#videos-dropdown .insert', function(event) {
+  this.$el.on('click', '#videos-menu .insert', function(event) {
     event.preventDefault();
 
     const video = {
-      src: $('#videos-dropdown').attr('data-video-src'),
+      src: $('#videos-menu').attr('data-video-src'),
       class: $(event.currentTarget).attr('data-video-size') == 'full_width' ? 'full-width' : 'video-default-size'
     }
-    const tag = $('#videos-dropdown').attr('data-insert-as');
+    const tag = $('#videos-menu').attr('data-insert-as');
 
     insert = self.area.insertVideo.bind(self.area, video, tag);
     insert();
@@ -607,13 +607,15 @@ Bootsy.Modal.prototype.updateGallery = function(selector, data) {
 }
 
 // Invokes dropdown menus for inserting images and videos
-Bootsy.Modal.prototype.invokeMenu = function(menuType) {
+Bootsy.Modal.prototype.invokeMenu = function(menuType, attrs) {
   switch (menuType) {
-    case value:
+    case Bootsy.constants.menuTypes.images:
 
       break;
+    case Bootsy.constants.menuTypes.videos:
 
+      break;
     default:
-      break;
+      throw new Error("First argument passed to invokeMenu() should be one of Bootsy.constants.menuTypes values");
   }
 }
