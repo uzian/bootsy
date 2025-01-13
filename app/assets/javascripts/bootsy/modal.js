@@ -1,6 +1,13 @@
 /* Bootsy modal */
 
 window.Bootsy = window.Bootsy || {};
+Bootsy.constants = Bootsy.constants || {};
+
+Bootsy.constants.menuTypes = {
+  images: 0,
+  videos: 1
+}
+
 
 Bootsy.Modal = function(area) {
   var self = this;
@@ -24,6 +31,7 @@ Bootsy.Modal = function(area) {
       // Update data attributes with image-specific data
       const src = $(imgTag).attr('src').slice(0, $(imgTag).attr('src').indexOf('?variant'));
       wrapper.attr('data-image-src', src);
+      wrapper.attr('data-source', 'local');
 
       // Update delete button's destination
       const imgId = $(imgTag).attr('src').slice($(imgTag).attr('src').lastIndexOf('/')+1, $(imgTag).attr('src').indexOf('?variant'));
@@ -597,3 +605,6 @@ Bootsy.Modal.prototype.updateGallery = function(selector, data) {
     console.error("Couldn't update modal's gallery. Error: ", error);
   }
 }
+
+// Invokes dropdown menus for inserting images and videos
+Bootsy.Modal.prototype.invokeMenu = function() {}
