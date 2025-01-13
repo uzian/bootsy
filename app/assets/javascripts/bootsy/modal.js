@@ -112,7 +112,7 @@ Bootsy.Modal = function(area) {
     wrappers.removeAttr('data-video-src');
   }.bind(this));
 
-  // Paginate through images/videos in galleries
+  // Paginate through images/videos
   this.$el.on('click', '.pagination .page-link', function(event) {
     event.preventDefault();
 
@@ -337,7 +337,6 @@ Bootsy.Modal.prototype.show = function() {
   this.$el.modal('show');
 };
 
-// Gallery loading
 Bootsy.Modal.prototype.showGalleryLoadingAnimation = function() {
   this.$el.find('.bootsy-gallery-loader').fadeIn(200);
 };
@@ -346,7 +345,6 @@ Bootsy.Modal.prototype.hideGalleryLoadingAnimation = function() {
   this.$el.find('.bootsy-gallery-loader').fadeOut(200);
 };
 
-// Upload loading animation
 Bootsy.Modal.prototype.showUploadLoadingAnimation = function() {
   this.$el.find('.bootsy-upload-loader').fadeIn(200);
 };
@@ -584,7 +582,7 @@ Bootsy.Modal.prototype.fetchAll = function(urls) {
   }
 }
 
-// Updates modal's gallery with new data fetched from server.
+// Updates modal's gallery with new data fetched from the server.
 // Normally is used after fetchFromBackend() function like so:
 // this.fetchFromBackend().then((data) => { this.updateGallery('#modal-id', data) })
 // Note that the modal you want to update should have div.gallery-wrapper and div.pagination-wrapper
