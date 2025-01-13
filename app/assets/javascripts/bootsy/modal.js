@@ -33,42 +33,16 @@ Bootsy.Modal = function(area) {
   }.bind(this));
 
   // Invoke dropdown menu on video click
-  this.$el.on('click', '.bootsy-video, #insert-external-video-btn', function(event) {
-    const wrapper = $('#videos-menu');
-    const menu = $('#videos-menu > .dropdown-menu');
-    const srcTag = $(event.currentTarget).find('source')[0];
-    const inputTag = $('#video-link-input')[0];
+  this.$el.on("click", ".bootsy-video", function(event) {
+    const srcTag = $(event.currentTarget).find("source")[0];
 
-    // If dropdown menu is being invoked by clicking on video:
-    // - use src stored in <source> tag;
-    // - insert as <video>
-    // Otherwise, if menu is being invoked by clicking on "Insert" button:
-    // - use src which user has provided in input field;
-    // - insert as <iframe>
     if (srcTag) {
-      wrapper.attr('data-video-src', $(srcTag).attr('src'));
-      wrapper.attr('data-insert-as', 'video');
-    } else if (inputTag) {
-      const src = $(inputTag).val().trim();
-      if (!src) { return; }
-      wrapper.attr('data-video-src', src);
-      wrapper.attr('data-insert-as', 'iframe');
-    }
+      const attrs = {
+        "data-url": $(srcTag).attr("src"),
+        "data-source": "local"
+      }
 
-    if (srcTag || inputTag) {
-      // Reposition the menu under the clicking point
-      const offsetX = event.clientX - ($(window).width() - $('.bootsy-modal .modal-dialog').width())/2 + 5;
-      const offsetY = event.clientY - ($('.bootsy-modal .modal-dialog').outerHeight(true) - $('.bootsy-modal .modal-dialog').height())/2 - 5;
-
-      wrapper.css({
-        'position': 'absolute',
-        'left': String(offsetX) + 'px',
-        'top': String(offsetY) + 'px'
-      });
-
-      wrapper.addClass('show');
-      menu.addClass('show');
-      wrapper.focus();
+      this.invokeMenu(Bootsy.constants.menuTypes.videos, attrs, event)
     }
   }.bind(this));
 
