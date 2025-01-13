@@ -1,4 +1,4 @@
-Terminology:
+#Terminology:
 target application - the Ruby on Rails application, which uses Bootsy gem. This particular fork is
                       tailored for one particular application only!
 foreign file - a file which is not hosted in target application's backend. Instead it's stored on
