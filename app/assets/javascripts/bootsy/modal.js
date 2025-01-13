@@ -8,7 +8,6 @@ Bootsy.constants.menuTypes = {
   videos: Symbol("videos")
 }
 
-
 Bootsy.Modal = function(area) {
   var self = this;
 
@@ -58,8 +57,8 @@ Bootsy.Modal = function(area) {
     menus.removeClass('show');
 
     // Clear out data attributes
-    wrappers.removeAttr('data-image-src');
-    wrappers.removeAttr('data-video-src');
+    wrappers.removeAttr('data-url');
+    wrappers.removeAttr('data-source');
   }.bind(this));
 
   // Paginate through images/videos
@@ -166,7 +165,7 @@ Bootsy.Modal = function(area) {
     }
 
     const image = {
-      src: $(this).parents('#images-menu').attr('data-image-src') + suffix
+      src: $(this).parents('#images-menu').attr('data-url') + suffix
     }
 
     if ($(this).attr('data-image-size') !== 'full_width') {
@@ -182,16 +181,16 @@ Bootsy.Modal = function(area) {
   });
 
   // Insert video to post body
-  this.$el.on('click', '#videos-menu .insert', function(event) {
+  this.$el.on("click", "#videos-menu .insert", function(event) {
     event.preventDefault();
 
     const video = {
-      src: $('#videos-menu').attr('data-video-src'),
-      class: $(event.currentTarget).attr('data-video-size') == 'full_width' ? 'full-width' : 'video-default-size'
+      src: $("#videos-menu").attr("data-url"),
+      class: $(event.currentTarget).attr("data-video-size") == "full_width" ? "full-width" : "video-default-size"
     }
-    const tag = $('#videos-menu').attr('data-insert-as');
+    const filesource = $("#videos-menu").attr("data-source");
 
-    insert = self.area.insertVideo.bind(self.area, video, tag);
+    insert = self.area.insertVideo.bind(self.area, video, filesource);
     insert();
 
     self.$el.modal('hide');

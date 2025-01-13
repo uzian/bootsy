@@ -92,7 +92,7 @@ Bootsy.Area.prototype.insertImage = function(image) {
 };
 
 // Insert video in the text
-Bootsy.Area.prototype.insertVideo = function(video, tag) {
+Bootsy.Area.prototype.insertVideo = function(video, filesource) {
   this.editor.currentView.element.focus();
 
   if (this.caretBookmark) {
@@ -100,15 +100,15 @@ Bootsy.Area.prototype.insertVideo = function(video, tag) {
     this.caretBookmark = null;
   }
 
-  switch(tag) {
-    case 'video':
+  switch(filesource) {
+    case 'local':
       this.editor.composer.commands.exec('insertVideo', video);
       break;
-    case 'iframe':
+    case 'foreign':
       this.editor.composer.commands.exec('insertIframe', video);
       $("#video-link-input").val("");
       break;
     default:
-      throw new Error(`Don't know which tag to use to insert video. data-insert-as is ${tag}`);
+      throw new Error(`Don't know which tag to use to insert video. data-source is ${filesource}`);
   }
 };
