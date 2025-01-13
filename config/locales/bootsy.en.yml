@@ -40,6 +40,7 @@ en:
     js:
       alert_unsaved: You have unsaved changes.
     video:
+      new: New video
       s: Video
       p: Videos
   errors:

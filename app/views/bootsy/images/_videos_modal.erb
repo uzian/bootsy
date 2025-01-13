@@ -22,7 +22,19 @@
         <div class="alert alert-info bootsy-empty-alert"></div>
 
         <div class="gallery-wrapper"></div>
-        <div class="pagination-wrapper"></div>
+        <div class="pagination-wrapper mb-5"></div>
+
+        <h6 class="modal-title mb-3"><%= t("bootsy.video.new") %></h6>
+
+        <div class="input-group">
+          <%= text_field_tag "video-url-input", nil, placeholder: t("bootsy.action.enter_video_url") %>
+          <div class="input-group-append">
+            <button id="link-video-btn" class="btn btn-primary">
+              <%= t("bootsy.action.insert") %>
+            </button>
+          </div>
+        </div>
+
         <%= render 'bootsy/images/loader', image_class: 'bootsy-gallery-loader' %>
       </div>
 

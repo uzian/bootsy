@@ -22,18 +22,25 @@
         <div class="alert alert-info bootsy-empty-alert"></div>
 
         <div class="gallery-wrapper"></div>
-        <div class="pagination-wrapper"></div>
+        <div class="pagination-wrapper mb-5"></div>
+
+        <h6 class="modal-title mb-3"><%= t("bootsy.image.new") %></h6>
+
+        <div class="input-group">
+          <%= text_field_tag "image-url-input", nil, placeholder: t("bootsy.action.enter_image_url") %>
+          <div class="input-group-append">
+            <button id="link-image-btn" class="btn btn-primary">
+              <%= t("bootsy.action.insert") %>
+            </button>
+          </div>
+        </div>
+
         <%= render 'bootsy/images/loader', image_class: 'bootsy-gallery-loader' %>
 
 
 
 
         <% if false %>
-
-        <div id="link-image-window" class="px-3 py-0 d-none">
-          <%= text_field_tag 'image-link-input', nil, placeholder: t('bootsy.action.enter_image_url'), class: 'form-control' %>
-        </div>
-
         <div id="videos-window" class="d-none">
           <div class='input-group mb-5'>
             <%= text_field_tag 'video-search', nil, placeholder: t('bootsy.action.search'), class: 'searchbar form-control' %>

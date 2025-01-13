@@ -422,8 +422,7 @@ iframe.full-width {
   width: min-content;
 }
 
-#images-menu,
-#videos-menu {
+#images-menu, #videos-menu {
   transition: none !important;
   -webkit-transition: none !important;
 }
