@@ -65,24 +65,25 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '.pagination .page-link', function(event) {
     event.preventDefault();
 
-    const paginationBtns = $('.pagination .page-item');
+    const modal = $('.bootsy-modal:not(.d-none)');
+    const paginationBtns = modal.find('.pagination .page-item');
     let nextActive = event.currentTarget;
     let url = $(event.currentTarget).attr('href');
     let pageId = $(event.currentTarget).text();
 
     // If text content is arrow - replace it with approprite page number
     if (pageId === '\u2192') {
-      pageId = String(Number($('.page-item.active').text()) + 1);
-      nextActive = $('.page-item.active').next().children()[0];
+      pageId = String(Number(modal.find('.page-item.active').text()) + 1);
+      nextActive = modal.find('.page-item.active').next().children()[0];
       url = $(nextActive).attr('href');
     } else if (pageId === '\u2190') {
-      pageId = String(Number($('.page-item.active').text()) - 1);
-      nextActive = $('.page-item.active').prev().children()[0];
+      pageId = String(Number(modal.find('.page-item.active').text()) - 1);
+      nextActive = modal.find('.page-item.active').prev().children()[0];
       url = $(nextActive).attr('href');
     }
 
     // Make clicked pagination button active
-    $('.page-item.active').removeClass('active');
+    modal.find('.page-item.active').removeClass('active');
     $(nextActive).parent().addClass('active');
 
     // Disable/enable arrows
@@ -96,9 +97,9 @@ Bootsy.Modal = function(area) {
     }
 
     // Check whether this page was accessed before
-    if ($(`div[data-page-id="${pageId}"]`).length > 0) {
+    if (modal.find(`div[data-page-id="${pageId}"]`).length > 0) {
       // If it was - display it and hide all others
-      const pages = $('div[data-page-id]');
+      const pages = modal.find('div[data-page-id]');
       this.showPage(pages, pageId);
     } else {
       // Otherwise, fetch images/videos and create new page
@@ -113,10 +114,10 @@ Bootsy.Modal = function(area) {
           [modal_body, pagination] = this.parseBackendResponse(data);
 
           modal_body = `<div class="d-flex flex-wrap" data-page-id="${pageId}">${modal_body}</div>`;
-          $('.bootsy-modal:not(.d-none) .gallery-wrapper').append(modal_body);
+          modal.find('.gallery-wrapper').append(modal_body);
         })
         .then(() => {
-          const pages = $('div[data-page-id]');
+          const pages = modal.find('div[data-page-id]');
           this.showPage(pages, pageId);
         });
     }

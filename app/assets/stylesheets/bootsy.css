@@ -422,8 +422,8 @@ iframe.full-width {
   width: min-content;
 }
 
-#images-dropdown,
-#videos-dropdown {
+#images-menu,
+#videos-menu {
   transition: none !important;
   -webkit-transition: none !important;
 }
