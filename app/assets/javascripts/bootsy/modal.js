@@ -124,25 +124,25 @@ Bootsy.Modal = function(area) {
   }.bind(this));
 
   // Upload image by URL provided
-  this.$el.on('click', '#image-link-control .insert-btn', function(event, xhr, settings) {
-    const imageURL = $($('#link-image-window input')[0]).val().trim();
+  // this.$el.on('click', '#image-link-control .insert-btn', function(event, xhr, settings) {
+  //   const imageURL = $($('#link-image-window input')[0]).val().trim();
 
-    // Validate image URL
-    if (imageURL == '') {
-      return;
-    }
+  //   // Validate image URL
+  //   if (imageURL == '') {
+  //     return;
+  //   }
 
-    fetch(imageURL)
-    .then((response) => {
-      return response.blob();
-    }, (error) => {
-      console.log(window.Bootsy.translations['imageFetchFailed']);
-      if (window.Bootsy.translations) {
-        Bootsy.Modal.prototype.alert(window.Bootsy.translations['imageFetchFailed']);
-      }
-      throw error;
-    })
-  }.bind(this));
+  //   fetch(imageURL)
+  //   .then((response) => {
+  //     return response.blob();
+  //   }, (error) => {
+  //     console.log(window.Bootsy.translations['imageFetchFailed']);
+  //     if (window.Bootsy.translations) {
+  //       Bootsy.Modal.prototype.alert(window.Bootsy.translations['imageFetchFailed']);
+  //     }
+  //     throw error;
+  //   })
+  // }.bind(this));
 
   // Upload image/video from user's disk
   this.$el.on('submit', '.bootsy-upload-form', function(event, xhr, settings) {

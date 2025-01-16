@@ -33,6 +33,11 @@
                 <%= file_field_tag "image-file-input", class: "custom-file-input", accept: "image/*" %>
                 <%= label_tag "image-file-input", t("bootsy.action.choose_file"), class: "custom-file-label" %>
               </div>
+              <div class="input-group-append">
+                <button id="upload-image-btn" class="btn btn-primary">
+                  <%= t("bootsy.action.insert") %>
+                </button>
+              </div>
             </div>
           </div>
         </div>
