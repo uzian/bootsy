@@ -144,7 +144,7 @@ Bootsy.Modal = function(area) {
     })
   }.bind(this));
 
-  // Upload image from user's computer
+  // Upload image/video from user's disk
   this.$el.on('submit', '.bootsy-upload-form', function(event, xhr, settings) {
     event.preventDefault();
 

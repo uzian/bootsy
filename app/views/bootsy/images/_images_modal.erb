@@ -26,19 +26,28 @@
 
         <h6 class="modal-title mb-4"><%= t("bootsy.image.new") %></h6>
 
-        <div class="mb-2">
-          <span class="mr-2"><%= t("bootsy.action.upload") %></span>
-          <a href="javascript:;"><i class="fa-solid fa-upload"></i></a></br>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group mb-2">
+              <div class="custom-file">
+                <%= file_field_tag "image-file-input", class: "custom-file-input", accept: "image/*" %>
+                <%= label_tag "image-file-input", t("bootsy.action.choose_file"), class: "custom-file-label" %>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="d-flex align-items-center">
-          <span class="text-nowrap mr-3"><%= "#{t('bootsy.action.or').capitalize!} #{t('bootsy.action.use_link').downcase!}"%></span>
-          <div class="input-group">
-            <%= text_field_tag "image-url-input", nil, placeholder: t("bootsy.action.enter_image_url") %>
-            <div class="input-group-append">
-              <button id="link-image-btn" class="btn btn-primary">
-                <%= t("bootsy.action.insert") %>
-              </button>
+        <span class="d-block mb-2"><%= "#{t('bootsy.action.or').capitalize!} #{t('bootsy.action.use_link').downcase!}"%></span>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <%= text_field_tag "image-url-input", nil, placeholder: t("bootsy.action.enter_image_url"), class: "form-control" %>
+              <div class="input-group-append">
+                <button id="link-image-btn" class="btn btn-primary">
+                  <%= t("bootsy.action.insert") %>
+                </button>
+              </div>
             </div>
           </div>
         </div>

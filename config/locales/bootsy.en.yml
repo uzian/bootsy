@@ -17,6 +17,7 @@ en:
       select_from_gallery: Select from gallery
       select_video: Videos
       youtube_vimeo: YouTube/Vimeo
+      choose_file: Choose file
     image_gallery: Image Gallery
     image:
       s: Image
