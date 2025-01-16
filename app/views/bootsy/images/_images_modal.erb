@@ -24,50 +24,26 @@
         <div class="gallery-wrapper"></div>
         <div class="pagination-wrapper mb-5"></div>
 
-        <h6 class="modal-title mb-3"><%= t("bootsy.image.new") %></h6>
+        <h6 class="modal-title mb-4"><%= t("bootsy.image.new") %></h6>
 
-        <div class="input-group">
-          <%= text_field_tag "image-url-input", nil, placeholder: t("bootsy.action.enter_image_url") %>
-          <div class="input-group-append">
-            <button id="link-image-btn" class="btn btn-primary">
-              <%= t("bootsy.action.insert") %>
-            </button>
+        <div class="mb-2">
+          <span class="mr-2"><%= t("bootsy.action.upload") %></span>
+          <a href="javascript:;"><i class="fa-solid fa-upload"></i></a></br>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <span class="text-nowrap mr-3"><%= "#{t('bootsy.action.or').capitalize!} #{t('bootsy.action.use_link').downcase!}"%></span>
+          <div class="input-group">
+            <%= text_field_tag "image-url-input", nil, placeholder: t("bootsy.action.enter_image_url") %>
+            <div class="input-group-append">
+              <button id="link-image-btn" class="btn btn-primary">
+                <%= t("bootsy.action.insert") %>
+              </button>
+            </div>
           </div>
         </div>
 
         <%= render 'bootsy/images/loader', image_class: 'bootsy-gallery-loader' %>
-
-
-
-
-        <% if false %>
-        <div id="videos-window" class="d-none">
-          <div class='input-group mb-5'>
-            <%= text_field_tag 'video-search', nil, placeholder: t('bootsy.action.search'), class: 'searchbar form-control' %>
-            <div class='input-group-append align-items-center' data-filetype='video'>
-              <button class='search-btn btn btn-primary mr-2'>
-                <i class='fas fa-search'></i>
-              </button>
-              <i class='reset-search fa-solid fa-rotate-left text-secondary'></i>
-            </div>
-          </div>
-          <div class="gallery-wrapper"></div>
-          <div class="pagination-wrapper mb-5"></div>
-          <div id='external-videos-control'>
-            <span class="ml-1">
-              <%= t('bootsy.action.youtube_vimeo') %>
-            </span>
-            <div class='form-inline mt-2'>
-              <%= text_field_tag 'video-link-input', nil, placeholder: t('bootsy.action.enter_video_url'), class: 'form-control mr-3' %>
-              <%= button_tag t('bootsy.action.insert'), type: 'button', id: 'insert-external-video-btn', class: 'cancel-btn btn btn-primary' %>
-            </div>
-          </div>
-        </div>
-
-        <%= refresh_btn %>
-
-        <% end %>
-
       </div>
 
       <div class="modal-footer">

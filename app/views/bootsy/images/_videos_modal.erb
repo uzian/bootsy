@@ -24,14 +24,22 @@
         <div class="gallery-wrapper"></div>
         <div class="pagination-wrapper mb-5"></div>
 
-        <h6 class="modal-title mb-3"><%= t("bootsy.video.new") %></h6>
+        <h6 class="modal-title mb-4"><%= t("bootsy.video.new") %></h6>
 
-        <div class="input-group">
-          <%= text_field_tag "video-url-input", nil, placeholder: t("bootsy.action.enter_video_url") %>
-          <div class="input-group-append">
-            <button id="link-video-btn" class="btn btn-primary">
-              <%= t("bootsy.action.insert") %>
-            </button>
+        <div class="mb-2">
+          <span class="mr-2"><%= t("bootsy.action.upload") %></span>
+          <a href="javascript:;"><i class="fa-solid fa-upload"></i></a></br>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <span class="text-nowrap mr-3"><%= "#{t('bootsy.action.or').capitalize!} #{t('bootsy.action.use_link').downcase!}"%></span>
+          <div class="input-group">
+            <%= text_field_tag "video-url-input", nil, placeholder: t("bootsy.action.enter_video_url") %>
+            <div class="input-group-append">
+              <button id="link-video-btn" class="btn btn-primary">
+                <%= t("bootsy.action.insert") %>
+              </button>
+            </div>
           </div>
         </div>
 
