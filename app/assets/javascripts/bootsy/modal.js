@@ -144,15 +144,51 @@ Bootsy.Modal = function(area) {
   //   })
   // }.bind(this));
 
+  // Display uploaded file's name in input field
+  this.$el.on('change', '#image-file-input, #video-file-input', function(event) {
+    const input = event.currentTarget;
+    const label = $(`label[for="${$(input).attr('id')}"]`);
+    $(label).text(input.files[0].name || window.Bootsy.translations['chooseFile'] || 'Choose file');
+  });
+
   // Upload image/video from user's disk
-  this.$el.on('submit', '.bootsy-upload-form', function(event, xhr, settings) {
-    event.preventDefault();
+  this.$el.on('click', '#upload-image-btn, #upload-video-btn', function(event) {
+    let url = Bootsy.config.galleryURL + '/user_files';
+    let file, filetype;
 
-    const fileSelect = event.target.querySelector('input[type="file"]');
-    const file = fileSelect.files[0];
+    switch (event.currentTarget) {
+      case $('#upload-image-btn')[0]:
+        file = $('#image-file-input').prop('files')[0];
+        filetype = 'image';
+        break;
+      case $('#upload-video-btn')[0]:
+        file = $('#video-file-input').prop('files')[0];
+        filetype = 'video';
+        break;
+    }
 
-    this.uploadImage(event, xhr, settings, file);
-    this.clearAlert();
+    if (!file) { return; }
+
+    fetch(url, {
+      method: 'POST',
+      body: {
+        filename: file.name,
+        filetype: filetype,
+        content: file
+      }
+    })
+    .then((response) => response.json)
+    .then((data) => {
+      console.log(data);
+
+    })
+
+
+    // const fileSelect = event.target.querySelector('input[type="file"]');
+    // const file = fileSelect.files[0];
+
+    // this.uploadImage(event, xhr, settings, file);
+    // this.clearAlert();
   }.bind(this));
 
   // Insert image to post body
@@ -511,25 +547,6 @@ Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
           .finally(() => {
             this.hideGalleryLoadingAnimation();
           });
-}
-
-// Function to fetch multiple images from API and upload them into the system
-// Currently not in use!
-Bootsy.Modal.prototype.fetchAll = function(urls) {
-  for (let i=0; i<urls.length; i++) {
-    fetch(urls[i])
-      .then((response) => {
-        return response.blob();
-      }, (error) => {
-        throw error;
-      })
-      .then((file) => {
-        // Give server some time to upload previous image
-        setTimeout(() => {
-          this.uploadImage(event, xhr, settings, file);
-        }, i*500);
-      });
-  }
 }
 
 // Updates modal's gallery with new data fetched from the server.
