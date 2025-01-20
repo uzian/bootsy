@@ -420,7 +420,8 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
 }
 
 Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
-  let url = Bootsy.config.galleryURL + `/user_files.json?filetype=${opts.filetype}&page=${Bootsy.config.page}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
+  const pageNum = opts.page || Bootsy.config.page;
+  let url = Bootsy.config.galleryURL + `/user_files.json?filetype=${opts.filetype}&page=${pageNum}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
   if (opts.search) { url += `&search=${opts.search}`; }
   this.showGalleryLoadingAnimation();
 
