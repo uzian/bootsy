@@ -443,7 +443,7 @@ Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
 
 // Updates modal's gallery with new data fetched from the server.
 // Normally is used after fetchFromBackend() function like so:
-// this.fetchFromBackend().then((data) => { this.updateGallery('#modal-id', data) })
+// this.fetchFromBackend().then((data) => { this.updateGallery('#modal-id', data); })
 // Note that the modal you want to update should have div.gallery-wrapper and div.pagination-wrapper
 Bootsy.Modal.prototype.updateGallery = function(selector, data) {
   try {
@@ -452,6 +452,8 @@ Bootsy.Modal.prototype.updateGallery = function(selector, data) {
     modal_body = '<div class="d-flex flex-wrap" data-page-id="1">'+modal_body+"</div>";
     $(`${selector} .gallery-wrapper`).html(modal_body);
     $(`${selector} .pagination-wrapper`).html(pagination);
+
+    this.clearAlert();
   } catch (error) {
     console.error("Couldn't update modal's gallery. Error: ", error);
   }
