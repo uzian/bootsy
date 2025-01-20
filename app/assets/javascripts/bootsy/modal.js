@@ -151,47 +151,7 @@ Bootsy.Modal = function(area) {
     $(label).text(input.files[0].name || window.Bootsy.translations['chooseFile'] || 'Choose file');
   });
 
-  // Upload image/video from user's disk
-  this.$el.on('click', '#upload-image-btn, #upload-video-btn', function(event) {
-    let url = Bootsy.config.galleryURL + '/user_files';
-    let file, filetype;
-
-    switch (event.currentTarget) {
-      case $('#upload-image-btn')[0]:
-        file = $('#image-file-input').prop('files')[0];
-        filetype = 'image';
-        break;
-      case $('#upload-video-btn')[0]:
-        file = $('#video-file-input').prop('files')[0];
-        filetype = 'video';
-        break;
-    }
-
-    if (!file) { return; }
-
-    fetch(url, {
-      method: 'POST',
-      body: {
-        filename: file.name,
-        filetype: filetype,
-        content: file
-      }
-    })
-    .then((response) => response.json)
-    .then((data) => {
-      console.log(data);
-
-    })
-
-
-    // const fileSelect = event.target.querySelector('input[type="file"]');
-    // const file = fileSelect.files[0];
-
-    // this.uploadImage(event, xhr, settings, file);
-    // this.clearAlert();
-  }.bind(this));
-
-  // Insert image to post body
+  // Insert image from gallery to post body
   this.$el.on('click', '#images-menu .insert', function(event) {
     let suffix = '?variant=' + $(this).attr('data-image-size');
 
@@ -217,7 +177,10 @@ Bootsy.Modal = function(area) {
     insert(image);
   });
 
-  // Insert video to post body
+  // Insert image from internet to post body
+  this.$el.on('click')
+
+  // Insert video from gallery to post body
   this.$el.on("click", "#videos-menu .insert", function(event) {
     event.preventDefault();
 
@@ -359,84 +322,6 @@ Bootsy.Modal.prototype.showRefreshButton = function() {
 
 Bootsy.Modal.prototype.hideRefreshButton = function() {
   this.$el.find('.refresh-btn').fadeOut(200);
-};
-
-// Set upload form
-Bootsy.Modal.prototype.setUploadForm = function(html) {
-  var uploadInput;
-
-  this.$el.find('.modal-footer').html(html);
-  this.hideUploadLoadingAnimation();
-  this.$el.find('.bootsy-upload-form input[type="file"]').bootstrapFileInput();
-
-  uploadInput = this.$el.find('.bootsy-upload-form input[type="file"]');
-
-  uploadInput.change(function() {
-    this.showUploadLoadingAnimation();
-    uploadInput.closest('form').submit();
-  }.bind(this));
-};
-
-// Upload image
-Bootsy.Modal.prototype.uploadImage = function(event, xhr, settings, file) {
-  const form = document.getElementById('new_image');
-  const fileURLInputName = 'image[remote_image_file_url]';
-  const fileURLInput = form.querySelector(
-  'input[name="' + fileURLInputName + '"]');
-  const token = form.querySelector('input[name="authenticity_token"]').value;
-  const formData = new FormData();
-  let fileURL;
-
-  formData.append('authenticity_token', token);
-
-  if (file) {
-    formData.append('image[content]', file, file.name);
-  }
-
-  if (fileURLInput) {
-    fileURL = fileURLInput.value;
-  } else {
-    fileURL = '';
-  }
-
-  formData.append(fileURLInputName, fileURL);
-
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', form.action, true);
-  xhr.onload = function () {
-    var data = JSON.parse(xhr.response);
-    if (xhr.status === 200) {
-      this.area.setImageGalleryId(data.gallery_id);
-      this.addImage(data.image);
-      this.setUploadForm(data.form);
-    } else {
-      this.imageUploadFailed(xhr, data);
-    }
-  }.bind(this);
-  xhr.send(formData);
-};
-
-// The image upload failed
-Bootsy.Modal.prototype.imageUploadFailed = function(xhr, invalidErrors) {
-  if (Number(xhr.status) === 422 && invalidErrors.content) {
-    this.hideUploadLoadingAnimation();
-
-    if (this.validation) this.validation.remove();
-
-    this.validation = $("<p class='text-danger'>");
-    this.validation.text(invalidErrors.content[0]);
-    this.$el.find('.bootsy-upload-form').append(this.validation);
-  } else {
-    this.hideGalleryLoadingAnimation();
-    alert($.fn.wysihtml.locale[this.area.locale].bootsy.error);
-  }
-
-  this.showRefreshButton();
-};
-
-// Add image to gallery
-Bootsy.Modal.prototype.addImage = function(html) {
-  $(html).hide().appendTo(this.$el.find('.bootsy-gallery')).fadeIn(200);
 };
 
 Bootsy.Modal.prototype.clearModal = function() {

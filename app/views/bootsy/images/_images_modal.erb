@@ -26,19 +26,27 @@
 
         <h6 class="modal-title mb-4"><%= t("bootsy.image.new") %></h6>
 
+        <% # For some legacy reason, first <form> tag gets removed from the modal. %>
+        <% # Oddly enough, the content of the form is preserved - only the wrapping <form> tag is removed %>
+        <% # For this reason this <form> tag is present here, so that real form below doesn't get stripped. %>
+        <form></form>
+
         <div class="row">
           <div class="col-md-6">
-            <div class="input-group mb-2">
-              <div class="custom-file">
-                <%= file_field_tag "image-file-input", class: "custom-file-input", accept: "image/*" %>
-                <%= label_tag "image-file-input", t("bootsy.action.choose_file"), class: "custom-file-label" %>
+            <% user_file = UserFile.new(filetype: :image, accesstype: UserFile::ACCESSTYPES[:public]) %>
+            <%= form_for(user_file, html: {multipart: true, class: "form"}, remote: true) do |f| %>
+              <%= f.hidden_field :filetype %>
+              <%= f.hidden_field :accesstype %>
+              <div class="input-group mb-2">
+                <div class="custom-file">
+                  <%= f.file_field :content, class: "custom-file-input", accept: "image/*" %>
+                  <%= f.label :content, t("bootsy.action.choose_file"), class: "custom-file-label" %>
+                </div>
+                <div class="input-group-append">
+                  <%= f.submit t("bootsy.action.insert"), class: "btn btn-primary" %>
+                </div>
               </div>
-              <div class="input-group-append">
-                <button id="upload-image-btn" class="btn btn-primary">
-                  <%= t("bootsy.action.insert") %>
-                </button>
-              </div>
-            </div>
+            <% end %>
           </div>
         </div>
 
