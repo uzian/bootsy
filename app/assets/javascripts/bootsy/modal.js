@@ -1,4 +1,11 @@
-/* Bootsy modal */
+/*
+  This file contains scripts related to the Bootsy modal, the one which is invoked when user clicks on
+  image or video icon on the toolbar.
+
+  Using the modal, user can browse and insert media files into the Bootsy area,
+  can find media files in the internet and insert them into the area by providing URL,
+  and can upload media files from own device.
+*/
 
 window.Bootsy = window.Bootsy || {};
 Bootsy.constants = Bootsy.constants || {};
