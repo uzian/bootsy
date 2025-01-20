@@ -419,6 +419,12 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
   return [modal_body, pagination];
 }
 
+/* Arguments:
+  {
+    filetype [image/video],
+    page?: Integer,
+  }
+*/
 Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
   const pageNum = opts.page || Bootsy.config.page;
   let url = Bootsy.config.galleryURL + `/user_files.json?filetype=${opts.filetype}&page=${pageNum}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
