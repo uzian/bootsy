@@ -148,7 +148,7 @@ Bootsy.Modal = function(area) {
   this.$el.on('change', '#image-file-input, #video-file-input', function(event) {
     const input = event.currentTarget;
     const label = $(`label[for="${$(input).attr('id')}"]`);
-    $(label).text(input.files[0].name || window.Bootsy.translations['chooseFile'] || 'Choose file');
+    $(label).text(input?.files[0]?.name || window.Bootsy.translations['chooseFile'] || 'Choose file');
   });
 
   // Insert image from gallery to post body
