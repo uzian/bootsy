@@ -26,21 +26,7 @@
 
         <h6 class="modal-title mb-4"><%= t("bootsy.video.new") %></h6>
 
-        <div class="row">
-          <div class="col-md-6">
-            <div class="input-group mb-2">
-              <div class="custom-file">
-                <%= file_field_tag "video-file-input", class: "custom-file-input", accept: "video/*" %>
-                <%= label_tag "video-file-input", t("bootsy.action.choose_file"), class: "custom-file-label" %>
-              </div>
-              <div class="input-group-append">
-                <button id="upload-video-btn" class="btn btn-primary">
-                  <%= t("bootsy.action.insert") %>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <%= render "bootsy/images/user_file_form", filetype: "video" %>
 
         <span class="d-block mb-2"><%= "#{t('bootsy.action.or').capitalize!} #{t('bootsy.action.use_link').downcase!}"%></span>
 
