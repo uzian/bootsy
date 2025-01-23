@@ -11,8 +11,12 @@ window.Bootsy = window.Bootsy || {};
 Bootsy.constants = Bootsy.constants || {};
 
 Bootsy.constants.menuTypes = {
-  images: Symbol("images"),
-  videos: Symbol("videos")
+  images: Symbol('images'),
+  videos: Symbol('videos')
+}
+Bootsy.constants.filesources = {
+  local: 'filesource-local',
+  foreign: 'filesource-foreign'
 }
 
 Bootsy.Modal = function(area) {
@@ -31,7 +35,7 @@ Bootsy.Modal = function(area) {
     if (imgTag) {
       const attrs = {
         "data-url": $(imgTag).attr("src").slice(0, $(imgTag).attr("src").indexOf("?variant")),
-        "data-source": "local"
+        "data-source": Bootsy.constants.filesources.local
       }
 
       this.invokeMenu(Bootsy.constants.menuTypes.images, attrs, event);
@@ -45,11 +49,33 @@ Bootsy.Modal = function(area) {
     if (srcTag) {
       const attrs = {
         "data-url": $(srcTag).attr("src"),
-        "data-source": "local"
+        "data-source": Bootsy.constants.filesources.local
       }
 
-      this.invokeMenu(Bootsy.constants.menuTypes.videos, attrs, event)
+      this.invokeMenu(Bootsy.constants.menuTypes.videos, attrs, event);
     }
+  }.bind(this));
+
+  // Invoke dropdown menu when linking images/videos
+  this.$el.on('click', '#link-image-btn, #link-video-btn', function(event) {
+    const filetype = $(event.currentTarget).attr('id').split('-')[1];
+    const url = $(`#${filetype}-url-input`).val().trim();
+    const attrs = {
+      'data-url': url,
+      'data-source': Bootsy.constants.filesources.foreign
+    }
+
+    let menuType;
+    switch (filetype) {
+      case 'image':
+        menuType = Bootsy.constants.menuTypes.images;
+        break;
+      case 'video':
+        menuType = Bootsy.constants.menuTypes.videos;
+        break;
+    }
+
+    this.invokeMenu(menuType, attrs, event);
   }.bind(this));
 
   // Hide menus on focus lost
@@ -137,7 +163,7 @@ Bootsy.Modal = function(area) {
     $(label).text(input?.files[0]?.name || Bootsy.translations['chooseFile'] || 'Choose file');
   }.bind(this));
 
-  // Insert image from gallery to post body
+  // Insert image to post body
   this.$el.on('click', '#images-menu .insert', function(event) {
     let suffix = '?variant=' + $(this).attr('data-image-size');
 
@@ -163,10 +189,7 @@ Bootsy.Modal = function(area) {
     insert(image);
   });
 
-  // Insert image from internet to post body
-  this.$el.on('click')
-
-  // Insert video from gallery to post body
+  // Insert video to post body
   this.$el.on("click", "#videos-menu .insert", function(event) {
     event.preventDefault();
 
@@ -470,10 +493,12 @@ Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
           });
 }
 
-// Updates modal's gallery with new data fetched from the server.
-// Normally is used after fetchFromBackend() function like so:
-// this.fetchFromBackend().then((data) => { this.updateGallery('#modal-id', data); })
-// Note that the modal you want to update should have div.gallery-wrapper and div.pagination-wrapper
+/*
+  Updates modal's gallery with new data fetched from the server.
+  Normally is used after fetchFromBackend() function like so:
+  this.fetchFromBackend().then((data) => { this.updateGallery('#modal-id', data); })
+  Note that the modal you want to update should have div.gallery-wrapper and div.pagination-wrapper
+*/
 Bootsy.Modal.prototype.updateGallery = function(selector, data) {
   try {
     let [modal_body, pagination] = this.parseBackendResponse(data);

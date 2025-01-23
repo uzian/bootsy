@@ -3,9 +3,7 @@
     <div class="input-group">
       <%= text_field_tag "#{filetype}-url-input", nil, placeholder: t("bootsy.action.enter_#{filetype}_url"), class: "form-control" %>
       <div class="input-group-append">
-        <button id="link-#{filetype}-btn" class="btn btn-primary">
-          <%= t("bootsy.action.insert") %>
-        </button>
+        <%= button_tag t("bootsy.action.insert"), type: "button", id: "link-#{filetype}-btn", class: "btn btn-primary" %>
       </div>
     </div>
   </div>
