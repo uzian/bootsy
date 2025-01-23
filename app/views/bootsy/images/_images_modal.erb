@@ -30,18 +30,7 @@
 
         <span class="d-block mb-2"><%= "#{t('bootsy.action.or').capitalize!} #{t('bootsy.action.use_link').downcase!}"%></span>
 
-        <div class="row">
-          <div class="col-md-6">
-            <div class="input-group">
-              <%= text_field_tag "image-url-input", nil, placeholder: t("bootsy.action.enter_image_url"), class: "form-control" %>
-              <div class="input-group-append">
-                <button id="link-image-btn" class="btn btn-primary">
-                  <%= t("bootsy.action.insert") %>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <%= render "bootsy/images/link_form", filetype: "image" %>
 
         <%= render 'bootsy/images/loader', image_class: 'bootsy-gallery-loader' %>
       </div>
