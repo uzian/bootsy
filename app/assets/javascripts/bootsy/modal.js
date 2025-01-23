@@ -199,10 +199,10 @@ Bootsy.Modal = function(area) {
     }
     const filesource = $("#videos-menu").attr("data-source");
 
-    insert = self.area.insertVideo.bind(self.area, video, filesource);
+    insert = this.area.insertVideo.bind(this.area, video, filesource);
     insert();
 
-    self.$el.modal('hide');
+    this.$el.modal('hide');
   }.bind(this));
 
   // Search for images/videos
