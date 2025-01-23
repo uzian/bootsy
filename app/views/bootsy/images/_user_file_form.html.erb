@@ -1,23 +1,14 @@
-<% # For some legacy reason, first <form> tag gets removed from the modal. %>
-<% # Oddly enough, the content of the form is preserved - only the wrapping <form> tag is removed %>
-<% # For this reason this <form> tag is present here, so that real form below doesn't get stripped. %>
-<form></form>
-
-<div class="row">
+<div class="row user-file-form">
   <div class="col-md-6">
-    <% user_file = UserFile.new(filetype: filetype, accesstype: UserFile::ACCESSTYPES[:public]) %>
-    <%= form_for(user_file, html: {multipart: true, class: "form"}, remote: true) do |f| %>
-      <%= f.hidden_field :filetype %>
-      <%= f.hidden_field :accesstype %>
-      <div class="input-group mb-2">
-        <div class="custom-file">
-          <%= f.file_field :content, class: "custom-file-input", accept: "#{filetype}/*" %>
-          <%= f.label :content, t("bootsy.action.choose_file"), class: "custom-file-label" %>
-        </div>
-        <div class="input-group-append">
-          <%= f.submit t("bootsy.action.insert"), class: "btn btn-primary" %>
-        </div>
+    <%= hidden_field_tag :filetype, filetype %>
+    <div class="input-group mb-2">
+      <div class="custom-file">
+        <%= file_field_tag :content, class: "custom-file-input", accept: "#{filetype}/*" %>
+        <%= label_tag :content, t("bootsy.action.choose_file"), class: "custom-file-label" %>
       </div>
-    <% end %>
+      <div class="input-group-append">
+        <%= button_tag t("bootsy.action.insert"), type: "button", class: "btn btn-primary" %>
+      </div>
+    </div>
   </div>
 </div>

@@ -130,33 +130,12 @@ Bootsy.Modal = function(area) {
     }
   }.bind(this));
 
-  // Upload image by URL provided
-  // this.$el.on('click', '#image-link-control .insert-btn', function(event, xhr, settings) {
-  //   const imageURL = $($('#link-image-window input')[0]).val().trim();
-
-  //   // Validate image URL
-  //   if (imageURL == '') {
-  //     return;
-  //   }
-
-  //   fetch(imageURL)
-  //   .then((response) => {
-  //     return response.blob();
-  //   }, (error) => {
-  //     console.log(window.Bootsy.translations['imageFetchFailed']);
-  //     if (window.Bootsy.translations) {
-  //       Bootsy.Modal.prototype.alert(window.Bootsy.translations['imageFetchFailed']);
-  //     }
-  //     throw error;
-  //   })
-  // }.bind(this));
-
   // Display uploaded file's name in input field
   this.$el.on('change', '#image-file-input, #video-file-input', function(event) {
     const input = event.currentTarget;
     const label = $(`label[for="${$(input).attr('id')}"]`);
-    $(label).text(input?.files[0]?.name || window.Bootsy.translations['chooseFile'] || 'Choose file');
-  });
+    $(label).text(input?.files[0]?.name || Bootsy.translations['chooseFile'] || 'Choose file');
+  }.bind(this));
 
   // Insert image from gallery to post body
   this.$el.on('click', '#images-menu .insert', function(event) {
@@ -201,7 +180,7 @@ Bootsy.Modal = function(area) {
     insert();
 
     self.$el.modal('hide');
-  });
+  }.bind(this));
 
   // Search for images/videos
   this.$el.on('click', '.search-btn', function(event) {
@@ -240,6 +219,49 @@ Bootsy.Modal = function(area) {
               break;
           }
         });
+  }.bind(this));
+
+  // Upload image/video
+  this.$el.on('click', '.user-file-form button', function(event) {
+    const form = $(event.currentTarget).parents('.user-file-form');
+    const filetype = form.find('input[type="hidden"]').val();
+    const file = form.find('input[type="file"]').prop('files')[0];
+    const label = form.find('label');
+    const fdata = new FormData();
+
+    fdata.append('user_file[filetype]', filetype);
+    fdata.append('user_file[content]', file);
+
+    this.clearAlert();
+    this.showUploadLoadingAnimation();
+
+    $.ajax({
+      type: 'POST',
+      url: `${Bootsy.config.galleryURL}/user_files`,
+      data: fdata,
+      dataType: 'json',
+      processData: false,
+      contentType: false,
+
+      success: () => {
+        // Refresh gallery and clear file input
+        this.fetchFromBackend({filetype})
+          .then((data) => {
+            this.updateGallery(`#${filetype}s-modal`, data);
+          });
+
+        label.text(Bootsy.translations['chooseFile'] || 'Choose file');
+        label.val('');
+      },
+
+      error: () => {
+        this.alert( Bootsy.translations['uploadError'] || `Couldn't upload the file`);
+      },
+
+      complete: () => {
+        this.hideUploadLoadingAnimation();
+      }
+    });
   }.bind(this));
 
   this.$el.modal({ show: false });
