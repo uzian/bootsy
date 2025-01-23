@@ -166,16 +166,15 @@ Bootsy.Modal = function(area) {
   // Insert image to post body
   this.$el.on('click', '#images-menu .insert', function(event) {
     const elem = event.currentTarget;
+    const filesource = $('#images-menu').attr('data-source');
     let suffix = '?variant=' + $(elem).attr('data-image-size');
-
-    event.preventDefault();
 
     if ($(elem).attr('data-image-size') === 'original') {
       suffix = '';
     }
 
     const image = {
-      src: $(elem).parents('#images-menu').attr('data-url') + suffix
+      src: $('#images-menu').attr('data-url') + suffix
     }
 
     if ($(elem).attr('data-image-size') !== 'full_width') {
@@ -187,7 +186,7 @@ Bootsy.Modal = function(area) {
     this.$el.modal('hide');
 
     insert = this.area.insertImage.bind(this.area);
-    insert(image);
+    insert(image, filesource);
   }.bind(this));
 
   // Insert video to post body
@@ -200,8 +199,8 @@ Bootsy.Modal = function(area) {
     }
     const filesource = $("#videos-menu").attr("data-source");
 
-    insert = this.area.insertVideo.bind(this.area, video, filesource);
-    insert();
+    insert = this.area.insertVideo.bind(this.area);
+    insert(video, filesource);
 
     this.$el.modal('hide');
   }.bind(this));
