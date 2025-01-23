@@ -165,29 +165,30 @@ Bootsy.Modal = function(area) {
 
   // Insert image to post body
   this.$el.on('click', '#images-menu .insert', function(event) {
-    let suffix = '?variant=' + $(this).attr('data-image-size');
+    const elem = event.currentTarget;
+    let suffix = '?variant=' + $(elem).attr('data-image-size');
 
     event.preventDefault();
 
-    if ($(this).attr('data-image-size') === 'original') {
+    if ($(elem).attr('data-image-size') === 'original') {
       suffix = '';
     }
 
     const image = {
-      src: $(this).parents('#images-menu').attr('data-url') + suffix
+      src: $(elem).parents('#images-menu').attr('data-url') + suffix
     }
 
-    if ($(this).attr('data-image-size') !== 'full_width') {
-      image.align = $(this).attr('data-position');
+    if ($(elem).attr('data-image-size') !== 'full_width') {
+      image.align = $(elem).attr('data-position');
     } else {
       image.class = 'full-width';
     }
 
-    self.$el.modal('hide');
+    this.$el.modal('hide');
 
-    insert = self.area.insertImage.bind(self.area);
+    insert = this.area.insertImage.bind(this.area);
     insert(image);
-  });
+  }.bind(this));
 
   // Insert video to post body
   this.$el.on("click", "#videos-menu .insert", function(event) {
