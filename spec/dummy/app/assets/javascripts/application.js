@@ -27,7 +27,7 @@
 window.Bootsy = window.Bootsy || {};
 
 Bootsy.config = {
-  galleryURL: 'http://localhost:3000', // -- Keep empty string if gallery is on the same origin
+  backendURL: 'http://localhost:3000', // -- Keep empty string if gallery is on the same origin
   page: '1',
   perPage: '6',
   schoolId: '2'

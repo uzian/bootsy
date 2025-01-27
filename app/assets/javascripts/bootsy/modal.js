@@ -260,7 +260,7 @@ Bootsy.Modal = function(area) {
 
     $.ajax({
       type: 'POST',
-      url: `${Bootsy.config.galleryURL}/user_files`,
+      url: `${Bootsy.config.backendURL}/user_files`,
       data: fdata,
       dataType: 'json',
       processData: false,
@@ -436,11 +436,11 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
     let tag;
 
     if (filetype === 'image') {
-      tag = `<img class="bootsy-image" src="${Bootsy.config.galleryURL}/user_files/${user_file_id}?variant=tiny" \
+      tag = `<img class="bootsy-image" src="${Bootsy.config.backendURL}/user_files/${user_file_id}?variant=tiny" \
               data-toggle="tooltip" title="${filename}">`;
     } else if (filetype === 'video') {
       tag = `<video class="bootsy-video" muted playsinline preload="metadata" width="100" height="100">
-              <source src="${Bootsy.config.galleryURL}/user_files/${user_file_id}" />
+              <source src="${Bootsy.config.backendURL}/user_files/${user_file_id}" />
               Your browser doesn't support videos
             </video>`;
     }
@@ -461,7 +461,7 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
   let end = pagination.indexOf('"', start+6);
 
   while (start > -1) {
-    const src = Bootsy.config.galleryURL + pagination.substring(start+6, end);
+    const src = Bootsy.config.backendURL + pagination.substring(start+6, end);
     pagination = pagination.substring(0, start+6) + src + pagination.substring(end);
 
     start = pagination.indexOf('href="', end);
@@ -479,7 +479,7 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
 */
 Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
   const pageNum = opts.page || Bootsy.config.page;
-  let url = Bootsy.config.galleryURL + `/user_files.json?filetype=${opts.filetype}&page=${pageNum}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
+  let url = Bootsy.config.backendURL + `/user_files.json?filetype=${opts.filetype}&page=${pageNum}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
   if (opts.search) { url += `&search=${opts.search}`; }
   this.showGalleryLoadingAnimation();
 
