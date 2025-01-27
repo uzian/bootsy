@@ -27,7 +27,7 @@ Bootsy.Modal = function(area) {
   this.$el.parents('form').after(this.$el);
 
   // Invoke dropdown menu on image click
-  this.$el.on("click", ".bootsy-image", function(event) {
+  this.$el.on("click", ".selector-area:has(.bootsy-image)", function(event) {
     const imgTag = $(event.currentTarget).is("img") ? event.currentTarget : $(event.currentTarget).find("img")[0];
 
     if (imgTag) {
@@ -41,7 +41,7 @@ Bootsy.Modal = function(area) {
   }.bind(this));
 
   // Invoke dropdown menu on video click
-  this.$el.on("click", ".bootsy-video", function(event) {
+  this.$el.on("click", ".selector-area:has(.bootsy-video)", function(event) {
     const srcTag = $(event.currentTarget).find("source")[0];
 
     if (srcTag) {
@@ -442,7 +442,7 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
               Your browser doesn't support videos
             </video>`;
     }
-    modal_body += `<div class="mr-1 mb-1 p-1 border" id="selector_image_${user_file_id}">
+    modal_body += `<div class="mr-1 mb-1 p-1 border selector-area" id="selector_image_${user_file_id}">
                     <a class="thumbnail" href="javascript:;">
                       <div class="col">
                         ${tag}
