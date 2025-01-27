@@ -20,8 +20,6 @@ Bootsy.constants.filesources = {
 }
 
 Bootsy.Modal = function(area) {
-  var self = this;
-
   this.$el = area.$el.siblings('.bootsy-modal');
   this.area = area;
 

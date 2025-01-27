@@ -80,12 +80,30 @@ Bootsy.Area.prototype.init = function() {
 };
 
 // Insert image in the text
-Bootsy.Area.prototype.insertImage = function(image) {
+Bootsy.Area.prototype.insertImage = function(image, filesource) {
   this.editor.currentView.element.focus();
 
   if (this.caretBookmark) {
     this.editor.composer.selection.setBookmark(this.caretBookmark);
     this.caretBookmark = null;
+  }
+
+  // Because foreign images don't have variants, we need to simulate
+  // them using "width" and "height" attributes
+  if (filesource === Bootsy.constants.filesources.foreign) {
+    const [base, variant] = image.src.split('?variant=');
+    const alignment = image.align;
+
+    if (variant) {
+      image = {
+        src: base,
+        with: Bootsy.config.imageSizes[variant][0],
+        height: Bootsy.config.imageSizes[variant][1],
+        align: alignment
+      }
+    }
+
+    $("#image-url-input").val("");
   }
 
   this.editor.composer.commands.exec('insertImage', image);
@@ -101,12 +119,12 @@ Bootsy.Area.prototype.insertVideo = function(video, filesource) {
   }
 
   switch(filesource) {
-    case 'local':
+    case Bootsy.constants.filesources.local:
       this.editor.composer.commands.exec('insertVideo', video);
       break;
-    case 'foreign':
+    case Bootsy.constants.filesources.foreign:
       this.editor.composer.commands.exec('insertIframe', video);
-      $("#video-link-input").val("");
+      $("#video-url-input").val("");
       break;
     default:
       throw new Error(`Don't know which tag to use to insert video. data-source is ${filesource}`);
