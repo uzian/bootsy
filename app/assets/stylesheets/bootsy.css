@@ -426,3 +426,9 @@ iframe.full-width {
   transition: none !important;
   -webkit-transition: none !important;
 }
+
+.selector-area {
+  text-align: center;
+  max-width: 200px;
+  overflow: hidden;
+}

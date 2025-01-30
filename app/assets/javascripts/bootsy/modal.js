@@ -408,7 +408,7 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
                     <a class="thumbnail" href="javascript:;">
                       <div class="col">
                         ${tag}
-                        <div class="bg-light">
+                        <div class="bg-light text-truncate">
                           <small>${filename}</small>
                         </div>
                       </div>
