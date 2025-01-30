@@ -96,62 +96,24 @@ Bootsy.Modal = function(area) {
   this.$el.on('click', '.pagination .page-link', function(event) {
     event.preventDefault();
 
-    const modal = $('.bootsy-modal:not(.d-none)');
-    const paginationBtns = modal.find('.pagination .page-item');
-    let nextActive = event.currentTarget;
-    let url = $(event.currentTarget).attr('href');
-    let pageId = $(event.currentTarget).text();
+    const targetPage = event.currentTarget;
+    const modal = $(targetPage).parents('.bootsy-modal').first();
+    const url = $(targetPage).attr('href');
 
-    // If text content is arrow - replace it with approprite page number
-    if (pageId === '\u2192') {
-      pageId = String(Number(modal.find('.page-item.active').text()) + 1);
-      nextActive = modal.find('.page-item.active').next().children()[0];
-      url = $(nextActive).attr('href');
-    } else if (pageId === '\u2190') {
-      pageId = String(Number(modal.find('.page-item.active').text()) - 1);
-      nextActive = modal.find('.page-item.active').prev().children()[0];
-      url = $(nextActive).attr('href');
-    }
+    fetch(url)
+      .then((response) => {
+        return response.json();
+      }, (error) => {
+        throw error;
+      })
+      .then((data) => {
+        let modal_body, pagination;
+        [modal_body, pagination] = this.parseBackendResponse(data);
 
-    // Make clicked pagination button active
-    modal.find('.page-item.active').removeClass('active');
-    $(nextActive).parent().addClass('active');
-
-    // Disable/enable arrows
-    if (pageId === '1') {
-      $(paginationBtns[0]).addClass('disabled');
-    } else if (pageId === $(paginationBtns.get(-2)).text()) {
-      $(paginationBtns.get(-1)).addClass('disabled');
-    } else {
-      $(paginationBtns[0]).removeClass('disabled');
-      $(paginationBtns.get(-1)).removeClass('disabled');
-    }
-
-    // Check whether this page was accessed before
-    if (modal.find(`div[data-page-id="${pageId}"]`).length > 0) {
-      // If it was - display it and hide all others
-      const pages = modal.find('div[data-page-id]');
-      this.showPage(pages, pageId);
-    } else {
-      // Otherwise, fetch images/videos and create new page
-      fetch(url)
-        .then((response) => {
-          return response.json();
-        }, (error) => {
-          throw error;
-        })
-        .then((data) => {
-          let modal_body, pagination;
-          [modal_body, pagination] = this.parseBackendResponse(data);
-
-          modal_body = `<div class="d-flex flex-wrap" data-page-id="${pageId}">${modal_body}</div>`;
-          modal.find('.gallery-wrapper').append(modal_body);
-        })
-        .then(() => {
-          const pages = modal.find('div[data-page-id]');
-          this.showPage(pages, pageId);
-        });
-    }
+        modal_body = `<div class="d-flex flex-wrap">${modal_body}</div>`;
+        modal.find('.gallery-wrapper').html(modal_body);
+        modal.find('.pagination-wrapper').html(pagination);
+      });
   }.bind(this));
 
   // Display uploaded file's name in input field
