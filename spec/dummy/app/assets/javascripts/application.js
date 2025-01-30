@@ -30,7 +30,6 @@ Bootsy.config = Object.freeze({
   backendURL: 'http://localhost:3000', // -- Keep empty string if gallery is on the same origin
   page: '1',
   perPage: '6',
-  schoolId: '2',
   imageSizes: {
     thumbnail: [60, 60],
     tiny: [100, 100],

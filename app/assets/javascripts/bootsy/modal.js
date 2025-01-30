@@ -439,7 +439,7 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
 */
 Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
   const pageNum = opts.page || Bootsy.config.page;
-  let url = Bootsy.config.backendURL + `/user_files.json?filetype=${opts.filetype}&page=${pageNum}&per_page=${Bootsy.config.perPage}&school_id=${Bootsy.config.schoolId}`;
+  let url = Bootsy.config.backendURL + `/user_files.json?filetype=${opts.filetype}&page=${pageNum}&per_page=${Bootsy.config.perPage}`;
   if (opts.search) { url += `&search=${opts.search}`; }
   this.showGalleryLoadingAnimation();
 
