@@ -1,0 +1,13 @@
+<div class="row mb-5 align-items-center">
+  <div class="col-md-6">
+    <div class="input-group">
+      <%= text_field_tag "#{filetype}s-search", nil, placeholder: t("bootsy.action.search"), class: "searchbar form-control" %>
+      <div class="input-group-append align-items-center" data-filetype="#{filetype}">
+        <button class="search-btn btn btn-primary">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <i class="reset-search fa-solid fa-rotate-left text-secondary"></i>
+</div>
