@@ -438,8 +438,21 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
   }
 */
 Bootsy.Modal.prototype.fetchFromBackend = function(opts) {
-  const pageNum = opts.page || Bootsy.config.page;
-  let url = Bootsy.config.backendURL + `/user_files.json?filetype=${opts.filetype}&page=${pageNum}&per_page=${Bootsy.config.perPage}`;
+  const pageNum = opts.page || Bootsy.config.page || 1;
+  const filetype = opts.filetype || 'image';
+  let perPage = 6;
+
+  switch (filetype) {
+    case 'image':
+      perPage = Bootsy.config.imagesPerPage;
+      break;
+    case 'video':
+      perPage = Bootsy.config.videosPerPage;
+      break;
+  }
+
+  let url = Bootsy.config.backendURL + `/user_files.json?filetype=${filetype}&page=${pageNum}&per_page=${perPage}`;
+
   if (opts.search) { url += `&search=${opts.search}`; }
   this.showGalleryLoadingAnimation();
 
