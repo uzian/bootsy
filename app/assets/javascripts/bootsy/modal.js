@@ -399,7 +399,7 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
       tag = `<img class="bootsy-image" src="${Bootsy.config.backendURL}/user_files/${user_file_id}?variant=tiny" \
               data-toggle="tooltip" title="${filename}">`;
     } else if (filetype === 'video') {
-      tag = `<div class="col">
+      tag = `<div class="col w-100 p-0">
               <video class="bootsy-video" muted playsinline preload="metadata" width="100" height="100">
                 <source src="${Bootsy.config.backendURL}/user_files/${user_file_id}" />
                 Your browser doesn't support videos
