@@ -25,16 +25,7 @@
 
 /* global Bootsy */
 window.Bootsy = window.Bootsy || {};
+Bootsy.config ||= {};
 
-Bootsy.config = Object.freeze({
-  backendURL: 'http://localhost:3000', // -- Keep empty string if gallery is on the same origin
-  page: '1',
-  perPage: '6',
-  imageSizes: {
-    thumbnail: [60, 60],
-    tiny: [100, 100],
-    small: [160, 160],
-    medium: [360, 360],
-    large: [760, 760]
-  }
-});
+Bootsy.config.backendURL = 'http://localhost:3000';
+Bootsy.config.page = 1;

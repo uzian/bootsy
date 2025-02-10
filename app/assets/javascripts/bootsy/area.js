@@ -97,8 +97,8 @@ Bootsy.Area.prototype.insertImage = function(image, filesource) {
     if (variant) {
       image = {
         src: base,
-        with: Bootsy.config.imageSizes[variant][0],
-        height: Bootsy.config.imageSizes[variant][1],
+        with: Bootsy.config.variants[variant][0],
+        height: Bootsy.config.variants[variant][1],
         align: alignment
       }
     }
