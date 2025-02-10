@@ -430,6 +430,6 @@ iframe.full-width {
 
 .selector-area {
   text-align: center;
-  max-width: 200px;
   overflow: hidden;
+  width: 15%;
 }
