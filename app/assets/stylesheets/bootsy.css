@@ -373,6 +373,7 @@ textarea.bootsy:required:invalid {
 .bootsy-image,
 .bootsy-video {
   margin-bottom: 15px;
+  width: 100%;
 }
 
 .bootsy-upload-loader {
