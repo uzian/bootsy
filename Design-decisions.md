@@ -6,14 +6,16 @@ tailored for one particular application only!
 some other server and is only referenced by Bootsy.
 
 
-13.01.2025
+10.02.2025
 Arman Yerkesh
 
 Foreign images naturally don't have variants. So, the workaround is to use "width" and "height" on
-<img> to make an appearance of a variant. So, why not do the same for all images and not bother with
-variants altogether? The reasoning for keeping image variants is that
+<img> to make an appearance of a variant. The same could've been applied to local images and then
+there would be no need for variants altogether. However, this was not done for the following reasons:
+
 1. variants give some performance optimization
 2. variants are already automatically created when images are uploaded to the target application
+3. it would cost time to remove variants from Bootsy
 
 
 
