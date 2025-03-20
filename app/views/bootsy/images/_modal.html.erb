@@ -14,8 +14,8 @@
   Bootsy.config ||= {};
 
   // Load settings
-  Bootsy.config.imagesPerPage = parseInt("<%= @_current_school.get_setting(:bootsy_images_per_page_int) %>") || 6;
-  Bootsy.config.videosPerPage = parseInt("<%= @_current_school.get_setting(:bootsy_videos_per_page_int) %>") || 6;
+  Bootsy.config.imagesPerPage = parseInt("<%= @_current_school&.get_setting(:bootsy_images_per_page_int) %>") || 18;
+  Bootsy.config.videosPerPage = parseInt("<%= @_current_school&.get_setting(:bootsy_videos_per_page_int) %>") || 12;
   Bootsy.config.variants = {};
   const variantNames = "<%= UserFile::SIZES.keys.join(' ') %>".split(' ');
   const variantSizes = "<%= UserFile::SIZES.values.join(' ') %>".split(' ');
