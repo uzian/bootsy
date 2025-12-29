@@ -32,6 +32,7 @@
     },
     link: {
       insert: 'Insert link',
+      remove: 'Remove link',
       cancel: 'Cancel',
       show_as_button: 'Show as button',
       target: 'Open link in new window'

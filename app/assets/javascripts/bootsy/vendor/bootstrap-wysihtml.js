@@ -125,6 +125,13 @@
             "</li>";
         },
 
+        "removeLink": function(locale, options) {
+            var size = (options && options.size) ? ' btn-'+options.size : '';
+            return "<li>" +
+              "<a class='btn btn-secondary " + size + "' data-wysihtml-command='removeLink' title='" + locale.link.remove + "' tabindex='-1'><i class='fas fa-link-slash'></i></a>" +
+            "</li>";
+        },
+
         "image": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
@@ -1267,6 +1274,7 @@
         "hr": true,
         "html": false,
         "link": true,
+        "removeLink": true,
         "image": true,
         "video": true,
         customCommand: false,
