@@ -30,6 +30,6 @@ Bootsy.config ||= {};
 Bootsy.config.backendURL = 'http://localhost:3000';
 Bootsy.config.page = 1;
 Bootsy.config.regexes = Object.freeze({
-  YouTube: /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([\w-]{11})/,
+  YouTube: /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([\w-]{11})/,
   Vimeo: /vimeo\.com\/(?:video\/)?(\d+)/
 });
