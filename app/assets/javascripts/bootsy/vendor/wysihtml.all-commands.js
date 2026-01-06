@@ -396,7 +396,7 @@ wysihtml.commands.insertIframe = (function() {
 
       // Process YouTube URLs
       if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
-        const youtubeRegex = /(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([\w-]{11})/;
+        const youtubeRegex = Bootsy.config.regexes.YouTube;
         const match = youtubeRegex.exec(videoUrl);
         if (match && match[1]) {
           iframeSrc = `https://www.youtube.com/embed/${match[1]}`;
@@ -405,7 +405,7 @@ wysihtml.commands.insertIframe = (function() {
 
       // Process Vimeo URLs
       else if (videoUrl.includes("vimeo.com")) {
-        const vimeoRegex = /vimeo\.com\/(?:video\/)?(\d+)/;
+        const vimeoRegex = Bootsy.config.regexes.Vimeo;
         const match = vimeoRegex.exec(videoUrl);
         if (match && match[1]) {
           iframeSrc = `https://player.vimeo.com/video/${match[1]}`;
