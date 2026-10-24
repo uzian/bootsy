@@ -9,7 +9,7 @@
         "font-styles": function(locale, options) {
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li class='dropdown'>" +
-              "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' title='" + locale.font_styles.title + "' id='dropdownFontStyleLink'  aria-haspopup='true' aria-expanded='false'>" +
+              "<a class='btn btn-secondary dropdown-toggle" + size + "' data-bs-toggle='dropdown' href='#' title='" + locale.font_styles.title + "' id='dropdownFontStyleLink'  aria-haspopup='true' aria-expanded='false'>" +
               "<span class='current-font'>" + locale.font_styles.normal + "</span>" +
               "</a>" +
               "<div class='dropdown-menu' aria-labelledby='dropdownFontStyleLink'>" +
@@ -35,7 +35,7 @@
             }
 
             return "<li class='dropdown'>" +
-              "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' id='dropdownFontSizeLink'  aria-haspopup='true' aria-expanded='false'>" +
+              "<a class='btn btn-secondary dropdown-toggle" + size + "' data-bs-toggle='dropdown' href='#' id='dropdownFontSizeLink'  aria-haspopup='true' aria-expanded='false'>" +
               "<i class='fas fa-text-height'></i>" +
               "</a>" +
               "<div class='dropdown-menu' aria-labelledby='dropdownFontSizeLink'>" +
@@ -105,7 +105,7 @@
                   "<div class='modal-content'>" +
                     "<div class='modal-header'>" +
                       "<h6 class='modal-title'>" + locale.link.insert + "</h6>" +
-                      "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" +
+                      "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
                     "</div>" +
                     "<div class='modal-body'>" +
                       "<input value='http://' class='bootstrap-wysihtml-insert-link-url form-control input-lg'><br>" +
@@ -115,8 +115,8 @@
                       "</div>"+
                     "</div>" +
                     "<div class='modal-footer'>" +
-                      "<a href='#' class='btn btn-secondary' data-dismiss='modal'>" + locale.link.cancel + "</a>" +
-                      "<a href='#' class='btn btn-primary' data-dismiss='modal'>" + locale.link.insert + "</a>" +
+                      "<a href='#' class='btn btn-secondary' data-bs-dismiss='modal'>" + locale.link.cancel + "</a>" +
+                      "<a href='#' class='btn btn-primary' data-bs-dismiss='modal'>" + locale.link.insert + "</a>" +
                     "</div>" +
                   "</div>" +
                 "</div>" +
@@ -140,14 +140,14 @@
                   "<div class='modal-content'>" +
                     "<div class='modal-header'>" +
                       "<h6 class='modal-title'>" + locale.image.insert + "</h6>" +
-                      "<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>" +
+                      "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
                     "</div>" +
                     "<div class='modal-body'>" +
                       "<input value='http://' class='bootstrap-wysihtml-insert-image-url form-control input-lg'>" +
                     "</div>" +
                     "<div class='modal-footer'>" +
-                      "<a href='#' class='btn btn-secondary ' data-dismiss='modal'>" + locale.image.cancel + "</a>" +
-                      "<a href='#' class='btn btn-primary' data-dismiss='modal'>" + locale.image.insert + "</a>" +
+                      "<a href='#' class='btn btn-secondary ' data-bs-dismiss='modal'>" + locale.image.cancel + "</a>" +
+                      "<a href='#' class='btn btn-primary' data-bs-dismiss='modal'>" + locale.image.insert + "</a>" +
                     "</div>" +
                   "</div>" +
                 "</div>" +
@@ -192,8 +192,8 @@
             }
 
             return "<li class='dropdown'>" +
-            "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' title='" + locale.colours.title + "' id='dropdownFontColorLink'  aria-haspopup='true' aria-expanded='false'>" +
-              "<i class='fas fa-paint-brush mr-2'></i><span class='current-color wysihtml-colors wysiwyg-bgcolor-default'>" + locale.colours.default + "</span>" +
+            "<a class='btn btn-secondary dropdown-toggle" + size + "' data-bs-toggle='dropdown' href='#' title='" + locale.colours.title + "' id='dropdownFontColorLink'  aria-haspopup='true' aria-expanded='false'>" +
+              "<i class='fas fa-paint-brush me-2'></i><span class='current-color wysihtml-colors wysiwyg-bgcolor-default'>" + locale.colours.default + "</span>" +
             "</a>" +
             "<div class='dropdown-menu' aria-labelledby='dropdownFontColorLink'>" +
             menu +
@@ -219,8 +219,8 @@
           }
 
           return "<li class='dropdown'>" +
-          "<a class='btn btn-secondary dropdown-toggle" + size + "' data-toggle='dropdown' href='#' title='" + locale.colours.title + "' id='dropdownFontBgColorLink'  aria-haspopup='true' aria-expanded='false'>" +
-            "<i class='fas fa-fill-drip mr-2'></i><span class='current-bgcolor wysihtml-colors wysiwyg-bgcolor-default'>" + locale.colours.default + "</span>" +
+          "<a class='btn btn-secondary dropdown-toggle" + size + "' data-bs-toggle='dropdown' href='#' title='" + locale.colours.title + "' id='dropdownFontBgColorLink'  aria-haspopup='true' aria-expanded='false'>" +
+            "<i class='fas fa-fill-drip me-2'></i><span class='current-bgcolor wysihtml-colors wysiwyg-bgcolor-default'>" + locale.colours.default + "</span>" +
           "</a>" +
           "<div class='dropdown-menu' aria-labelledby='dropdownFontBgColorLink'>" +
           menu +
@@ -246,13 +246,6 @@
 
         window.editor = this.editor;
 
-        $('iframe.wysihtml-sandbox').each(function(i, el){
-            $(el.contentWindow).off('focus.wysihtml').on({
-                'focus.wysihtml' : function(){
-                    $('li.dropdown').removeClass('open');
-                }
-            });
-        });
     };
 
     Wysihtml.prototype = {
@@ -395,8 +388,12 @@
                     self.editor.currentView.element.focus();
                     caretBookmark = self.editor.composer.selection.getBookmark();
                     insertImageModal.appendTo('body').modal('show');
-                    insertImageModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
+                    // BS5 closes modals from a document-level listener; hide here so the click
+                    // can still be kept from reaching an outer modal.
+                    insertImageModal.off('click.dismiss.modal').on('click.dismiss.modal', '[data-bs-dismiss="modal"]', function(e) {
+                        e.preventDefault();
                         e.stopPropagation();
+                        insertImageModal.modal('hide');
                     });
                     return false;
                 }
@@ -444,7 +441,7 @@
                     href: url,
                     target: "_blank",
                     rel: "nofollow",
-                    class: asButton.prop('checked') ? "btn btn-primary mt-1 ml-1" : ""
+                    class: asButton.prop('checked') ? "btn btn-primary mt-1 ms-1" : ""
                 });
             };
             var pressedEnter = false;
@@ -473,8 +470,12 @@
                     self.editor.currentView.element.focus();
                     caretBookmark = self.editor.composer.selection.getBookmark();
                     insertLinkModal.appendTo('body').modal('show');
-                    insertLinkModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
+                    // BS5 closes modals from a document-level listener; hide here so the click
+                    // can still be kept from reaching an outer modal.
+                    insertLinkModal.off('click.dismiss.modal').on('click.dismiss.modal', '[data-bs-dismiss="modal"]', function(e) {
+                        e.preventDefault();
                         e.stopPropagation();
+                        insertLinkModal.modal('hide');
                     });
                     return false;
                 }

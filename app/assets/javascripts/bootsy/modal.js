@@ -116,13 +116,6 @@ Bootsy.Modal = function(area) {
       });
   }.bind(this));
 
-  // Display uploaded file's name in input field
-  this.$el.on('change', '#image-file-input, #video-file-input', function(event) {
-    const input = event.currentTarget;
-    const label = $(`label[for="${$(input).attr('id')}"]`);
-    $(label).text(input?.files[0]?.name || Bootsy.translations['chooseFile'] || 'Choose file');
-  }.bind(this));
-
   // Insert image to post body
   this.$el.on('click', '#images-menu .insert', function(event) {
     const elem = event.currentTarget;
@@ -168,7 +161,7 @@ Bootsy.Modal = function(area) {
   // Search for images/videos
   this.$el.on('click', '.search-btn', function(event) {
     const keyword = $(event.currentTarget).parents('.input-group').find('.searchbar').first().val();
-    const filetype = $(event.currentTarget).parent().data('filetype');
+    const filetype = $(event.currentTarget).closest('[data-filetype]').data('filetype');
 
     this.fetchFromBackend({
           filetype: filetype,
@@ -209,7 +202,6 @@ Bootsy.Modal = function(area) {
     const form = $(event.currentTarget).parents('.user-file-form');
     const filetype = form.find('input[type="hidden"]').val();
     const file = form.find('input[type="file"]').prop('files')[0];
-    const label = form.find('label');
     const fdata = new FormData();
 
     fdata.append('user_file[filetype]', filetype);
@@ -233,8 +225,7 @@ Bootsy.Modal = function(area) {
             this.updateGallery(`#${filetype}s-modal`, data);
           });
 
-        label.text(Bootsy.translations['chooseFile'] || 'Choose file');
-        label.val('');
+        form.find('input[type="file"]').val('');
       },
 
       error: () => {
@@ -247,7 +238,6 @@ Bootsy.Modal = function(area) {
     });
   }.bind(this));
 
-  this.$el.modal({ show: false });
   this.hideRefreshButton();
   this.hideEmptyAlert();
 };
@@ -397,7 +387,7 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
 
     if (filetype === 'image') {
       tag = `<img class="bootsy-image" src="${Bootsy.config.backendURL}/user_files/${user_file_id}?variant=tiny" \
-              data-toggle="tooltip" title="${filename}">`;
+              data-bs-toggle="tooltip" title="${filename}">`;
     } else if (filetype === 'video') {
       tag = `<div class="col w-100 p-0">
               <video class="bootsy-video" muted playsinline preload="metadata" width="100" height="100">
@@ -409,7 +399,7 @@ Bootsy.Modal.prototype.parseBackendResponse = function(data) {
               </div>
             </div>`;
     }
-    modal_body += `<div class="mr-1 mb-1 p-1 border selector-area" id="selector_image_${user_file_id}">
+    modal_body += `<div class="me-1 mb-1 p-1 border selector-area" id="selector_image_${user_file_id}">
                     <a class="thumbnail" href="javascript:;">
                       ${tag}
                     </a>

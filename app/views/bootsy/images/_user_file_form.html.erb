@@ -2,13 +2,8 @@
   <div class="col-md-6">
     <%= hidden_field_tag :filetype, filetype %>
     <div class="input-group mb-2">
-      <div class="custom-file">
-        <%= file_field_tag :content, class: "custom-file-input", accept: "#{filetype}/*" %>
-        <%= label_tag :content, t("bootsy.action.choose_file"), class: "custom-file-label" %>
-      </div>
-      <div class="input-group-append">
-        <%= button_tag t("bootsy.action.insert"), type: "button", class: "btn btn-primary" %>
-      </div>
+      <%= file_field_tag :content, class: "form-control", accept: "#{filetype}/*", "aria-label": t("bootsy.action.choose_file") %>
+      <%= button_tag t("bootsy.action.insert"), type: "button", class: "btn btn-primary" %>
     </div>
   </div>
 </div>

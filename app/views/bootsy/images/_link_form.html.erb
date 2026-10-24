@@ -2,9 +2,7 @@
   <div class="col-md-6">
     <div class="input-group">
       <%= text_field_tag "#{filetype}-url-input", nil, placeholder: t("bootsy.action.enter_#{filetype}_url"), class: "form-control" %>
-      <div class="input-group-append">
-        <%= button_tag t("bootsy.action.insert"), type: "button", id: "link-#{filetype}-btn", class: "btn btn-primary" %>
-      </div>
+      <%= button_tag t("bootsy.action.insert"), type: "button", id: "link-#{filetype}-btn", class: "btn btn-primary" %>
     </div>
   </div>
 </div>
