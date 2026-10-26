@@ -42,7 +42,9 @@ Bootsy.Area.prototype.unsavedChangesAlert = function () {
 Bootsy.Area.prototype.clear = function () {
   this.editor.clear();
   this.setImageGalleryId('');
-  this.modal.$el.data('gallery-loaded', false);
+  if (this.modal) {
+    this.modal.$el.data('gallery-loaded', false);
+  }
 };
 
 Bootsy.Area.prototype.setImageGalleryId = function(id) {
@@ -74,7 +76,10 @@ Bootsy.Area.prototype.init = function() {
       return true;
     }.bind(this));
 
-    this.modal.init();
+    // The image/video modal only exists when uploads are enabled (image: true, uploader: true)
+    if (this.modal) {
+      this.modal.init();
+    }
     this.$el.data('bootsy-initialized', true);
   }
 };
